@@ -38,9 +38,14 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
 
     # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Skips the
     # Referee/Router call entirely for turns the heuristic judges simple.
+    # NPC-addressing is decided separately/deterministically either way, so
+    # mundane dialogue still gets a real NPC reply even on the fast path.
     if agents.looks_simple(player_input, world):
+        addresses_npc_fast = agents.addresses_active_npc(player_input, world)
         verdict = {
-            "turn_type": "action", "known_to_dm": True, "addresses_npc": False,
+            "turn_type": "dialogue" if addresses_npc_fast else "action",
+            "known_to_dm": True,
+            "addresses_npc": addresses_npc_fast,
             "outcome": "success", "twist": "",
             "rationale": "heuristic: skipped verdict call, judged simple",
         }

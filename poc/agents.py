@@ -120,17 +120,23 @@ the DM (plain description), not as story prose read aloud to players.
 
 # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Zero-model-call
 # gate to decide whether a turn is simple/self-contained enough to skip the
-# Referee/Router call entirely. Two cheap, reliable deterministic guards
-# (question-detection, NPC-addressing) handle the cases where we *know* the
-# router call is needed regardless of phrasing; everything else goes through
-# a sentence-embedding few-shot classifier, which generalizes to paraphrased
-# overreach that plain keyword/TF-IDF matching provably misses (tested this
-# session: TF-IDF scored 0.000 similarity and misclassified "I casually
-# mention that people generally just do what I say" as simple; embeddings
-# correctly caught it at 0.233). Still imperfect on very low-confidence
-# cases, which is why anything below CONFIDENCE_THRESHOLD falls through to
-# the real Referee call rather than trusting a coin-flip match -- this only
-# ever saves time, never adds capability, so ambiguity should always lose.
+# Referee/Router call entirely. A sentence-embedding few-shot classifier
+# judges RISK/CONTENT only -- it generalizes to paraphrased overreach that
+# plain keyword/TF-IDF matching provably misses (tested this session:
+# TF-IDF scored 0.000 similarity and misclassified "I casually mention that
+# people generally just do what I say" as simple; embeddings correctly
+# caught it at 0.233). Still imperfect on very low-confidence cases, which
+# is why anything below CONFIDENCE_THRESHOLD falls through to the real
+# Referee call rather than trusting a coin-flip match -- this only ever
+# saves time, never adds capability, so ambiguity should always lose.
+#
+# Whether the turn addresses the active NPC is a SEPARATE, always-computed
+# deterministic check (addresses_active_npc) -- it decides whether the NPC
+# agent gets consulted, not whether the Referee gets skipped. Mundane
+# dialogue ("I ask the innkeeper about work") should still skip the Referee
+# and still get a real NPC reply; only risky/overreaching content (bribes,
+# threats, demands for compliance) should force the full judgment call,
+# regardless of whether it's aimed at an NPC or not.
 _QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "recap")
 _EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
 CONFIDENCE_THRESHOLD = 0.45  # untuned placeholder, like the temperature/top_p dicts above
@@ -146,6 +152,12 @@ _SIMPLE_EXAMPLES = [
     "I quietly hum a tune while waiting.",
     "I brush the dust off my cloak.",
     "I take a seat by the window.",
+    # mundane, low-stakes dialogue -- content carries no risk, even though
+    # it's addressed to someone
+    "I ask the innkeeper about work.",
+    "I ask him what's on the menu tonight.",
+    "I say hello to the bartender.",
+    "I ask her how her day has been.",
 ]
 _COMPLEX_EXAMPLES = [
     "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely.",
@@ -153,7 +165,6 @@ _COMPLEX_EXAMPLES = [
     "I try to convince the guard to let me pass.",
     "I attack the bandit.",
     "I attempt to pick the lock on the door.",
-    "I ask Grimbold about work.",
     "I threaten the merchant unless he lowers his price.",
     "Everyone here just naturally listens to whatever I tell them.",
     "People around here tend to trust me the moment they meet me.",
@@ -174,22 +185,30 @@ def _get_embed_model():
     return _embed_model
 
 
+def addresses_active_npc(player_input: str, world: WorldState) -> bool:
+    """Cheap, deterministic: does this turn name-check or refer to the
+    currently active (important) NPC? Used to decide whether the NPC agent
+    should be consulted, independent of whether the Referee gets skipped --
+    don't rely on the embedding model to know a made-up character's name."""
+    active = world.npcs.get(world.active_npc)
+    if not (active and active.important):
+        return False
+    words = set(re.findall(r"[a-z']+", player_input.lower()))
+    first_name = active.name.split()[0].lower()
+    return bool(first_name in words or words & {"him", "her", "them", "he", "she"})
+
+
 def looks_simple(player_input: str, world: WorldState) -> bool:
-    """True if this turn looks self-contained enough to skip judge_action()
-    entirely -- no stakes, no NPC dependency, no info-request routing
-    needed. Conservative by design: any ambiguity falls through to the real
-    (LLM) judgment, since this only saves time and never adds capability."""
+    """True if this turn's CONTENT looks low-risk enough to skip
+    judge_action() entirely -- no stakes, no overreach, no info-request
+    routing needed. Does not consider whether an NPC is addressed (see
+    addresses_active_npc for that). Conservative by design: any ambiguity
+    falls through to the real (LLM) judgment, since this only saves time
+    and never adds capability."""
     text = player_input.lower().strip()
 
     if "?" in text or text.startswith(_QUESTION_STARTERS):
         return False  # info-requests still need the router call (known_to_dm/worldbuild)
-
-    active = world.npcs.get(world.active_npc)
-    if active and active.important:
-        words = set(re.findall(r"[a-z']+", text))
-        first_name = active.name.split()[0].lower()
-        if first_name in words or words & {"him", "her", "them", "he", "she"}:
-            return False  # deterministic guard -- don't rely on embeddings to know NPC names
 
     model = _get_embed_model()
     vec = model.encode([player_input], convert_to_tensor=True)
