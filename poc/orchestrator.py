@@ -36,10 +36,22 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
         if on_timing:
             on_timing(event, time.monotonic() - t0)
 
-    verdict = agents.judge_action(world, player_input)
-    mark("verdict")
-    if verbose:
-        print(f"\n[router+referee] {verdict}\n")
+    # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Skips the
+    # Referee/Router call entirely for turns the heuristic judges simple.
+    if agents.looks_simple(player_input, world):
+        verdict = {
+            "turn_type": "action", "known_to_dm": True, "addresses_npc": False,
+            "outcome": "success", "twist": "",
+            "rationale": "heuristic: skipped verdict call, judged simple",
+        }
+        mark("verdict")
+        if verbose:
+            print(f"\n[router+referee] SKIPPED (heuristic: simple) {verdict}\n")
+    else:
+        verdict = agents.judge_action(world, player_input)
+        mark("verdict")
+        if verbose:
+            print(f"\n[router+referee] {verdict}\n")
 
     needs_worldbuild = (
         verdict.get("turn_type") == "info_request"

@@ -6,6 +6,9 @@ intentionally not tuned yet. Revisit once we're testing against real play
 sessions, per the plan to defer that tuning until it's needed.
 """
 import json
+import re
+
+from sentence_transformers import SentenceTransformer, util
 
 from ollama_client import chat
 from world_state import WorldState, NPC
@@ -113,6 +116,90 @@ established, write 100-180 words of new lore that fits seamlessly with \
 what exists and does not contradict it. Write it as reference material for \
 the DM (plain description), not as story prose read aloud to players.
 """
+
+
+# EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Zero-model-call
+# gate to decide whether a turn is simple/self-contained enough to skip the
+# Referee/Router call entirely. Two cheap, reliable deterministic guards
+# (question-detection, NPC-addressing) handle the cases where we *know* the
+# router call is needed regardless of phrasing; everything else goes through
+# a sentence-embedding few-shot classifier, which generalizes to paraphrased
+# overreach that plain keyword/TF-IDF matching provably misses (tested this
+# session: TF-IDF scored 0.000 similarity and misclassified "I casually
+# mention that people generally just do what I say" as simple; embeddings
+# correctly caught it at 0.233). Still imperfect on very low-confidence
+# cases, which is why anything below CONFIDENCE_THRESHOLD falls through to
+# the real Referee call rather than trusting a coin-flip match -- this only
+# ever saves time, never adds capability, so ambiguity should always lose.
+_QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "recap")
+_EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
+CONFIDENCE_THRESHOLD = 0.45  # untuned placeholder, like the temperature/top_p dicts above
+
+_SIMPLE_EXAMPLES = [
+    "I glance around the tavern for an empty table to sit at.",
+    "I stretch my legs and yawn.",
+    "I walk over to the hearth to warm my hands.",
+    "I take a sip of my drink.",
+    "I lean back in my chair.",
+    "I look up at the ceiling beams.",
+    "I set my pack down on the floor.",
+    "I quietly hum a tune while waiting.",
+    "I brush the dust off my cloak.",
+    "I take a seat by the window.",
+]
+_COMPLEX_EXAMPLES = [
+    "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely.",
+    "I draw my sword and in one perfect strike intimidate all three into surrendering instantly.",
+    "I try to convince the guard to let me pass.",
+    "I attack the bandit.",
+    "I attempt to pick the lock on the door.",
+    "I ask Grimbold about work.",
+    "I threaten the merchant unless he lowers his price.",
+    "Everyone here just naturally listens to whatever I tell them.",
+    "People around here tend to trust me the moment they meet me.",
+    "I sneak past the guards without being seen.",
+]
+
+_embed_model = None
+_example_texts = _SIMPLE_EXAMPLES + _COMPLEX_EXAMPLES
+_example_labels = ["SIMPLE"] * len(_SIMPLE_EXAMPLES) + ["COMPLEX"] * len(_COMPLEX_EXAMPLES)
+_example_vecs = None
+
+
+def _get_embed_model():
+    global _embed_model, _example_vecs
+    if _embed_model is None:
+        _embed_model = SentenceTransformer(_EMBED_MODEL_NAME)
+        _example_vecs = _embed_model.encode(_example_texts, convert_to_tensor=True)
+    return _embed_model
+
+
+def looks_simple(player_input: str, world: WorldState) -> bool:
+    """True if this turn looks self-contained enough to skip judge_action()
+    entirely -- no stakes, no NPC dependency, no info-request routing
+    needed. Conservative by design: any ambiguity falls through to the real
+    (LLM) judgment, since this only saves time and never adds capability."""
+    text = player_input.lower().strip()
+
+    if "?" in text or text.startswith(_QUESTION_STARTERS):
+        return False  # info-requests still need the router call (known_to_dm/worldbuild)
+
+    active = world.npcs.get(world.active_npc)
+    if active and active.important:
+        words = set(re.findall(r"[a-z']+", text))
+        first_name = active.name.split()[0].lower()
+        if first_name in words or words & {"him", "her", "them", "he", "she"}:
+            return False  # deterministic guard -- don't rely on embeddings to know NPC names
+
+    model = _get_embed_model()
+    vec = model.encode([player_input], convert_to_tensor=True)
+    sims = util.cos_sim(vec, _example_vecs)[0]
+    best_idx = int(sims.argmax())
+    best_sim = float(sims[best_idx])
+
+    if best_sim < CONFIDENCE_THRESHOLD:
+        return False  # not confident enough either way -- ask the real Referee
+    return _example_labels[best_idx] == "SIMPLE"
 
 
 def judge_action(world: WorldState, player_input: str) -> dict:
