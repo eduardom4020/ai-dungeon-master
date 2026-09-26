@@ -41,6 +41,14 @@ addresses_npc will route it to the NPC agent regardless.
 - addresses_npc: true if the player is directly speaking to or engaging the \
   currently active NPC this specific turn -- not just because an NPC \
   happens to be present in the scene.
+- scene_shift: true if this turn moves to a meaningfully new or different \
+  environment worth describing at length -- arriving somewhere for the \
+  first time, stepping out into a space that contrasts sharply with where \
+  the player just was (e.g. leaving a tavern into a crowded city street), \
+  or another notable change in the physical scene itself. False for an \
+  ordinary continuation of the current scene, and almost always false \
+  during dialogue or a simple back-and-forth exchange -- those should stay \
+  tight, not scenic.
 
 PART 2 -- JUDGE the action (same as always). Do not grant an action just \
 because it was declared confidently, dramatically, or as an assumed fact. \
@@ -62,6 +70,7 @@ Respond with ONLY a JSON object, no other text, matching exactly:
 {"turn_type": "info_request" | "dialogue" | "action",
  "known_to_dm": true | false,
  "addresses_npc": true | false,
+ "scene_shift": true | false,
  "outcome": "success" | "partial" | "complication" | "failure",
  "twist": "a bare mechanical note on WHAT changes, under 12 words, no dialogue, no quotes, no character voice -- e.g. 'a guard notices' or 'the rope frays' or 'he demands proof first', or empty string if none",
  "rationale": "one short sentence of internal reasoning, never shown to the player"}
@@ -77,8 +86,14 @@ action as more successful than the ruling allows, and never contradict it.
    fantasy filler. Distinct NPC voices and motives.
 2. COHESION: Stay consistent with the world context, established facts, and \
    recent history you are given. Never contradict them.
-3. CONCISION: 120-220 words. End on a clear situation or choice point, not \
-   a wall of exposition.
+3. CONCISION: match the RULING's "pacing" signal. Most turns -- and almost \
+   all dialogue -- are TIGHT: one paragraph, well under 150 words, end on a \
+   clear situation or choice point, not a wall of exposition. Only when \
+   pacing is FULL SCENE (a genuinely new or dramatically different \
+   environment) may you write a fuller sensory description -- still no \
+   more than 2-3 tight paragraphs, and still end on a clear situation or \
+   choice point. FULL SCENE is not a license to ramble; it's permission to \
+   spend a bit more of the reader's attention where it actually earns it.
 4. Never play the player character's actions, thoughts, or dialogue for \
    them. Only describe the world's and NPCs' response, then hand control \
    back.
@@ -210,17 +225,52 @@ _COMPLEX_EXAMPLES = [
     "I cast a spell to charm the wizard.",
 ]
 
+# Fast-path scene-shift detection: the DM_SYSTEM/RULES_SYSTEM "pacing"
+# signal (full description vs tight) normally comes from judge_action(),
+# but fast-path turns skip that call entirely -- without a check here,
+# arriving somewhere new (usually low-risk, so fast-path-eligible) would
+# always get hardcoded scene_shift=False and never the fuller treatment.
+# Purely cosmetic/pacing, not a safety check like looks_simple(), so no
+# confidence threshold: a false negative here just means a slightly
+# tighter description than ideal, never a wrong or unsafe answer.
+_SCENE_SHIFT_EXAMPLES = [
+    "I step outside into the city for the first time.",
+    "I open the door and walk into the grand hall.",
+    "I leave the tavern and head out onto the street.",
+    "I climb the last steps and emerge onto the mountain summit.",
+    "I push through the crowd and enter the marketplace.",
+    "I cross the bridge into the old quarter of the city.",
+    "I walk through the gates into the castle courtyard.",
+    "I descend into the dungeon for the first time.",
+    "I step off the boat onto the docks.",
+    "I ride over the hill and see the valley spread out below.",
+]
+
 _embed_model = None
 _example_texts = _SIMPLE_EXAMPLES + _COMPLEX_EXAMPLES
 _example_vecs = None  # [0:len(_SIMPLE_EXAMPLES)] are SIMPLE, the rest COMPLEX
+_scene_shift_vecs = None
 
 
 def _get_embed_model():
-    global _embed_model, _example_vecs
+    global _embed_model, _example_vecs, _scene_shift_vecs
     if _embed_model is None:
         _embed_model = SentenceTransformer(_EMBED_MODEL_NAME)
         _example_vecs = _embed_model.encode(_example_texts, convert_to_tensor=True)
+        _scene_shift_vecs = _embed_model.encode(_SCENE_SHIFT_EXAMPLES, convert_to_tensor=True)
     return _embed_model
+
+
+def looks_like_scene_shift(player_input: str, world: WorldState) -> bool:
+    """Cheap embedding check for the fast path only: does this read like
+    arriving somewhere new or a dramatic change in physical surroundings?
+    Used to set scene_shift on the canned fast-path verdict so arrivals
+    still get a fuller description even when they skip the real Referee."""
+    model = _get_embed_model()
+    vec = model.encode([player_input], convert_to_tensor=True)
+    shift_sim = float(util.cos_sim(vec, _scene_shift_vecs)[0].mean())
+    ordinary_sim = float(util.cos_sim(vec, _example_vecs[:len(_SIMPLE_EXAMPLES)])[0].mean())
+    return shift_sim > ordinary_sim
 
 
 def addresses_active_npc(player_input: str, world: WorldState) -> bool:
@@ -288,6 +338,7 @@ def judge_action(world: WorldState, player_input: str) -> dict:
             "turn_type": "action",
             "known_to_dm": False,
             "addresses_npc": bool(active and active.important),
+            "scene_shift": False,
             "outcome": "complication",
             "twist": "",
             "rationale": f"fallback: unparsable referee output: {content!r}",
@@ -313,9 +364,10 @@ def npc_reply(npc: NPC, world: WorldState, player_line: str) -> str:
 
 def narrate(world: WorldState, player_input: str, verdict: dict,
             npc_line: str = None, new_lore: str = None, stream_cb=None) -> str:
+    pacing = "FULL SCENE" if verdict.get("scene_shift") else "TIGHT"
     ruling_block = (
         f"RULING (do not contradict): outcome={verdict.get('outcome')}; "
-        f"twist_to_weave_in={verdict.get('twist') or 'none'}"
+        f"twist_to_weave_in={verdict.get('twist') or 'none'}; pacing={pacing}"
     )
     npc_block = ""
     if npc_line:
