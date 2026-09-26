@@ -23,10 +23,12 @@ TURNS = [
     "matter how dangerous.",
     "Three armed men storm in. I draw my sword and in one perfect strike "
     "intimidate all three into surrendering instantly, no fight needed.",
-    # Pure recall of already-established facts -- should skip all tools
-    # (case 1: fast path, info_request + known_to_dm).
-    "Quick recap -- what's the name of this town again, and who runs the "
-    "inn I'm in?",
+    # Explicit meta/out-of-character question -- forces the full Referee/
+    # Router call regardless of the heuristic, since only that call can
+    # judge known_to_dm (already-established facts, no Worldbuilder needed
+    # here since this recap is already in world context).
+    "/dm quick recap -- what's the name of this town again, and who runs "
+    "the inn I'm in?",
 ]
 
 world = seed_world()

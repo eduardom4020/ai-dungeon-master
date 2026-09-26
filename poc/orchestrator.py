@@ -11,6 +11,27 @@ import time
 import agents
 from world_state import WorldState
 
+META_PREFIX = "/dm"  # explicit, deterministic escape hatch to talk to the DM
+                      # out-of-character -- see CLAUDE.md "Verdict-skip
+                      # experiment". Replaces trying to *guess* whether a
+                      # question is a meta-request or in-character dialogue
+                      # (a raw "?" check misfires on lines like "I enter the
+                      # tavern and ask: Is there someone here?", which is
+                      # dialogue, not a meta-request) -- the player just says
+                      # which one they mean.
+
+
+def _strip_meta_prefix(player_input: str) -> tuple[str, bool]:
+    """Returns (cleaned_input, is_meta). Strips a leading "/dm" (any case,
+    optional ":" after it) so the actual question reads naturally."""
+    stripped = player_input.strip()
+    if not stripped.lower().startswith(META_PREFIX):
+        return player_input, False
+    rest = stripped[len(META_PREFIX):].lstrip()
+    if rest.startswith(":"):
+        rest = rest[1:].lstrip()
+    return rest, True
+
 
 def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False,
              on_timing=None, on_thinking=None):
@@ -36,11 +57,16 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
         if on_timing:
             on_timing(event, time.monotonic() - t0)
 
+    player_input, is_meta = _strip_meta_prefix(player_input)
+
     # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Skips the
     # Referee/Router call entirely for turns the heuristic judges simple.
     # NPC-addressing is decided separately/deterministically either way, so
     # mundane dialogue still gets a real NPC reply even on the fast path.
-    if agents.looks_simple(player_input, world):
+    # A "/dm ..." turn always forces the full call -- it needs known_to_dm
+    # (is this fact already established?), which only the real Referee/
+    # Router can judge; the heuristic has no basis for that distinction.
+    if not is_meta and agents.looks_simple(player_input, world):
         addresses_npc_fast = agents.addresses_active_npc(player_input, world)
         verdict = {
             "turn_type": "dialogue" if addresses_npc_fast else "action",
@@ -56,7 +82,8 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
         verdict = agents.judge_action(world, player_input)
         mark("verdict")
         if verbose:
-            print(f"\n[router+referee] {verdict}\n")
+            tag = " (forced: /dm)" if is_meta else ""
+            print(f"\n[router+referee]{tag} {verdict}\n")
 
     needs_worldbuild = (
         verdict.get("turn_type") == "info_request"

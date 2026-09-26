@@ -43,6 +43,9 @@ def print_help():
         "  /verbose            toggle showing referee verdicts and raw NPC lines\n"
         "  /reset              discard saved session and start over\n"
         "  /quit\n"
+        "\nTip: start a line with /dm to ask the DM something out-of-character\n"
+        "(e.g. '/dm what was the innkeeper's name again?') instead of playing\n"
+        "it in-character -- this always gets a full, careful answer.\n"
     )
 
 
