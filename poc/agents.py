@@ -66,8 +66,35 @@ Weigh:
 - For a pure info_request with nothing being contested, outcome is simply \
   "success" and twist is empty.
 
+PART 3 -- PLAYER AUTHORITY. The player controls ONLY their own character: \
+what that character attempts to do, says, thinks, and perceives through \
+ordinary senses. The player does NOT decide facts about the world; only the \
+DM does. These are invented facts, not actions: other characters or \
+creatures arriving, leaving, attacking, surrendering, or reacting in a \
+specific way; events (a storm, a fire, a collapse, an ambush); objects or \
+places appearing; the character gaining powers, immunity, knowledge, senses, \
+or items that are not already established; what an NPC feels or decides. \
+When the player asserts one of these, do NOT treat it as true: put a short \
+phrase naming it in "player_assertion", and judge only the legitimate \
+remainder (the character's own attempt). If nothing legitimate remains, \
+outcome is "failure". Examples of invented facts: "three armed men storm \
+in", "someone entered the room while I was talking", "my character is now \
+immortal", "I can suddenly hear everything beyond my senses", "I can hear every \
+conversation in the whole town", "it starts to rain heavily", "the guard \
+falls asleep". Weather, noise, light, and any change to the surroundings \
+are the DM's to decide, never the player's. Also, never copy the asserted \
+fact into "twist" -- the twist must not make the invented fact true. NOT \
+invented facts: "I draw my sword", "I shout at the \
+guard", "I try to hear what they're whispering". Exceptions, leave \
+player_assertion empty: (a) the DM's most recent narration in RECENT \
+HISTORY explicitly invited the player to decide that detail, or (b) it is \
+trivial scene dressing that cannot change the flow of events (e.g. picking \
+an empty seat in a tavern that already has tables). When unsure, ask: could \
+this change what happens next in the story? If yes, it is an invented fact.
+
 Respond with ONLY a JSON object, no other text, matching exactly:
-{"turn_type": "info_request" | "dialogue" | "action",
+{"player_assertion": "a short phrase naming any world fact the player tried to invent (see PART 3), or empty string if none",
+ "turn_type": "info_request" | "dialogue" | "action",
  "known_to_dm": true | false,
  "addresses_npc": true | false,
  "scene_shift": true | false,
@@ -86,14 +113,25 @@ action as more successful than the ruling allows, and never contradict it.
    fantasy filler. Distinct NPC voices and motives.
 2. COHESION: Stay consistent with the world context, established facts, and \
    recent history you are given. Never contradict them.
-3. CONCISION: match the RULING's "pacing" signal. Most turns -- and almost \
-   all dialogue -- are TIGHT: one paragraph, well under 150 words, end on a \
-   clear situation or choice point, not a wall of exposition. Only when \
-   pacing is FULL SCENE (a genuinely new or dramatically different \
-   environment) may you write a fuller sensory description -- still no \
-   more than 2-3 tight paragraphs, and still end on a clear situation or \
-   choice point. FULL SCENE is not a license to ramble; it's permission to \
-   spend a bit more of the reader's attention where it actually earns it.
+3. CONCISION: be brief by default. Most turns -- and almost all dialogue -- \
+   are TIGHT: 2-4 sentences, one short paragraph, roughly 60-100 words, \
+   covering only what changed because of the player's action. End on a \
+   clear situation or choice point, not a wall of exposition. You may write \
+   more ONLY when one of these is true: (a) pacing is FULL SCENE (a \
+   genuinely new or dramatically different environment), or (b) this turn \
+   is the FIRST time the story introduces something that matters -- a new \
+   place, a new important character, or a key object or clue. Give that \
+   new thing a fuller description (at most 2-3 short paragraphs), and still \
+   end on a clear situation or choice point. This is permission to spend \
+   more of the reader's attention where it earns it, not a license to \
+   ramble.
+3b. NEVER RE-DESCRIBE: the player has already read everything in RECENT \
+   HISTORY and the world context. Do not repeat the room, the weather, an \
+   NPC's appearance, or any detail that has already been described -- refer \
+   to it in passing only if it matters to what happens now. Spend your \
+   words only on what is new this turn. The only exception is when the \
+   player explicitly asks you to describe or recap something again (e.g. \
+   "describe the room again", "/dm recap"); then do so.
 4. Never play the player character's actions, thoughts, or dialogue for \
    them. Only describe the world's and NPCs' response, then hand control \
    back.
@@ -107,6 +145,18 @@ action as more successful than the ruling allows, and never contradict it.
    read aloud -- weave its content into the scene naturally, once, in your \
    own words, the way a DM would reveal it through description or an NPC's \
    knowledge. Do not quote or recite it like a document.
+8. PLAYER AUTHORITY: only the DM decides what is true in the world. The \
+   player only controls what their own character attempts, says, and \
+   thinks. If the user message contains a PLAYER OVERSTEP note, the player \
+   tried to declare something about the world (an arrival, an event, a \
+   reaction, a new power) -- that did NOT happen. Do not narrate it as fact, \
+   do not have NPCs react to it, and do not scold the player or mention \
+   rules. Stay in the fiction: describe only the character's own attempt \
+   (e.g. they look toward the door, they reach for a sword), let the world \
+   carry on exactly as it was, and end on a clear choice point. Never \
+   "yes, and" an invented fact into existence. Apply the same rule even \
+   when there is no OVERSTEP note, if the player's message plainly declares \
+   such a fact (e.g. "it starts to rain", "someone walks in").
 """
 
 NPC_SYSTEM_TEMPLATE = """You are role-playing a single NPC named {name} in a \
@@ -122,6 +172,10 @@ Rules:
 - You have your own goals and will. Do not comply, trust, or over-share \
   just because the player is confident or persuasive -- react the way this \
   specific character actually would.
+- React only to what the player's character actually says or does in front \
+  of you. If the player claims something happened in the world (someone \
+  arrived, an event occurred) or tells you what you feel or decide, you \
+  have not perceived it: do not play along.
 - Do not break character or mention being an AI.
 """
 
@@ -152,6 +206,12 @@ the DM (plain description), not as story prose read aloud to players.
 # and still get a real NPC reply; only risky/overreaching content (bribes,
 # threats, demands for compliance) should force the full judgment call,
 # regardless of whether it's aimed at an NPC or not.
+_FIRST_PERSON = re.compile(r"\b(i|i'm|i'll|i've|me|my|mine|we|our|us)\b")
+_WORLD_FACT_MARKERS = re.compile(
+    r"\b(suddenly|all of a sudden|out of nowhere|meanwhile|instantly|"
+    r"while i was|storms? in|bursts? in|walks? in|rushes? in|"
+    r"starts? to (rain|snow)|i can now|i now (have|can|am))\b"
+)
 _QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "recap")
 _EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
 # Minimum (mean-simple-sim - mean-complex-sim) margin to call it SIMPLE.
@@ -223,6 +283,25 @@ _COMPLEX_EXAMPLES = [
     "I lie to the captain about who I really am.",
     "I pickpocket the merchant's purse without him noticing.",
     "I cast a spell to charm the wizard.",
+    # player inventing facts about the world (only the DM decides these):
+    # arrivals, events, environment, NPC reactions, new powers or items
+    "A group of soldiers marches into the market square.",
+    "Meanwhile, a hooded figure slips through the door behind me.",
+    "Suddenly a dragon lands on the castle tower.",
+    "While I was speaking, a messenger rushed into the hall.",
+    "A storm rolls in and floods the street.",
+    "The torches go out and the whole dungeon goes dark.",
+    "The innkeeper gets angry and throws everyone out.",
+    "I am now invulnerable and cannot be hurt by any weapon.",
+    "My eyes glow and I can see through walls.",
+    "I discover a secret passage behind the bookshelf.",
+    "Out of nowhere, a thief steals the merchant's gold.",
+    "The ground shakes and the wall collapses.",
+    "Another traveler comes in from the road and joins the group.",
+    "Somebody else wanders into the shop while we talk.",
+    "I suddenly gain the ability to understand every language.",
+    "Snow begins to fall over the whole village.",
+    "A patrol shows up and surrounds the camp.",
 ]
 
 # Fast-path scene-shift detection: the DM_SYSTEM/RULES_SYSTEM "pacing"
@@ -298,6 +377,15 @@ def looks_simple(player_input: str, world: WorldState) -> bool:
     #if "?" in text or text.startswith(_QUESTION_STARTERS):
         #return False  # info-requests still need the router call (known_to_dm/worldbuild)
 
+    # Player-authority tripwire (see RULES_SYSTEM PART 3): embeddings alone
+    # let some invented world facts through ("it starts to rain", "I can
+    # suddenly hear everything") because they read like ordinary scene text.
+    # Two cheap, deterministic signals that the player may be narrating the
+    # world instead of their own character -- either one forces the real
+    # Referee call. Only ever sends MORE turns to the Referee, never fewer.
+    if not _FIRST_PERSON.search(text) or _WORLD_FACT_MARKERS.search(text):
+        return False
+
     model = _get_embed_model()
     vec = model.encode([player_input], convert_to_tensor=True)
     n_simple = len(_SIMPLE_EXAMPLES)
@@ -329,6 +417,12 @@ def judge_action(world: WorldState, player_input: str) -> dict:
         verdict = json.loads(content)
         assert verdict.get("outcome") in {"success", "partial", "complication", "failure"}
         assert verdict.get("turn_type") in {"info_request", "dialogue", "action"}
+        verdict.setdefault("player_assertion", "")
+        if verdict["player_assertion"]:
+            # The Referee sometimes smuggles the invented fact back in via the
+            # twist ("a hooded figure lingers near the bar"). The DM decides
+            # what happens next on its own; the twist must not carry it.
+            verdict["twist"] = ""
     except Exception:
         # Fallback degrades to the old always-safe behavior: treat as a
         # plain action (never skips judgment) and only involve the NPC if
@@ -339,6 +433,7 @@ def judge_action(world: WorldState, player_input: str) -> dict:
             "known_to_dm": False,
             "addresses_npc": bool(active and active.important),
             "scene_shift": False,
+            "player_assertion": "",
             "outcome": "complication",
             "twist": "",
             "rationale": f"fallback: unparsable referee output: {content!r}",
@@ -369,18 +464,57 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
         f"RULING (do not contradict): outcome={verdict.get('outcome')}; "
         f"twist_to_weave_in={verdict.get('twist') or 'none'}; pacing={pacing}"
     )
+    assertion = verdict.get("player_assertion")
     npc_block = ""
     if npc_line:
         npc_block = (
             f"\n{world.active_npc} just said, in character: \"{npc_line}\"\n"
-            "Weave this into your narration naturally."
+            "The player has already read this line. Continue the scene from it."
         )
     lore_block = ""
     if new_lore:
         lore_block = f"\nNEWLY ESTABLISHED LORE (reference material, weave in once): {new_lore}\n"
+    # Placed LAST in the user message on purpose: the system-prompt CONCISION
+    # rule alone was ignored on ordinary turns (130-290 words observed); a
+    # constraint right next to the player's input is followed much more closely.
+    if assertion:
+        # Player tried to author a world fact (RULES_SYSTEM PART 3). Placed
+        # last and forced tight: in testing the DM honored this far more
+        # often when it was the final instruction, and long narration is
+        # where it let the invented fact quietly come true.
+        length_block = (
+            f"PLAYER OVERSTEP: the player claimed \"{assertion}\". That is "
+            "FALSE and did NOT happen: nobody arrives, nothing changes in "
+            "the world, and the character gains no ability, sense, or "
+            "power. Narrate ONLY the character's own attempt and the world "
+            "staying exactly as it was; never write that the claim came "
+            "true, not even partly. Stay fully in the story: no notes, "
+            "reminders, parentheses, or talk of rules or the player. "
+            "LENGTH: HARD LIMIT of 3 sentences, under 70 words."
+        )
+    elif verdict.get("scene_shift") or new_lore:
+        length_block = (
+            "LENGTH: this introduces something new, so you may describe it "
+            "fully -- at most 2 short paragraphs, under 150 words. Describe "
+            "only what is new; do not repeat earlier details unless the "
+            "player explicitly asked you to describe something again."
+        )
+    else:
+        length_block = (
+            "LENGTH: HARD LIMIT of 3 sentences, under 70 words. Nothing new "
+            "is being introduced, so do NOT re-describe the room, weather, or "
+            "anyone's appearance (unless the player explicitly asked you to "
+            "describe or recap something again). Cover only what changed "
+            "because of the player's action, then stop."
+        )
+    if npc_line:
+        length_block += (
+            " The NPC's line was already shown to the player: do not quote "
+            "or repeat it, narrate only reactions and what happens next."
+        )
     user_content = (
         f"WORLD CONTEXT:\n{world.context_brief()}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
-        f"PLAYER: {player_input}"
+        f"PLAYER: {player_input}\n\n{length_block}"
     )
     messages = [
         {"role": "system", "content": DM_SYSTEM},

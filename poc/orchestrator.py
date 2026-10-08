@@ -73,6 +73,7 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             "known_to_dm": True,
             "addresses_npc": addresses_npc_fast,
             "scene_shift": agents.looks_like_scene_shift(player_input, world),
+            "player_assertion": "",
             "outcome": "success", "twist": "",
             "rationale": "heuristic: skipped verdict call, judged simple",
         }
