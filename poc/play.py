@@ -113,9 +113,12 @@ def main():
         def on_thinking():
             print("[thinking...]\n")
 
+        def on_note(note):
+            print(f"[DM, out of character] {note}\n")
+
         dm_text, verdict = orchestrator.run_turn(
             world, player_input, stream_cb=on_token, verbose=verbose,
-            on_thinking=on_thinking,
+            on_thinking=on_thinking, on_note=on_note,
         )
         print()
         world.save(STATE_PATH)

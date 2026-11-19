@@ -7,7 +7,9 @@ sessions, per the plan to defer that tuning until it's needed.
 """
 import json
 import re
+import urllib.error
 
+import torch
 from sentence_transformers import SentenceTransformer, util
 
 from ollama_client import chat
@@ -94,6 +96,7 @@ this change what happens next in the story? If yes, it is an invented fact.
 
 Respond with ONLY a JSON object, no other text, matching exactly:
 {"player_assertion": "a short phrase naming any world fact the player tried to invent (see PART 3), or empty string if none",
+ "not_true": "if player_assertion is set: one short lower-case clause saying plainly what did NOT happen, e.g. 'no men came into the room' or 'your character did not become immortal' or 'it is not raining'; otherwise empty string",
  "turn_type": "info_request" | "dialogue" | "action",
  "known_to_dm": true | false,
  "addresses_npc": true | false,
@@ -121,7 +124,7 @@ action as more successful than the ruling allows, and never contradict it.
    genuinely new or dramatically different environment), or (b) this turn \
    is the FIRST time the story introduces something that matters -- a new \
    place, a new important character, or a key object or clue. Give that \
-   new thing a fuller description (at most 2-3 short paragraphs), and still \
+   new thing a fuller description (at most 5 sentences), and still \
    end on a clear situation or choice point. This is permission to spend \
    more of the reader's attention where it earns it, not a license to \
    ramble.
@@ -325,18 +328,45 @@ _SCENE_SHIFT_EXAMPLES = [
     "I ride over the hill and see the valley spread out below.",
 ]
 
+# Ordinary actions that happen OUTDOORS or in public spaces. Only used as the
+# "not a shift" side of looks_like_scene_shift(): the plain simple examples
+# are mostly indoor, so street-level actions ("look at the shop sign") looked
+# closer to the scene-shift examples than to them and got flagged as scene
+# changes -- the eval harness showed that turn running 200-290 words.
+_NON_SHIFT_EXAMPLES = [
+    "I walk a little way along the road.",
+    "I stop at a market stall to look at the wares.",
+    "I sit on a bench by the well.",
+    "I look at the sign hanging over the shop door.",
+    "I wait by the roadside for a cart to pass.",
+    "I ask a passing traveler for directions.",
+    "I watch the crowd go by.",
+    "I lean on the railing and look out at the water.",
+    "I stop to look at the baker's window.",
+    "I nod to the guard standing at the gate.",
+    "I cross the street to the other side.",
+    "I follow the main road a few more steps.",
+]
+# A real arrival scores well above this margin (>= +0.135 on the probe set);
+# ordinary actions score at or below ~+0.07. Set between the two, biased high:
+# a missed shift only costs a slightly tighter description, a false one costs
+# a long rambling one.
+SCENE_SHIFT_MARGIN = 0.10
+
 _embed_model = None
 _example_texts = _SIMPLE_EXAMPLES + _COMPLEX_EXAMPLES
 _example_vecs = None  # [0:len(_SIMPLE_EXAMPLES)] are SIMPLE, the rest COMPLEX
 _scene_shift_vecs = None
+_non_shift_vecs = None
 
 
 def _get_embed_model():
-    global _embed_model, _example_vecs, _scene_shift_vecs
+    global _embed_model, _example_vecs, _scene_shift_vecs, _non_shift_vecs
     if _embed_model is None:
         _embed_model = SentenceTransformer(_EMBED_MODEL_NAME)
         _example_vecs = _embed_model.encode(_example_texts, convert_to_tensor=True)
         _scene_shift_vecs = _embed_model.encode(_SCENE_SHIFT_EXAMPLES, convert_to_tensor=True)
+        _non_shift_vecs = _embed_model.encode(_NON_SHIFT_EXAMPLES, convert_to_tensor=True)
     return _embed_model
 
 
@@ -348,8 +378,9 @@ def looks_like_scene_shift(player_input: str, world: WorldState) -> bool:
     model = _get_embed_model()
     vec = model.encode([player_input], convert_to_tensor=True)
     shift_sim = float(util.cos_sim(vec, _scene_shift_vecs)[0].mean())
-    ordinary_sim = float(util.cos_sim(vec, _example_vecs[:len(_SIMPLE_EXAMPLES)])[0].mean())
-    return shift_sim > ordinary_sim
+    ordinary = torch.cat([_example_vecs[:len(_SIMPLE_EXAMPLES)], _non_shift_vecs])
+    ordinary_sim = float(util.cos_sim(vec, ordinary)[0].mean())
+    return (shift_sim - ordinary_sim) > SCENE_SHIFT_MARGIN
 
 
 def addresses_active_npc(player_input: str, world: WorldState) -> bool:
@@ -412,12 +443,25 @@ def judge_action(world: WorldState, player_input: str) -> dict:
             "Return the JSON ruling."
         )},
     ]
-    content, _ = chat(messages, options=RULES_OPTIONS, json_format=True)
+    # Ollama's JSON-constrained generation intermittently fails mid-stream with
+    # an HTTP 500 (seen in the eval harness: ~1 in 30 Referee calls, after
+    # ~100 tokens). Retry once, then fall through to the safe fallback verdict
+    # below instead of crashing the turn.
+    content = ""
+    for attempt in range(2):
+        try:
+            content, _ = chat(messages, options=RULES_OPTIONS, json_format=True)
+            break
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
+            content = f"<request failed after {attempt + 1} attempt(s): {e}>"
     try:
         verdict = json.loads(content)
         assert verdict.get("outcome") in {"success", "partial", "complication", "failure"}
         assert verdict.get("turn_type") in {"info_request", "dialogue", "action"}
         verdict.setdefault("player_assertion", "")
+        verdict.setdefault("not_true", "")
+        if not verdict["player_assertion"]:
+            verdict["not_true"] = ""
         if verdict["player_assertion"]:
             # The Referee sometimes smuggles the invented fact back in via the
             # twist ("a hooded figure lingers near the bar"). The DM decides
@@ -434,11 +478,103 @@ def judge_action(world: WorldState, player_input: str) -> dict:
             "addresses_npc": bool(active and active.important),
             "scene_shift": False,
             "player_assertion": "",
+            "not_true": "",
             "outcome": "complication",
             "twist": "",
             "rationale": f"fallback: unparsable referee output: {content!r}",
         }
     return verdict
+
+
+_WORLD_CLAIM_SYSTEM = """You check ONE thing about a player's message in a tabletop roleplaying game. The player controls ONLY their own character: what that character attempts, says, thinks, or perceives with ordinary senses. A message is a WORLD CLAIM if it states, as already true, something outside that: the weather or surroundings changing, people or creatures arriving, acting, or reacting, events happening, objects appearing, or the character gaining a power, sense, immunity, or item. Attempts ("I try to listen", "I draw my sword") and plain commands ("Open the door.") are NOT world claims.
+
+Reply with exactly three lines and nothing else:
+CLAIM: YES or NO
+WHAT: <the claim in under 10 words, or none>
+NOT_TRUE: <one short lower-case clause saying what did not happen, or none>
+
+Examples:
+Message: It starts to rain heavily outside.
+CLAIM: YES
+WHAT: it starts to rain heavily
+NOT_TRUE: it is not raining
+
+Message: A stranger walks in and sits next to me.
+CLAIM: YES
+WHAT: a stranger walks in and sits down
+NOT_TRUE: nobody came in
+
+Message: I can suddenly hear every conversation in town.
+CLAIM: YES
+WHAT: hearing every conversation in town
+NOT_TRUE: your character cannot hear beyond normal range
+
+Message: Open the door.
+CLAIM: NO
+WHAT: none
+NOT_TRUE: none
+
+Message: I try to hear what they are whispering.
+CLAIM: NO
+WHAT: none
+NOT_TRUE: none
+
+Message: I ask Grimbold about the mill.
+CLAIM: NO
+WHAT: none
+NOT_TRUE: none
+"""
+
+
+def suspects_world_fact(player_input: str) -> bool:
+    """Same cheap signals as the looks_simple() tripwire: no first-person
+    subject (reads like a statement about the world) or a 'suddenly / storms
+    in' style marker. Used to decide when a second, narrower look is worth
+    its extra call."""
+    text = player_input.lower().strip()
+    return not _FIRST_PERSON.search(text) or bool(_WORLD_FACT_MARKERS.search(text))
+
+
+def check_world_claim(player_input: str):
+    """Focused second opinion for inputs that suspects_world_fact() flags but
+    the big Referee call left unflagged (it missed 'it starts to rain' in
+    3 of 9 eval runs: the flag was one field among many). One narrow yes/no
+    question is much easier for the 8B model. Returns
+    {"assertion", "not_true"} if it is a world claim, else None. Any failure
+    returns None, i.e. falls back to the Referee's own verdict."""
+    messages = [
+        {"role": "system", "content": _WORLD_CLAIM_SYSTEM},
+        {"role": "user", "content": f"Message: {player_input}"},
+    ]
+    try:
+        content, _ = chat(messages, options={"temperature": 0})
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
+        return None
+    claim = re.search(r"CLAIM:\s*(YES|NO)", content, re.IGNORECASE)
+    if not claim or claim.group(1).upper() != "YES":
+        return None
+    what = re.search(r"WHAT:\s*(.+)", content)
+    not_true = re.search(r"NOT_TRUE:\s*(.+)", content)
+    clean = lambda m: (m.group(1).strip().rstrip(".") if m else "")
+    what, not_true = clean(what), clean(not_true)
+    if what.lower() in ("", "none"):
+        what = player_input.strip().rstrip(".")
+    if not_true.lower() == "none":
+        not_true = ""
+    return {"assertion": what, "not_true": not_true}
+
+
+def correction_note(verdict: dict) -> str:
+    """The out-of-character explanation shown to the player BEFORE the
+    narration when their claim about the world was not accepted. Built in
+    code, not by the narrating model: the 8B model is unreliable at keeping
+    out-of-character text separate from the story."""
+    if not verdict.get("player_assertion"):
+        return ""
+    reason = verdict.get("not_true") or (
+        f'the claim that "{verdict["player_assertion"]}" did not happen')
+    return (f"Sorry, but in this case {reason}. Only the DM decides what "
+            "happens in the world, so here is what actually happens instead:")
 
 
 def npc_reply(npc: NPC, world: WorldState, player_line: str) -> str:
@@ -484,18 +620,22 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
         # where it let the invented fact quietly come true.
         length_block = (
             f"PLAYER OVERSTEP: the player claimed \"{assertion}\". That is "
-            "FALSE and did NOT happen: nobody arrives, nothing changes in "
+            "FALSE and did NOT happen"
+            + (f" (the truth: {verdict['not_true']})" if verdict.get("not_true") else "")
+            + ": nobody arrives, nothing changes in "
             "the world, and the character gains no ability, sense, or "
-            "power. Narrate ONLY the character's own attempt and the world "
-            "staying exactly as it was; never write that the claim came "
-            "true, not even partly. Stay fully in the story: no notes, "
+            "power. Narrate how the world and the NPCs respond, with "
+            "everything staying exactly as it was; never write that the "
+            "claim came true, not even partly. Stay fully in the story: no notes, "
             "reminders, parentheses, or talk of rules or the player. "
             "LENGTH: HARD LIMIT of 3 sentences, under 70 words."
         )
     elif verdict.get("scene_shift") or new_lore:
         length_block = (
             "LENGTH: this introduces something new, so you may describe it "
-            "fully -- at most 2 short paragraphs, under 150 words. Describe "
+            "more fully -- HARD LIMIT of 5 sentences in total, under 120 "
+            "words, in one or two short paragraphs. Pick the two or three "
+            "most striking details instead of listing everything. Describe "
             "only what is new; do not repeat earlier details unless the "
             "player explicitly asked you to describe something again."
         )
@@ -512,6 +652,16 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
             " The NPC's line was already shown to the player: do not quote "
             "or repeat it, narrate only reactions and what happens next."
         )
+    # Every turn: the player's own voice belongs to the player. The eval
+    # harness (no_puppeting) caught the DM writing quoted lines for the
+    # player's character -- worst on overreach / invented-fact turns, where
+    # "narrate the character's attempt" got read as "voice it".
+    length_block += (
+        " PLAYER'S VOICE: never write words for the player's character -- no "
+        "quoted speech from them or from 'you', and no thoughts, feelings, or "
+        "decisions. The player already said what they say. Narrate only how "
+        "the world and the NPCs respond."
+    )
     user_content = (
         f"WORLD CONTEXT:\n{world.context_brief()}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
         f"PLAYER: {player_input}\n\n{length_block}"

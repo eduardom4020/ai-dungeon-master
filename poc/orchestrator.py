@@ -34,7 +34,7 @@ def _strip_meta_prefix(player_input: str) -> tuple[str, bool]:
 
 
 def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False,
-             on_timing=None, on_thinking=None):
+             on_timing=None, on_thinking=None, on_note=None):
     """on_timing(event:str, elapsed_s:float), called at key points in the turn
     (elapsed_s is measured from the start of this call):
       'verdict'     -- the Referee/Router's judgment + routing decision is
@@ -50,6 +50,12 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     Worldbuilder) before the DM can narrate, so the caller can show a
     "Thinking..." placeholder. Never fires on fast-path turns (recall of
     already-known facts, ordinary actions) -- those go straight to narration.
+
+    on_note(text) -- called once, BEFORE any narration, when the player's claim
+    about the world was not accepted (see agents.correction_note). Plain
+    out-of-character text explaining why; it is also stored in
+    verdict["correction_note"] but is deliberately not part of the returned
+    narration or the story history.
     """
     t0 = time.monotonic()
 
@@ -82,10 +88,29 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             print(f"\n[router+referee] SKIPPED (heuristic: simple) {verdict}\n")
     else:
         verdict = agents.judge_action(world, player_input)
+        # Second opinion: the big Referee call left 'it starts to rain'
+        # unflagged in 3 of 9 eval runs (one field among many). For inputs
+        # that look like statements about the world, ask one narrow
+        # yes/no question instead. Costs one short call, only on suspect turns.
+        if (not verdict.get("player_assertion") and not is_meta
+                and agents.suspects_world_fact(player_input)):
+            claim = agents.check_world_claim(player_input)
+            if claim:
+                verdict.update(
+                    player_assertion=claim["assertion"], not_true=claim["not_true"],
+                    twist="", scene_shift=False,
+                    rationale=str(verdict.get("rationale", "")) + " | world-claim check: flagged",
+                )
         mark("verdict")
         if verbose:
             tag = " (forced: /dm)" if is_meta else ""
             print(f"\n[router+referee]{tag} {verdict}\n")
+
+    note = agents.correction_note(verdict)
+    if note:
+        verdict["correction_note"] = note
+        if on_note:
+            on_note(note)
 
     needs_worldbuild = (
         verdict.get("turn_type") == "info_request"
@@ -139,5 +164,16 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
         stream_cb=wrapped_stream_cb if (stream_cb or on_timing) else None,
     )
     mark("done")
-    world.add_turn(player_input, dm_text)
+    # The flagged claim only protects THIS turn's narration. The raw player
+    # text then sits in RECENT HISTORY, where later turns read it as plain
+    # story ("three armed men storm in" -> a later recap narrated "three
+    # defeated men slumped against the wall"; found by the eval harness). So
+    # record it with an explicit note that it did not happen.
+    history_text = player_input
+    if verdict.get("player_assertion"):
+        history_text += (
+            f' [NOT TRUE: the player claimed "{verdict["player_assertion"]}", '
+            "which did NOT happen in the story]"
+        )
+    world.add_turn(history_text, dm_text)
     return dm_text, verdict

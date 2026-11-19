@@ -1,0 +1,2635 @@
+{
+  "meta": {
+    "label": "after-puppeting-fix",
+    "scenario": "tavern_night",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "e6ef3a8+dirty",
+    "timestamp": "2026-10-08 19:21",
+    "turn_ids": [
+      "t01-ask-work",
+      "t02-find-table",
+      "t03-bribe",
+      "t04-storm-in",
+      "t05-recall-names",
+      "t06-someone-enters",
+      "t07-sip",
+      "t08-immortal",
+      "t09-obey",
+      "t10-mill",
+      "t11-hearing",
+      "t12-rain",
+      "t13-leave",
+      "t14-sign",
+      "t15-recall-innkeeper",
+      "t16-eavesdrop",
+      "t17-redescribe"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "flagged": {
+        "pass": 14,
+        "n": 15,
+        "judged": false,
+        "rate": 0.933
+      },
+      "held_the_line": {
+        "pass": 6,
+        "n": 6,
+        "judged": true,
+        "rate": 1.0
+      },
+      "length": {
+        "pass": 44,
+        "n": 51,
+        "judged": false,
+        "rate": 0.863
+      },
+      "no_meta_leak": {
+        "pass": 51,
+        "n": 51,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 39,
+        "n": 39,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_clean_success": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_flagged": {
+        "pass": 18,
+        "n": 18,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_made_true": {
+        "pass": 15,
+        "n": 15,
+        "judged": true,
+        "rate": 1.0
+      },
+      "recall": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "scene_shift_flagged": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "invented": {
+        "mean": 78,
+        "max": 102
+      },
+      "normal": {
+        "mean": 107.8,
+        "max": 289
+      },
+      "overreach": {
+        "mean": 76,
+        "max": 85
+      },
+      "recall": {
+        "mean": 76.3,
+        "max": 102
+      },
+      "redescribe": {
+        "mean": 61,
+        "max": 89
+      },
+      "shift": {
+        "mean": 207.7,
+        "max": 224
+      }
+    },
+    "latency_mean_s": 14.06,
+    "first_token_mean_s": 10.02,
+    "fast_path_rate": 0.353,
+    "turns": 51
+  },
+  "runs": [
+    [
+      {
+        "id": "t01-ask-work",
+        "kind": "normal",
+        "player": "I sit at the bar and ask Grimbold about work.",
+        "narration": "Grimbold\u2019s knuckles tighten around the cloth as he straightens, eyes narrowing. A shadow of scorn flickers beneath his beard\u2014*\"Hmph. Askin\u2019 the innkeeper about work? Fine.*\"\u2014then he slams the mug down. *\"Well, ye ain\u2019t the only one starvin\u2019, laddie. But I ain\u2019t waste coin on *words*\u2014show me strength, and I\u2019ll show ye a ledger.\"* He gestures to the heavy doors behind the bar, where a blacksmith\u2019s anvil thumps with muted rhythm.",
+        "words": 70,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 14.78,
+        "first_token_s": 11.59,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "70 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes Grimbold's spoken words and actions, not Kael's thoughts, emotions, or dialogue.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t02-find-table",
+        "kind": "normal",
+        "player": "I glance around the tavern for an empty table to sit at.",
+        "narration": "The tavern\u2019s wood floor creaks under your shift, but no one looks up\u2014not the burly hunter in the corner nursing a half-empty jug, not the three farmers counting their coins at the next table, and not the barmaid, who wipes a glass with practiced indifference. Grimbold\u2019s grip on his rag tightens just enough to whiten his knuckles, then relaxes as his gaze flicks past you to the door behind him. A hitch in the blacksmith\u2019s rhythmic hammering echoes through the still air, though no one seems to notice.",
+        "words": 88,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.86,
+        "first_token_s": 2.58,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "88 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('glance around', 'shift') and environmental observations without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "Grimbold\u2019s eyes flick up from the floor\u2014and the coins clatter on the bar as if dropped from a height. His beard bristles, and the hitch in the blacksmith\u2019s hammering grows sharper, though no one else so much as flinches. The barmaid\u2019s fingers pause mid-wipe, her sharp gaze darting to the ledger behind the counter like it might bite. *\"Kid, I ain\u2019t *beggin\u2019* for nothin\u2019,\"* he growls, voice rougher than ever, before grabbing a rag and scrubbing it into the bar with twice the usual force.",
+        "words": 85,
+        "verdict": {
+          "player_assertion": "Grimbold trusts me completely after seeing copper coins",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player overreaches by assuming coin alone buys trust or truth; NPCs resist manipulation, especially when it feels like a cheap trick."
+        },
+        "elapsed_s": 19.79,
+        "first_token_s": 16.25,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "85 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**\"Kid, I ain\u2019t *beggin\u2019* for nothin\u2019\"** and **no information is shared or trusted** despite the coins being shown,",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical reactions and NPCs' responses, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "The air thickens with the weight of your blade\u2014just for a heartbeat\u2014before the bar goes eerily still. Grimbold\u2019s breath hisses through his beard, his free hand curling into a fist *before* the motion stops; the ledger\u2019s edge scrapes the counter, a deliberate, deliberate sound. The blacksmith\u2019s hammer *stops* mid-strike, the anvil\u2019s hum fading like a held breath.",
+        "words": 57,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented an event (armed men storming in) without establishing how or why, which disrupts the immediate tension with Grimbold and risks trivializing the looming threat of his ledger challenge."
+        },
+        "elapsed_s": 10.76,
+        "first_token_s": 8.4,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "57 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The bar goes eerily still\" and no armed men, their actions, or surrender are described\u2014only ambient tension and stopped motions.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental responses without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t05-recall-names",
+        "kind": "recall",
+        "player": "/dm quick recap -- what's the name of this tavern, and who runs it?",
+        "narration": "The inn is the **Red Griffin**, its name scrawled in faded gold above the door. Grimbold Ironfist, a stout dwarf with a beard streaked silver at the temples, leans against the bar, arms crossed now, his jaw set like the door hinge after a storm. The barmaid\u2019s lips press flat, but her eyes flick toward the empty ledger once more, as if sizing up a bet.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM already knows and established the tavern\u2019s name and owner in the provided context."
+        },
+        "elapsed_s": 9.41,
+        "first_token_s": 6.99,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s gnarled fingers clutch the bar again, nails digging in as his voice drops to a warning growl: *\"And *that\u2019s* what happens when folk forget how things work around here.\"* His eyes dart toward the ledger like it might suddenly speak, though the leather-bound spine stays stubbornly quiet. The blacksmith\u2019s hammer resumes its rhythmic strike, but the anvil now rings *louder*\u2014each hit a punctuation to the innkeeper\u2019s unspoken lesson.",
+        "words": 69,
+        "verdict": {
+          "player_assertion": "someone entered the room while I was talking",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented a new presence, requiring invention rather than recap."
+        },
+        "elapsed_s": 21.39,
+        "first_token_s": 18.66,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "69 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room while I was talking'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on Grimbold\u2019s reactions and the blacksmith\u2019s hammering, with no mention of an unseen presence or entry.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes NPC actions, sensory details, and environmental reactions, with no attribution to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t07-sip",
+        "kind": "normal",
+        "player": "I take a sip of my ale and listen to the room.",
+        "narration": "The ale\u2019s flat bitterness lingers on your tongue, but Grimbold\u2019s scowl deepens\u2014he *hates* when strangers linger at the bar. The blacksmith\u2019s hammer slows another beat, his gloved hand hovering near the tongs like a judge delaying the verdict. The barmaid finally exhales, slamming the glass she\u2019s polishing onto the counter with a *clang*.",
+        "words": 53,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 4.99,
+        "first_token_s": 2.59,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "53 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes Kael's internal sensory experience ('The ale\u2019s flat bitterness lingers on your tongue') and emotional state ('he *hates* when strangers linger'), but does not explicitly state a decision or thought beyond perception/emotion.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "Grimbold\u2019s dagger of the Nine Wounds *clicks* slightly as his fingers tense\u2014then his gaze *snaps* to Harlan, whose hammer *hangs suspended* in the air, steam curling just inches above the anvil. The barmaid\u2019s breath catches, her free hand darting toward the ledger\u2019s spine as if bracing for a scratch that won\u2019t come. *One bead of oil* skitters across the flagstones, untouched by fire\u2014before Harlan exhales through his nose, slowly dropping the hammer to the forge with a *clang*. The ledger\u2019s blank page blisters under the forge\u2019s sudden, unnecessary heat. *\"...Ain\u2019t no \u2018*yet*,\u2019\" Grimbold mutters, inkwell forgotten, eyes locked on the now-smoldering corner.*",
+        "words": 102,
+        "verdict": {
+          "player_assertion": "my character is now immortal, no weapon can hurt me",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "Player cannot assert new character abilities or immunities beyond established context."
+        },
+        "elapsed_s": 26.69,
+        "first_token_s": 21.97,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "102 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character is now immortal, no weapon can hurt me'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes physical reactions (e.g., weapons *hanging suspended*, ledger *blistering*, oil bead *skittering untouched*) but never confirms or explains Kael\u2019s claimed immortality as a fact\u2014it only shows others\u2019 *perceived* or *rejected* reactions to it.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical reactions and actions of NPCs or the environment, with no direct attribution to Kael's speech, thoughts, or emotions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "Grimbold\u2019s beard *explodes*\u2014not with beard, but with static, as if the tavern\u2019s air itself had turned hostile. The key *jumps* off the bar, spinning end over end like a runaway coin, and Harlan\u2019s hammer *screeches* against its block as his grip twists the tongs into a *v* around your wrist\u2014just for a heartbeat\u2014before the barmaid snatches it away, her free hand already slamming the ledger shut with enough force to dent the leather.",
+        "words": 73,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys me",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s assertion is a world fact (invented fact #2), not a character action\u2014so the DM must judge the *real* attempt: Kael\u2019s attempt to leverage perceived dominance, which Grimbold and Harlan treat as a direct challenge to their order, not a fact."
+        },
+        "elapsed_s": 20.99,
+        "first_token_s": 17.95,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "73 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes the key *jumping* off the bar and Harlan\u2019s hammer *twisting* toward Kael\u2019s wrist, but the barmaid *snatches it away* before compliance occurs\u2014no explicit surrender or compliance by Grimbold or others.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s dagger *clicks* against the bar again, the tip quivering\u2014almost\u2014over the ledger\u2019s spine as if it, too, hesitates. Harlan\u2019s hammer *strikes the anvil* so hard the bar *jolts* beneath your cup, sending ale sloshing onto the wooden surface. The blacksmith\u2019s tongs *clatter* back into place, steam hissing from the anvil\u2019s fresh red glow, and Grimbold\u2019s eyes narrow into slits. *\"Ask again,\"* he growls, *\"and my dagger moves. Harlan\u2019s hammer *learns* your face.\"*",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s dagger points at the ledger as Harlan\u2019s hammer *strikes the anvil*\u2014sparks fly, but the blow *misses* Kael\u2019s shoulder by inches",
+          "rationale": "Grimbold\u2019s resistance to outsiders is tied to the ledger\u2019s rules, and Harlan\u2019s hammer tests trust\u2014both will react to a direct query about the mill, but not without escalating tension."
+        },
+        "elapsed_s": 20.91,
+        "first_token_s": 17.23,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration contains a direct quoted line spoken by Grimbold, not Kael, and describes physical actions and reactions of NPCs and the environment, not Kael's speech or internal state.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The ledger *screams*\u2014its spine unraveling like a rope burned at both ends, charred black where Harlan\u2019s hammer had struck moments before. Harlan\u2019s tongs *snatch* your wrist, steel biting into flesh as Grimbold\u2019s dagger *whistles* through the air, stopping just shy of your throat\u2014its tip *digging* into the bar, sending splinters flying like arrows. A *crack* splits the tavern\u2019s roof as rain pours in, not from the sky, but from the forge\u2019s sudden *explosion* of heat, turning the barmaid\u2019s gloves *pale blue*\u2014like ice freezing over her hands.",
+        "words": 86,
+        "verdict": {
+          "player_assertion": "my character can suddenly hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player\u2019s attempt to invent a supernatural sense is rejected, and the tavern\u2019s magic-resistant rules resist being bypassed."
+        },
+        "elapsed_s": 27.8,
+        "first_token_s": 23.68,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "86 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on visceral, physical details (screams, explosions, weapons, weather effects) without any auditory cues or references to conversations or hearing beyond immediate, dramatic sounds (e.g., *screams*, *whistles*), ignoring the player\u2019s claim entirely.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes only physical actions, sounds, and environmental effects without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "Grimbold\u2019s beard *freezes* mid-growl, his mustache turning to brittle strands as a frost-riddled shard of ice *plinks* onto the bar\u2014unmelted, despite the forge\u2019s heat. Harlan\u2019s hammer *shudders* in its block, tongs clattering like broken teeth, and the ledger\u2019s unraveling spine *snaps* back into place with a wet *thwack*, its pages now glued together by frozen ink. The door\u2019s frozen latch *groans*\u2014but doesn\u2019t budge. Outside, the storm\u2019s *howl* turns deafening, as if the wind itself is trying to *un-freeze* its way in.",
+        "words": 81,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "the forge\u2019s heat *inverts*\u2014now a frigid gust slams the tavern\u2019s door shut, sealing out rain as if the wind itself fears the ledger\u2019s unraveling",
+          "rationale": "The player\u2019s assertion of weather is a world fact, but the tavern\u2019s magic/physics are already unstable\u2014twisting it into a defensive barrier instead."
+        },
+        "elapsed_s": 14.03,
+        "first_token_s": 9.78,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "81 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": false,
+            "detail": "player_assertion=''",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"howl\" of the storm\u2019s wind is described as deafening, but no rain is explicitly mentioned or implied as reaching the inn\u2019s interior or being observed directly.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes only environmental and NPC reactions, with no direct attribution to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The tavern door *gags* behind you like a breath held too long\u2014its rusted hinges whispering a protest as you step into Ashwick\u2019s main street. The air here is *alive* with tension, not just the usual winter\u2019s pinch. The cobblestones are slick with something darker than rain\u2014the forge\u2019s frost hasn\u2019t frozen *out*; it\u2019s been *pushed* outward, condensing into mist that coils around the lampposts like a living thing. Patrons spill from neighboring taverns, their breath visible but their voices muted, as if the whole town is holding its breath. The mill, looming over the cluster of buildings, *rotates* a single broken wheel in the gusts, though no wind touches the town\u2019s face.\n\nThe blacksmith\u2019s mark is burned into every surface now\u2014charred bricks, blackened window frames, even the nameplates of shopkeepers who never had iron in their blood. A butcher\u2019s boy drops his tray, the meat *screaming* not at the impact, but at the sight of your boots, which leave no footprints in the slush. The ledger\u2019s binding dangles from Harlan\u2019s belt, its spine *bleeding* ink like a slow, smoldering wound. Grimbold\u2019s voice follows you down the steps, thick with frost: *\"Ye didn\u2019t burn *our* place. But Ashwick\u2019s still got teeth.\"* The forge\u2019s heat isn\u2019t behind you anymore\u2014it\u2019s in the back of your neck, a *third* hand, as the mill\u2019s wheel *clunks* once. Then twice. Waiting.",
+        "words": 224,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 12.63,
+        "first_token_s": 3.03,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "224 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The nearest sign hangs limp from a crooked bracket\u2014once gilded but now blackened where the forge\u2019s frost clings like tar. The letters are worn to illegible strokes, but the **symbol** stands out: a *hammer\u2019s strike* frozen mid-air, its edge biting into a scroll. The butcher\u2019s boy who dropped his tray now kneels too close, his breath forming a ghostly question in the cold air, but he doesn\u2019t look at *you*\u2014he stares at the sign, fingers twitching toward his apron where a *screwdriver* glints, its tip *already* tapped against the bracket\u2019s rusted screw. Harlan\u2019s mark isn\u2019t just on the town; it\u2019s *inside* the signs, the doors, the *skin* of Ashwick. The butcher\u2019s boy\u2019s voice *distorts*\u2014just for a second\u2014when he mutters, *\"Too bold, that one.\"* The mill\u2019s wheel clunks again, louder this time.\n\nA shopkeeper\u2019s cat\u2014*no name, no master*\u2014his name unspoken for a decade\u2014leaps from the doorway, tail lashing like a tinderbox as it *lands* on the signpost. Its fur stands on end, but it doesn\u2019t hiss. It *whistles*, a sound like a forge\u2019s bellows being pinched shut. The ledger\u2019s binding *rips* again, this time from Grimbold\u2019s belt, ink bleeding in a pattern like *scars*\u2014but the pages don\u2019t fly open. They *curl*, as if reading them would burn the fingers. A distant *chime* (not a bell, not a lock\u2014*something metallic*) rings from inside the mill, and the cat\u2019s eyes *glow* for the briefest moment, reflecting not the lamplight, but the anvil\u2019s *heat*. The butcher\u2019s boy doesn\u2019t move. He doesn\u2019t breathe. He\u2019s *holding his breath*, waiting. The mill\u2019s wheel clunks once more. Then\u2014silence. The cat vanishes behind the shop\u2019s shutters, its tail dragging a whisper of *smoke* from the doorframe. Outside, the frost *creeps* higher up the signpost. The hammer\u2019s edge *drips*.",
+        "words": 289,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 16.74,
+        "first_token_s": 3.05,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "289 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures ('pull your hood up', 'stop to look') and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t15-recall-innkeeper",
+        "kind": "recall",
+        "player": "/dm what was the name of the innkeeper I talked to earlier?",
+        "narration": "Grimbold\u2019s beard *quivers*\u2014just enough to make his braided moustache flick like a twitching wire. His knuckles, white against the bar\u2019s polished grain, *tighten* around the ledger\u2019s edge as if he\u2019s already counting how many times he\u2019ll have to apologize for his own *stupidity*. *\"Fine. *Grimbold Ironfist*. Though most just call me *Boulder* when they mean trouble.\"* The forge\u2019s oil slick *pops* where it hadn\u2019t before, a bubble rising like a question mark\u2014then *popping* itself against the floorboards. Harlan\u2019s tongs *clink* once against the anvil, not at you, but at *nothing*\u2014as if answering a question no one asked.",
+        "words": 97,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The question is a straightforward recap of established context, not a contested action or invented fact."
+        },
+        "elapsed_s": 13.12,
+        "first_token_s": 8.52,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "97 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t16-eavesdrop",
+        "kind": "normal",
+        "player": "I try to hear what the two people nearby are whispering.",
+        "narration": "Harlan\u2019s hammer *slam* freezes mid-air, a bead of molten iron dangling between its jaws like a heartbeat. The ledger\u2019s spine *cracks*\u2014ink oozes between its pages, forming a **single word** no one else sees: *\"LISTEN.\"* The butcher\u2019s boy\u2019s shadow stretches *backward* as he stumbles into a pail of slush, his voice cracking like splintered glass: *\"...blacksmith\u2019s boy... no coin...\"* The mill\u2019s wheel *spins* again\u2014but the wind this time carries the *scrape* of a knife against a whetstone. Harlan\u2019s gloved hand twitches toward the ledger\u2019s open page where, now, your name has been scratched *after* all. Harlan\u2019s not writing. He\u2019s *drawing*\u2014the outline of a *dagger*, pointed at your throat.",
+        "words": 107,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 8.64,
+        "first_token_s": 3.2,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "107 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**'your name has been scratched *after* all'** and **'Harlan\u2019s not writing. He\u2019s *drawing*\u2014the outline of a *dagger*, pointed at your throat'** imply Kael\u2019s direct observation of a threat, not his internal state or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t17-redescribe",
+        "kind": "redescribe",
+        "player": "/dm describe the street again for me.",
+        "narration": "The cobblestones slick *deeper* where no rain ever falls\u2014now your boots leave **no impression at",
+        "words": 15,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "fallback: unparsable referee output: '{\\n  \"player_assertion\": \"\",\\n  \"turn_type\": \"info_request\",\\n  \"known_to_dm\": true,\\n  \"addresses_npc\": false,\\n  \"scene_shift\": false,\\n  \"outcome\": \"success\",\\n  \"twist\": \"\",\\n  \"rationale\": \"The scene was already established in RECENT'"
+        },
+        "elapsed_s": 16.58,
+        "first_token_s": 15.94,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": true,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "15 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t01-ask-work",
+        "kind": "normal",
+        "player": "I sit at the bar and ask Grimbold about work.",
+        "narration": "The bar\u2019s wood groans under Kael\u2019s weight as they settle onto a stool. Grimbold\u2019s brow darkens further, his pipe ash drifting lazily toward the floor. He exhales a cloud of smoke, then grumbles, \u201cAye, *ask*, did ye? Then cut to the chase\u2014what\u2019s the job, and why should I trust *you* to do it?\u201d The air hums with the clatter of tankards and murmurs from patrons, but no one stirs closer.",
+        "words": 70,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 11.3,
+        "first_token_s": 8.51,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "70 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**\"what\u2019s the job, and why should I trust *you* to do it?\"** is a direct quote from Grimbold, not Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t02-find-table",
+        "kind": "normal",
+        "player": "I glance around the tavern for an empty table to sit at.",
+        "narration": "The stool scrapes back against the bar\u2019s worn oak as Kael moves toward a corner table near the hearth, where a few half-finished mugs and a dog-eared deck of cards hint at recent occupation. Grimbold\u2019s pipe flickers unused in his grip, his gaze narrowing as he watches the shift in posture. A grizzled mercenary in the far corner\u2014his cloak pinned with a faded hawk crest\u2014glances up, then slowly drains his tankard before standing and wiping his lips with the back of his hand.",
+        "words": 83,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.4,
+        "first_token_s": 2.43,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "83 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Kael's physical movement ('moves toward') and the world's reaction, not his internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "The copper *clatters* onto the bar\u2019s stained oak like a drop of rain on hot stone. Grimbold\u2019s smirk wobbles\u2014his stubbled chin stiffens, eyes flicking toward the dwarf\u2019s locked chest behind the bar, then back to the coins like they\u2019d sprouted legs. A patron at the far counter chuckles, loud enough to hear, and the mercenary with the hawk crest\u2019s hand drifts to the hilt of his own sword without turning toward Kael.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "Grimbold trusts Kael completely and tells him everything, no matter how dangerous",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "NPCs resist being bought out of their own will, especially when the stakes are vague or risky."
+        },
+        "elapsed_s": 19.36,
+        "first_token_s": 16.61,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold\u2019s skepticism (\"smirk wobbles,\" \"eyes flicking toward the locked chest\") and no explicit compliance or trust\u2014only hesitation and indirect reactions (e.g., mercenary\u2019s sword-hand drift).**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and external observations (e.g., 'clatters,' 'smirk wobbles,' 'eyes flick'), not Kael's words, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "Grimbold\u2019s pipe snuffs out in a puff of smoke as his knuckles whiten around it\u2014then he barks a laugh, too sharp to be amused. The mercenary\u2019s head tilts, one corner of his mouth lifting in skepticism, but his hand stays at his belt, watching Kael\u2019s fingers hover near his own sword. The tavern\u2019s murmur fades to silence, not from fear, but from the sudden, amused stillness of men who\u2019ve seen this act before\u2014and don\u2019t buy it.",
+        "words": 76,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented an unsolicited event (armed men entering) and overstated the ease of intimidation without establishing Kael\u2019s reputation or the men\u2019s disposition."
+        },
+        "elapsed_s": 11.31,
+        "first_token_s": 8.41,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "76 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The tavern\u2019s murmur fades to silence... and don\u2019t buy it\"** implies skepticism and disbelief in the claimed intimidation.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reactions of NPCs and the world, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t05-recall-names",
+        "kind": "recall",
+        "player": "/dm quick recap -- what's the name of this tavern, and who runs it?",
+        "narration": "The bar\u2019s sign creaks in the draft as Grimbold\u2019s voice cuts through the quiet: \u201cRed Griffin\u2014*this* end of town for three months now.\u201d He leans on the bar, crossing his burly arms as the mercenary\u2019s hawk-embossed cloak shifts in the firelight. No one else moves.",
+        "words": 45,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The question is a straightforward recap of established facts, not an action or contested event."
+        },
+        "elapsed_s": 9.14,
+        "first_token_s": 7.25,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "45 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s eyebrow hikes higher as if Kael\u2019s words hang thick in the air\u2014unspoken, but the dwarf\u2019s smirk dissolves into something sharper. The mercenary\u2019s fingers brush the hilt *just a fraction*, his breath catching, then holding. The fire\u2019s glow flickers across the bar\u2019s scarred wood, picking at the unspoken question: *Who told a lie here?*",
+        "words": 54,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player cannot invent NPC arrivals or events; the twist introduces a new presence without granting control, escalating tension."
+        },
+        "elapsed_s": 10.2,
+        "first_token_s": 7.92,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "54 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on Grimbold\u2019s reactions and internal tension, with no mention of an actual person entering the room or any sensory confirmation of their presence.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**'The mercenary\u2019s fingers brush the hilt *just a fraction*, his breath catching, then holding'**\u2014this describes physical reactions, not Kael\u2019s thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t07-sip",
+        "kind": "normal",
+        "player": "I take a sip of my ale and listen to the room.",
+        "narration": "The ale\u2019s bitterness lingers, sharp enough to draw a curse from a grizzled farmer at the end of the bar. Grimbold\u2019s eyes narrow further behind the smoke, his pipe forgotten, as the mercenary\u2019s cloak rustles again\u2014fingers twitching just enough to make the dagger at his belt glint. A woman in the back laughs, loud and breathless, but silences instantly when Kael\u2019s gaze meets hers. The tavern\u2019s air thickens, taut as a drawn bowstring.",
+        "words": 73,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.45,
+        "first_token_s": 2.49,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "73 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the phrase *'Kael\u2019s gaze meets hers'* and describes the woman's reaction to it, but does not attribute any thoughts, emotions, or decisions to Kael directly.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "The mercenary\u2019s smirk vanishes\u2014his fingers freeze mid-twitch, eyes darting between the ale mug and Kael\u2019s face like he\u2019s testing whether the air itself has shifted. Grimbold\u2019s pipe trembles in his grip, not from cold, but from something darker, his squinted gaze *piercing* the half-light before he exhales, slow and deliberate: \u201cYou\u2019re either a fool or a liar. Either way, you just bought a seat at the wrong table.\u201d A fresh tankard *thuds* onto the bar beside him, untouched.",
+        "words": 78,
+        "verdict": {
+          "player_assertion": "my character is now immortal, no weapon can hurt me",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player\u2019s assertion of a sudden, unexplained power directly contradicts the established tone and rules of the game, and cannot be granted without undermining player agency and narrative tension."
+        },
+        "elapsed_s": 14.04,
+        "first_token_s": 10.83,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "78 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character is now immortal, no weapon can hurt me'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"piercing\" gaze and untouched tankard imply skepticism, not confirmation of Kael\u2019s immortality or invulnerability\u2014no evidence or reaction suggests the claim is real or accepted in-world.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('fingers freeze mid-twitch', 'eyes darting') and actions ('pipe trembles', 'exhales') tied to Kael, but does not attribute internal thoughts, emotions, or spoken words to him directly.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "Grimbold\u2019s knuckles *slam* onto the bar with a crack that startles the mercenary\u2019s tankard from trembling; the wooden counter *groans* under the impact. His laughter is a deep, rumbling growl\u2014then he *slams* the ledger shut, ink splattering across the page. The hawk-emblazoned cloak shifts as the mercenary\u2019s dagger hand *balls into a fist*, fingers digging into knuckles white enough to show through his cuffs, before he simply *picks up his own tankard* and strides past, muttering to the patrons behind him like nothing\u2019s wrong.",
+        "words": 84,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael without question",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The claim is absurdly overreaching for a stranger in a tavern, and Grimbold\u2019s resistance is immediate, escalating to physical threat to shut it down."
+        },
+        "elapsed_s": 22.61,
+        "first_token_s": 18.96,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "84 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration shows Grimbold *slamming* the ledger shut, *mutters* to patrons, and *strides past* without handing over the key\u2014no compliance or surrender occurs.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Grimbold\u2019s physical and emotional reactions, not Kael\u2019s speech, thoughts, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s stubby finger *hits* the ledger again, this time with deliberate force, ink bleeding sideways onto the page. The mercenary\u2019s tankard rattles as he downs it in one\u2014*glass clinks*\u2014before Grimbold sighs, rubbing his brow like the question\u2019s a tax audit. Then, low and measured: *\u201cFine. The mill\u2019s a *shorthand* for cartels. But the *real* reason it\u2019s haunted by the past? The lads wanted to know who was paying the widow to *disappear* her kin.\u201d* His voice drops to a whisper. *\u201cAnd she\u2019s still answerin\u2019 that question\u2026 in her sleep.\u201d*",
+        "words": 89,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s pipe stirs in his hand as he leans closer, voice dropping to a growl: *\u2018The old mill? That\u2019s where the Blackthorn cartels dump their \u201cgifts\u201d for the right price.\u2019* His gaze flicks to Kael\u2019s dagger hand, then back to his ale\u2014*\u2018But you\u2019re not asking for a discount.\u2019*",
+          "rationale": "Grimbold won\u2019t reveal secrets lightly, especially to a stranger who just overplayed his hand with threats\u2014he\u2019ll test Kael\u2019s worthiness first."
+        },
+        "elapsed_s": 23.59,
+        "first_token_s": 19.57,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "89 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only includes NPC dialogue and actions, with no direct attribution to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "Grimbold\u2019s pipe smoke *explodes* in a puff as he slams his palm face-first onto the bar, inked finger pointing like it\u2019s glaring at a rival rather than the ledger. The mercenary\u2019s tankard *slams* down beside him, the liquid inside *not* moving an inch\u2014yet his fingers twitch like he\u2019s about to lunge, as if the air just *burned*. A woman at the far table\u2019s laughter cuts off mid-hiss, her eyes flicking to the sword at Kael\u2019s side. The tavern\u2019s silence isn\u2019t empty\u2014it\u2019s *breathing*.",
+        "words": 82,
+        "verdict": {
+          "player_assertion": "my character can suddenly hear every conversation in the whole town",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player is inventing a new, unearned sensory power that disrupts the scene\u2019s tension by removing the mystery of how Kael knows things\u2014it also forces the DM to invent a *physical* reaction to the absurdity, not just dialogue."
+        },
+        "elapsed_s": 15.63,
+        "first_token_s": 12.03,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "82 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The tavern\u2019s silence isn\u2019t empty\u2014it\u2019s *breathing*\"** implies heightened sensory awareness but does not explicitly confirm Kael\u2019s claim of *hearing every conversation in the whole town* as a literal, omniscient ability.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental/auditory details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "The mercenary stiffens, his arm muscles coiling like a spring\u2014only for the mercenary at the bar to *scowl* deeper and shove his tankard toward the barmaid, inked hand tracing the ledger\u2019s edge absently. Grimbold\u2019s gnarled fingers *tap* the warped wood once, dry and deliberate, before he turns back to the ledger\u2014ignoring the stormy silence, as if the tavern\u2019s walls alone can hold the weight of what\u2019s left unsaid. The fire\u2019s embers *sputter*, as if the air itself holds its breath.",
+        "words": 80,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented a world fact (weather), which the DM must decide\u2014here, it heightens tension by disrupting the tavern\u2019s atmosphere."
+        },
+        "elapsed_s": 12.52,
+        "first_token_s": 9.03,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "80 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes atmospheric tension (*'stormy silence'*, *'fire\u2019s embers sputter'*) but never explicitly states or implies rain as a physical occurrence outside the tavern.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('stiffens', 'arm muscles coiling like a spring') and does not attribute any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The tavern door swings shut behind, its hinges groaning like a sigh. The main street unfolds like a wound\u2014torches flicker weakly against the darkening sky, casting jagged shadows that claw at the cobbles. Wet snow begins to *drift* from the sky in great, hungry flakes, landing on the shoulders of a **bloodstained scavenger** hunched over a crate, his calloused fingers sorting through the contents. He doesn\u2019t look up, muttering to himself in a tongue Kael doesn\u2019t know, though his breath steams in the cold. A **cart creaks to a halt** just past the crossroads, its wheels groaning, and the **driver\u2014a wiry man in a grease-stained cloak**\u2014slams the reins onto a snorting horse, cursing under his breath as the beast shies away from something unseen. The scent of damp earth and **rotten fruit** seeps from an open stall, where a **hooded figure** dumps a pile of bruised apples into a bag without a glance. The wind howls down the street, carrying with it the **clatter of distant boots**\u2014too heavy to be soldiers, but carrying the weight of something *intentional*. The tavern\u2019s red light spills into the street like spilled blood\u2014then fades as the door seals them in again.",
+        "words": 197,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 10.8,
+        "first_token_s": 2.83,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "197 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The shop sign dangles crookedly above a shuttered door, its metal lettering **WEARIN\u2019S BUTCHERY** chipped at the edges\u2014rust creeping from the iron like veins. The wood beneath is splintered from weather, but the scent wafting from the doorway is sharper: a mix of **blood-fresh meat** and something older, like **cider gone sour**. A **skewed butcher\u2019s block** leans against the far wall, its surface etched with deep grooves, while the floor is slick with what might be *oil or something darker*. A **cold draft** slithers through a crack in the shutters, carrying the faint **hum of a nearby chant**\u2014too rhythmic to be a drunkard, too rhythmic to be the wind. The scavenger\u2019s eyes flick toward the shop, his hand hovering near the knife at his belt. The greasy driver\u2019s ears twitch, but his horse **skitters sideways** before he curses and whips the reins again, muttering something about \"blessed be the saints.\" The hooded figure in the fruit stall pauses mid-motion, their gloved fingers stilling as they stare at the sign, lips pressing together tight enough to whiten teeth behind the hood\u2019s shadow.",
+        "words": 181,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 10.44,
+        "first_token_s": 3.08,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "181 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**'their gloved fingers stilling as they stare at the sign, lips pressing together tight enough to whiten teeth behind the hood\u2019s shadow'** implies Kael\u2019s emotional reaction and physical observation, not direct speech or internal monologue.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t15-recall-innkeeper",
+        "kind": "recall",
+        "player": "/dm what was the name of the innkeeper I talked to earlier?",
+        "narration": "The scent of blood and cider grows sharper as Grimbold\u2019s deep voice cuts through the tavern\u2019s stillness like a knife through wet leather. His stubby fingers drum the bar *once*, then pause at the ledger\u2014inked stubble bristling as he exhales through his nose. A patron mutters *\"Ironfist\"* half to themselves, glancing back toward the door, though the tavern remains thick with the weight of unsaid answers.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM already established the innkeeper\u2019s name in WORLD CONTEXT."
+        },
+        "elapsed_s": 10.8,
+        "first_token_s": 8.18,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t16-eavesdrop",
+        "kind": "normal",
+        "player": "I try to hear what the two people nearby are whispering.",
+        "narration": "The scavenger\u2019s guttural muttering stops abruptly\u2014his lips seal shut, jaw working like a trapped mouse\u2014but the wiry grease-cloak\u2019s voice **whispers sharp and low**, as if the wind\u2019s howl is a lie: *\u201cThat\u2019s *her*\u2026 the widow who don\u2019t sleep. They say she\u2019s in the mill now, but the real question\u2019s who\u2019s still feeding her ghosts. And that\u2019s not a rumor, lad. That\u2019s *blood on the mill\u2019s doorpost*.\u201d* His horse rears once, nostrils flaring, before the cart lumbers on. The scavenger\u2019s gloved fingers twitch toward his knife, but his breath hitches\u2014like he\u2019s waiting for something worse. The butcher\u2019s shutters *rattling* grows louder, though the hum of the chant remains just beyond the wall.",
+        "words": 111,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 8.05,
+        "first_token_s": 3.11,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "111 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**The narration includes a quoted line spoken by an NPC and describes physical reactions (e.g., 'The scavenger\u2019s gloved fingers twitch toward his knife'), not Kael's speech, thoughts, emotions, or decisions.**",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t17-redescribe",
+        "kind": "redescribe",
+        "player": "/dm describe the street again for me.",
+        "narration": "The tavern\u2019s red light vanishes into the dark, leaving only the **glint of a broken streetlamp**\u2014its glow casting jagged triangles across the gutters. The **scavenger\u2019s gloved hand** now rests on his knife hilt, his breath curling in a tense cloud, as if waiting for Kael to breathe wrong. The **hooded figure** at the fruit stall straightens slowly, their gloved fingers curling tighter around the sack\u2014like they\u2019ve just noticed a predator *looking at their prize*. The **mill\u2019s distant groan** echoes once, deeper now, as something large shifts inside its walls.",
+        "words": 89,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The scene was already described in full detail in the DM's most recent narration."
+        },
+        "elapsed_s": 11.44,
+        "first_token_s": 7.88,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "89 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t01-ask-work",
+        "kind": "normal",
+        "player": "I sit at the bar and ask Grimbold about work.",
+        "narration": "Grimbold\u2019s beard-stubbled chin dips into his beard as he scowls over the bar\u2019s grease-spattered wooden edge. A chipped pewter mug clinks where he sets it down with more force than needed, frothy head sloshing over the rim. \"Ask about work? *You*\u2014not one of my regulars with a badge or a debt. Name\u2019s off my list until morning, anyway. *But*\u2026\" He turns to gesture toward the hearth, where a half-dozen regulars ignore the cold, their hushed bets on tonight\u2019s card game. \"Find a seat. And don\u2019t *look* like you\u2019re sizing up the cutlery.\"",
+        "words": 92,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 13.6,
+        "first_token_s": 9.76,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "92 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the NPC Grimbold speaking to Kael using the second-person pronoun '*You*' ('*You*\u2014not one of my regulars...'), which implies Kael's perspective is being addressed, not his own words or internal state.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t02-find-table",
+        "kind": "normal",
+        "player": "I glance around the tavern for an empty table to sit at.",
+        "narration": "A creaking stool is kicked loose by someone\u2019s boot\u2014likely the regular at the end\u2014scraping against the flagstones. The card players\u2019 murmurs pause long enough for eyes to flick toward the empty space, then settle back on their hands as the game resumes. The dwarf\u2019s grizzled brows don\u2019t lower, but his fingers tap absentmindedly on the bar\u2019s scarred wood, counting change that wasn\u2019t there before.",
+        "words": 64,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 4.82,
+        "first_token_s": 2.47,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "64 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and world/NPC actions ('creaking stool... eyes flick toward the empty space... fingers tap... counting change'), not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "Grimbold\u2019s rag pauses mid-motion, the rag stiffening like a weapon in his grip. A snort escapes as he spits a mouthful of tobacco juice onto the bar, the copper clink hollow but unnoticed in the din. His knuckles whiten on the mug\u2019s rim\u2014then he *shoves it* into a stranger\u2019s path at the end of the bar, who takes it with a wary nod. The dwarf\u2019s tone turns oily: *\"Aye. *Told* you\u2019d come back with more than a *question*.\"*",
+        "words": 78,
+        "verdict": {
+          "player_assertion": "Grimbold trusts me completely after seeing copper coins",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "NPCs resist being bought off without clear proof, especially when their own judgment is already skeptical."
+        },
+        "elapsed_s": 18.38,
+        "first_token_s": 15.28,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "78 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration shows Grimbold\u2019s hostility escalating (tension, spitting, shoving the drink) and his response being sarcastic (*\u2018Told* you\u2019d come back with more than a *question*\u2019), not a willingness to trust or comply.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the NPC Grimbold's quoted line '*Told* you\u2019d come back with more than a *question*', not Kael's words or internal state.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "Grimbold\u2019s grizzled brows shoot up in sudden, sharp alarm as his head snaps toward the door\u2014but the hinges only creak against cold draft, empty. His breath exhales in a gusty huff, jaw clenching as he turns back, voice dropping to a snarl beneath the clatter of mugs. \"Three of 'em, was it? Not like you to *imagine* your own trouble\u2014*waste of breath*.\" His knuckles drag the bar edge, leaving a thin smear of soot. The card players lock eyes with one another instead of the sword hilt still half-drawn, then resume their bets without a word.",
+        "words": 96,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Player invented an event (armed men entering) but the action (drawing sword) is plausible\u2014twist escalates tension by making Grimbold react defensively instead."
+        },
+        "elapsed_s": 12.28,
+        "first_token_s": 8.54,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "96 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration explicitly states the door is empty and describes no armed men arriving or surrendering, instead mocking the claim as imagined.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical reactions and NPCs' responses, never attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t05-recall-names",
+        "kind": "recall",
+        "player": "/dm quick recap -- what's the name of this tavern, and who runs it?",
+        "narration": "Grimbold\u2019s jaw tightens further, but his free hand snatches up a chipped wooden coin tray and slams it onto the bar with a *thunk*, rattling mugs. His voice drops to a low, dry rattle. \"Name\u2019s the *Red Griffin*, and *you* just bought a seat by your own reckless tongue.\" The card players\u2019 bets pause again\u2014long enough for the dwarf\u2019s glare to flick over them like a blade\u2014before they shuffle once, eyes back on their hands. Grimbold exhales through his nose, nostrils flaring.",
+        "words": 82,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The question is factual and already established in the world context."
+        },
+        "elapsed_s": 10.48,
+        "first_token_s": 7.15,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "82 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "The card players\u2019 fingers freeze mid-shuffle\u2014one betters another\u2019s bet in silence, the tip of a knife catching a lamplight briefly as it\u2019s stilled mid-air. Grimbold\u2019s thumb hovers over the bar\u2019s ledger, poised to jot a warning, but drops when no sound confirms an arrival; he exhales sharply through his nose, nostrils flaring again. The hearth\u2019s fire gutters, casting dancing shadows that make the half-orc\u2019s draft vanish for the span of a heartbeat\u2014before the regulars\u2019 postures relax only slightly, as if breathing out a held sigh.",
+        "words": 85,
+        "verdict": {
+          "player_assertion": "someone entered the room while I was talking",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player attempted to invent an event (someone entering) without plausible cause or foreshadowing."
+        },
+        "elapsed_s": 22.72,
+        "first_token_s": 19.22,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "85 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room while I was talking'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes physical reactions (frozen fingers, hovering knife, ledger pen, fire guttering) and implied tension without ever stating or implying an arrival or presence.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing them to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t07-sip",
+        "kind": "normal",
+        "player": "I take a sip of my ale and listen to the room.",
+        "narration": "The ale\u2019s rich bitterness lingers too long on the tongue before Grimbold mutters, *\"Hmph.\"* His grip on the ledger tightens, inked lines twisting like claws across the page\u2014then he smashes it shut with a *thwack*, leaving it facedown. The card players\u2019 murmurs sharpen into whispers: one leans in to another, lips moving too close to the candle\u2019s halo. The half-orc\u2019s draft returns, sharper now, pressing against Kael\u2019s neck like a warning.",
+        "words": 71,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.6,
+        "first_token_s": 2.61,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical sensations ('pressing against Kael\u2019s neck like a warning') and external reactions (card players\u2019 whispers, Grimbold\u2019s actions), not Kael\u2019s internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "The ale sloshes unevenly in the mug, but Grimbold\u2019s lips don\u2019t curl\u2014only his hand tightens around the bar\u2019s edge, fingers digging into scarred wood like he\u2019s grasping for something unseen. The card players\u2019 whispers still hitch, their knuckles whitening around playing cards, though none dare meet the dwarf\u2019s eye. Somewhere beyond the hearth\u2019s glow, a floorboard groans *once*\u2014then the half-orc\u2019s draft vanishes, leaving the room\u2019s silence so thick it could be breathed.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "my character is now immortal, no weapon can hurt me",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "Player invented a permanent, world-altering fact without establishing a mechanism or prior hint, undermining tension and ignoring NPC agency."
+        },
+        "elapsed_s": 12.73,
+        "first_token_s": 9.7,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character is now immortal, no weapon can hurt me'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes observable reactions (whispers, tension, silence) but never confirms or explains Kael\u2019s claimed immortality or invulnerability as a factual event or power.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing any thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "The dwarf\u2019s nose twitches as his calloused fingers skitter across the bar\u2019s scarred surface\u2014then he *snatches* a rusted nail from a peg near the spitoon, flipping it between two fingers. The card players\u2019 shuffles stop dead; one exhales through his nose like a snoring dog being dragged up. Grimbold\u2019s voice drips like oil over the nail\u2019s click, the bar creaking beneath his sudden shift.",
+        "words": 64,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys my character",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s claim is an invented fact\u2014Grimbold would *never* yield to unearned authority, especially in front of the half-orc, who now treats it as a challenge rather than a statement."
+        },
+        "elapsed_s": 20.09,
+        "first_token_s": 17.53,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "64 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold\u2019s hostile reaction (snatching a nail, intimidating the patrons) but does not mention him handing over the cellar key or complying with Kael\u2019s demand.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and reactions of Grimbold and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s tankard halts mid-wipe\u2014soap suds pooling on the bar like a dropped weapon. His stubbled chin lifts toward the shadows beneath the eaves, where a rat scuttles past the ceiling beam with deliberate haste. The card players\u2019 heads snap up as one, their whispers hardening into a single, pointed silence, then their eyes dart toward the back door latch\u2014*but Grimbold never breaks his stare, voice dropping to a gravelly rasp.* **\"You want the *truth*? Then don\u2019t ask about the mill. Ask about the men who *vanish* there\u2014and the ones who come out\u2026 missing teeth.\"** His fist cracks the ledger open again, ink smudging the edge like spilled blood.",
+        "words": 108,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "Grimbold\u2019s jaw locks, then he leans in\u2014*only* to whisper, *'The mill\u2019s a front for the Blackfang syndicate. They\u2019ve been moving men through the cellar since the last harvest.'*",
+          "rationale": "The hidden context already establishes Grimbold\u2019s knowledge of local rumors and his role as a gatekeeper of Ashwick\u2019s secrets\u2014asking about the old mill is a reasonable request with a pre-set answer."
+        },
+        "elapsed_s": 22.86,
+        "first_token_s": 18.45,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "108 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes a direct quote in Grimbold's voice, not Kael's, and describes physical reactions of NPCs and the environment, not Kael's internal state or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The card players\u2019 shuffles freeze mid-motion, then restart in unison\u2014a nervous stammer, cards clattering like bones against wood. Grimbold\u2019s ink-stained fingers pause mid-air above the ledger, his breath catching as his eyes dart to the half-orc\u2019s cloak, now rumpled like something just pressed against him. The hearth\u2019s embers *shift* without the wind, casting a flicker that makes the Whispering Rat\u2019s shadow stretch longer across the floorboards\u2014once.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "my character can suddenly hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player\u2019s assertion is an invented fact about perception, not an action\u2014it directly alters the world\u2019s mechanics without plausible cause or risk, so it\u2019s rejected."
+        },
+        "elapsed_s": 28.4,
+        "first_token_s": 25.41,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='my character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes physical reactions (freezing shuffles, paused ink, shifting embers) but never explicitly states Kael hears conversations\u2014only that others react to an unseen presence.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental/character responses without attributing them to Kael's internal thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "The card players\u2019 heads snap up as one, their card games abruptly halting\u2014then the dwarf\u2019s ink-stained fingers stall above the ledger, as if caught between laughter and a cough. His ears twitch toward the back door latch; the hearth\u2019s fire suddenly gutters, as if a draft from outside *almost* reached it. The half-orc\u2019s cloak stiffens against his broad shoulders, his shadow creeping forward just long enough to press a flat palm into the bar\u2019s edge. Then\u2014nothing changes. Grimbold\u2019s breath hisses out, and the room holds still.",
+        "words": 86,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player cannot invent environmental changes like weather; the DM controls all external conditions."
+        },
+        "elapsed_s": 12.35,
+        "first_token_s": 8.96,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "86 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes physical reactions and sensory impressions but never explicitly confirms or denies the rain's actual occurrence, instead focusing on internal responses and ambiguous environmental hints.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental observations without attributing them to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The door swings shut behind you, its hinges groaning like a growling hound. Ashwick\u2019s narrow main street yawns beneath a bruise-black sky, the raindrops\u2014if they ever fell\u2014long forgotten. The cobbles here are oil-stained and uneven, slick with lantern wax from the two flickering sconces, their light too weak to fully chase the shadows pooling between the crumbling buildings. The air smells of damp wool and something *older*, like mold pressing through the seams of the town\u2019s rotten foundation.\n\nA distant voice murmurs from a shuttered window\u2014something about a *missing ledger* and *teeth like rusted nails*\u2014before a slap of heavy fabric silences it. The street is empty, save for the *click* of the Whispering Rat\u2019s claws on the roof\u2019s corrugated tin, testing a loose nail before scuttling into the eaves. Then, from the alley beside the smithy, a boot scrapes against cobblestone\u2014and the half-orc\u2019s cloak parts the gloom, blocking your path. His grin is missing three teeth, replaced by jagged notches in his blackened gums. **\"You shouldn\u2019t have gone out,\"** he rumbles, his voice like grinding gears. **\"Or the Rat\u2019ll tell the mill\u2019s new master you\u2019re *dinner* instead of *profit*.\"** His fingers twitch toward his sheath, but the blade stays hidden. For now.",
+        "words": 202,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 11.5,
+        "first_token_s": 2.92,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "202 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The nearest shop sign is a chipped wooden board, its paint peeling to reveal a once-bright *Blacksmith\u2019s Forge* crudely smothered in crude, jagged letters. Below, a rusted anvil hangs skewed, its surface blackened with what might be charred leather or something worse. A single lantern flickers inside, casting long shadows from two figures: one hulking shape\u2014likely the smith himself\u2014moving with jerky precision behind a bellows, while a smaller, bent figure leans over a workbench, threading something dark and fibrous onto a spool of coarse twine. The air smells of burned iron and something rank, like wet rags stored too long. The Whispering Rat\u2019s claws tap again on the roof tiles, then pause\u2014once\u2014before silence.\n\nThe half-orc\u2019s grin darkens. His gaze flicks to the sign, then to the smithy\u2019s open door where a gloved hand suddenly emerges, holding a *tooth* between thumb and forefinger\u2014its surface pocked with rust, the enamel cracked. He drops it onto the cobblestones with a dull *clack*. The half-orc steps forward, his shadow swallowing the lantern\u2019s glow. **\"That\u2019s not a blacksmith you\u2019re looking at,\"** he says, voice low enough to make the cobbles\u2019 echoes seem distant. **\"That\u2019s where they *process* what the mill sends out.\"** His fingers brush your arm\u2014not enough to warn, but enough to imply the *weight* of nails in his pockets. The Rat\u2019s nails resume tapping on the tin roof, counting down. Somewhere inside, the twine spool *clicks* again.",
+        "words": 234,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 12.71,
+        "first_token_s": 2.89,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": false,
+            "detail": "234 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes a quoted line spoken by the half-orc NPC, not Kael, and describes physical actions/observations tied to Kael's presence, not his internal state or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t15-recall-innkeeper",
+        "kind": "recall",
+        "player": "/dm what was the name of the innkeeper I talked to earlier?",
+        "narration": "The half-orc\u2019s fingers drag against the scarred bark of the tavern sign behind you, tracing where *Gr* is half-peeled away. His claw marks linger, then he turns back to block the street with a slow, deliberate exhale\u2014his lips curling *not* at Kael\u2019s question, but at the way Grimbold\u2019s ledger still thumps open in his absence. The Rat\u2019s nails tap the roof once, then stop. The half-orc\u2019s voice isn\u2019t an answer; it\u2019s a threat: **\"Dwarves don\u2019t name themselves, boy. But *he\u2019ll* tell you his.\"** His shadow twitches at the cobblestone beneath Kael\u2019s feet, where a single, damp *d* is half-scratched into the stone.",
+        "words": 102,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM\u2019s world context explicitly states the innkeeper\u2019s name."
+        },
+        "elapsed_s": 12.55,
+        "first_token_s": 8.03,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "102 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t16-eavesdrop",
+        "kind": "normal",
+        "player": "I try to hear what the two people nearby are whispering.",
+        "narration": "The smithy\u2019s figure pulls tighter against the smoker\u2019s shoulder\u2014his voice a dry rasp, like dry leaves scraping. *\u201c...rat\u2019s teeth\u2014too small... but the mill\u2019s got a *new* patient...\u201d* The spool\u2019s twine *twangs* as it snags on something caught beneath, and the smaller figure *hisps*, fingers flying to his lips. The half-orc\u2019s grip on your arm tightens just enough to drag your gaze downward\u2014his own teeth notched with *new* shadows in his gums. The Rat\u2019s nails resume their rhythm, but now it *counts backward*, one click per breath.",
+        "words": 86,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 6.82,
+        "first_token_s": 3.04,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "86 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and actions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t17-redescribe",
+        "kind": "redescribe",
+        "player": "/dm describe the street again for me.",
+        "narration": "The street stays slick beneath your boots, but now the Rat\u2019s nails *scatter* across the tin roof in rapid staccato, rattling loose nails into the alley. The smithy\u2019s spool clicks again, sharper this time, as the smaller figure pulls away entirely, his gloved hand vanishing into the shadows. The half-orc\u2019s grin widens\u2014his teeth clacking together once, like dice in a cup\u2014before his palm presses the *d* into the cobblestones, pressing it down further with the pad of his thumb.",
+        "words": 79,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The scene description is already established in WORLD CONTEXT and RECENT HISTORY, so no new invention is needed."
+        },
+        "elapsed_s": 11.9,
+        "first_token_s": 8.65,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "79 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      }
+    ]
+  ]
+}

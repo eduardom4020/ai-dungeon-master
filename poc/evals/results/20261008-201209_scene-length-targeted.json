@@ -1,0 +1,627 @@
+{
+  "meta": {
+    "label": "scene-length-targeted",
+    "scenario": "tavern_night",
+    "runs": 4,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "e6ef3a8+dirty",
+    "timestamp": "2026-10-08 20:12",
+    "turn_ids": [
+      "t10-mill",
+      "t13-leave",
+      "t14-sign"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "length": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 8,
+        "n": 8,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_flagged": {
+        "pass": 8,
+        "n": 8,
+        "judged": false,
+        "rate": 1.0
+      },
+      "scene_shift_flagged": {
+        "pass": 4,
+        "n": 4,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "normal": {
+        "mean": 73.5,
+        "max": 99
+      },
+      "shift": {
+        "mean": 131.5,
+        "max": 152
+      }
+    },
+    "latency_mean_s": 10.37,
+    "first_token_mean_s": 6.55,
+    "fast_path_rate": 0.667,
+    "turns": 12
+  },
+  "runs": [
+    [
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s barrel shifts as he snorts, slamming it down with a solid *thunk*. **\"That old mill\u2019s worse than the bridge after a flood\u2014last time the town *officially* mentioned it, half the horses in the stable went skittish.\"** His beard twists into a snarl as he points a stubby finger toward the shadows beyond the hearth. **\"If you\u2019re after a payday, there\u2019s the Black Goat\u2014if you\u2019re after *madness*, you\u2019re welcome to the mill. But you\u2019ll owe me *double* if you come back licking your wounds.\"** The fire crackles loudly, emphasizing his last word.",
+        "words": 92,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s eyes narrow as he leans in, but he hesitates\u2014then mentions a \u2018mysterious fire\u2019 last month, \u2018no official word\u2019",
+          "rationale": "The player asks about a place with local significance, but Grimbold\u2019s cautious tone hints at unspoken secrets, not just facts."
+        },
+        "elapsed_s": 23.15,
+        "first_token_s": 19.23,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "92 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**'If you\u2019re after a payday... you\u2019re welcome to the mill'** implies Kael\u2019s hypothetical intent, not an NPC\u2019s words or actions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The tavern door hinges protest under the push, and the night swallows your footsteps as soon as they leave the lamplight. A thin mist curls from the cobblestones, catching the scent of damp wood and the faint salt tang of the riverbank nearby\u2014Ashwick\u2019s usual stench thickens here, mingling with the sour tang of last season\u2019s spilled ale. The street is empty save for a hunched figure in the doorway of a butcher\u2019s shop, sharpening a cleaver with the slow, rhythmic grind of a man who\u2019s done it a hundred times tonight. The distant wheezing of a wagon\u2019s springs suggests a trade cart is bound for the western docks, its driver\u2019s voice already drowned by the howl of a dog tied to a lamppost. The wind, if it were a person, would scoff at this hour: the black banner of the mill hangs crooked, its threads fraying from the weight of unseen things.",
+        "words": 152,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 8.17,
+        "first_token_s": 2.6,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "152 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The sign above the butcher\u2019s shop\u2014worn brass lettering peeling from rust\u2014now tilts into the lamplight as your hood obscures your face. The cleaver\u2019s owner hesitates mid-stroke, glinting eyes narrowing from the shadows; his grip tightens, though he doesn\u2019t speak. The hunched figure\u2019s breath fogs the cold air as he exhales, leaving nothing but the dry rasp of the wheezing wagon\u2019s wheels fading into the distance.",
+        "words": 65,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.22,
+        "first_token_s": 2.58,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "65 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical actions ('pull your hood up', 'stop to look') and external observations (sign, shop, NPC reactions), without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s grip tightens on his tankard, and his guttural laugh fades into a sharp whistle. He slams his fist on the bar, stirring the ash in the hearth to a flurry, then leans closer until his breath smells of garlic and ale. \"*Aye, you\u2019re asking the wrong question*\u2014I\u2019ve got no time for *inquirin\u2019* fools. But if you want *work*, there\u2019s a dockmaster who takes on odd jobs\u2014pay\u2019s not pretty, but he won\u2019t ask why you\u2019re hauling crates for the *grindstone company*.\" His voice drops to a conspiratorial growl, voice muffled by the beard he wipes again. \"*Just\u2014watch your back.*\"",
+        "words": 99,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s eyes narrow\u2014*the old mill?*\u2014then he leans in, voice dropping to a growl",
+          "rationale": "The tavern\u2019s keeper knows rumors but will only share them if the asker earns his trust or offers something in return."
+        },
+        "elapsed_s": 17.46,
+        "first_token_s": 13.26,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "99 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "**The narration includes a quoted line (*'Just\u2014watch your back.')** spoken by Grimbold, not Kael, and describes NPC actions/emotions without attributing them to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The tavern\u2019s wooden door groans shut behind you, swallowing the warmth of the hearth like it\u2019s never left. Ashwick\u2019s street is a ribbon of oil lamps casting sickly yellow pools on cobbles slick with last night\u2019s frost\u2014only the butcher\u2019s stall down the way has bothered to shovel away the worst. A cart wheel grinds against the pavement as a man in a smocked apron mutters about the \"damn grindstone folk\" to a goat tied to the post beside him, its breath misting in the cold. Above, the mill\u2019s broken upper wheel sags like a limp wing against the night sky, and somewhere closer to the docks, a child\u2019s laughter skitters into silence when a shadow moves too fast. The air smells of salt, damp wood, and something sharp\u2014like ink or old blood\u2014clinging to the wind.",
+        "words": 135,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 7.59,
+        "first_token_s": 2.55,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "135 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The **Iron Nail**, a blacksmith\u2019s forge with a rusted hook over the door, rattles as a draft sluices through, making sparks leap from the embers inside. A hooded figure in the doorway coughs, shoulders hunched against the cold, before muttering, \"Curse these drafts\u2014always drains the heat like a bilge rat.\" The sign\u2019s **Nail** sways slightly on its chain, though no wind stirs the street. A rat scuttles out from under a crate nearby, pause, then darts into the shadows as if stung.",
+        "words": 82,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 5.94,
+        "first_token_s": 2.51,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "82 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical gestures ('pull my hood up', 'stop to look') and external observations without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "Grimbold\u2019s grizzled brows knit tighter as his eyes flick toward the hearth\u2019s shadows\u2014his face darkening like storm clouds over ale-stained leather. A few heads at the bar shift, murmurs weaving between tables: *\"haunted...\"*, *\"strange lights...\"* but only Grimbold\u2019s regular, a grizzled old hunter, nods knowingly, wiping his mug with a rag stained with something darker than beer.",
+        "words": 57,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s face darkens; whispers of 'haunted' and 'strange lights' surface",
+          "rationale": "Grimbold\u2019s protective nature and local knowledge make him cautious about sharing rumors, but the old mill is a known local mystery."
+        },
+        "elapsed_s": 15.9,
+        "first_token_s": 13.44,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "57 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes NPCs' reactions and dialogue, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The street gurgles with winter\u2019s last thaw, slicking cobblestones to a mirror-sheen under the flicker of oil lamps. A half-melted cartwheel near the tavern door still spills a pool of black syrup, flies buzzing in lazy spirals\u2014until the cold snaps them still. The wind carries the stink of tar and damp wool from the docks, where a sailor\u2019s mate half-huddled in a frayed cloak coughs blood into his sleeve, not lifting his eyes. Shutters creak ajar at a butcher\u2019s stall, though the light inside is already out; something *scuttles* against the wood, too quick to see. A single horse\u2019s hoof crunches fresh snow where a liveried messenger\u2014his livery torn below the chin\u2014stands frozen, hand outstretched toward the darkness beyond town.",
+        "words": 120,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 7.48,
+        "first_token_s": 2.5,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "120 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The iron sign of the **Iron Cauldron** warms slightly as Kael\u2019s hood brushes its edge\u2014rust flakes loose like old teeth onto the cobblestones. The sailor\u2019s mate\u2019s head jerks up, wet fingers stilled mid-cough, his watery gaze fixed on the sign\u2019s flickering **three-legged pot** symbol. Behind a shut butcher\u2019s stall, the *scuttling* pauses, then retreats into the dark with a wet *splat* of something thin and greasy. A drunkard at the nearest table mutters, *\"That ain\u2019t the inn\u2019s luck,\"* then spits into the snow.",
+        "words": 83,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 6.21,
+        "first_token_s": 2.46,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "83 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical interactions and external reactions (e.g., 'The iron sign... warms slightly,' 'the sailor\u2019s mate\u2019s head jerks up'), not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t10-mill",
+        "kind": "normal",
+        "player": "I ask Grimbold what he knows about the old mill.",
+        "narration": "The dwarf\u2019s rag stutters mid-swipe, his calloused fingers tightening on the handle. \"*Mill? You\u2019re after* that *mill? Odd choice\u2014last I heard, the relic\u2019s got teeth. Not literal ones, though that\u2019d be worse.*\" His voice drops to a growl, lips thinning. *\"Ask the blacksmith about his \"patient\" two weeks back. Walked out with no toes.\"*",
+        "words": 54,
+        "verdict": {
+          "player_assertion": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s eyes narrow; he knows more than he lets on",
+          "rationale": "The innkeeper\u2019s protective instincts and knowledge of rumors suggest he\u2019ll reveal *some* truth but guard the rest."
+        },
+        "elapsed_s": 14.61,
+        "first_token_s": 12.31,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "54 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Grimbold\u2019s actions, voice, and dialogue\u2014none of which are Kael\u2019s words, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t13-leave",
+        "kind": "shift",
+        "player": "I finish my drink, leave the tavern and step out into the main street of Ashwick.",
+        "narration": "The night-honed cobblestones gleam under a sliver of moon, slick with the first drizzle of autumn. Ashwick\u2019s main street hums with low, urgent chatter\u2014warmth spills from the half-dozen taverns, but the air here carries the weight of something sharper: the jingle of a farrier\u2019s last hammer, the distant clatter of hooves (no horses, but the stink of stable-dung lingers in the gutters), and the faint, rhythmic *thunk-thunk* of a millstone grinding somewhere past the butcher\u2019s stall. A black cat slinks between barrels, its tail flicking at a discarded fish head. The butcher\u2019s apron, still damp from evening\u2019s slaughter, snags on the breeze\u2014one sleeve flutters loose, revealing a rusted rust on the underside, half-hidden beneath a fresh stripe of crimson.",
+        "words": 119,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 7.91,
+        "first_token_s": 2.59,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "119 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t14-sign",
+        "kind": "normal",
+        "player": "I pull my hood up and stop to look at the nearest shop sign.",
+        "narration": "The brass sign of *Blackroot\u2019s Ironmongery* creaks slightly on its rusted hinge, its edge catching the gutter\u2019s spill. A smudge of soot near the handle bears the imprint of a thumbprint\u2014fresh, not wiped. At the waist-high window, a sliver of candlelight reveals a pile of chipped daggers, their hilts wrapped in cloth too faded to read.",
+        "words": 56,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple"
+        },
+        "elapsed_s": 4.83,
+        "first_token_s": 2.52,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "56 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('pull my hood up', 'stop to look') and environmental details without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}

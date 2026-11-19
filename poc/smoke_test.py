@@ -49,8 +49,12 @@ for i, turn in enumerate(TURNS, 1):
         print(f"\n[{event} at {elapsed:.2f}s]")
 
     turn_start = time.monotonic()
+    def on_note(note):
+        print(f"[DM, out of character] {note}\n")
+
     dm_text, verdict = orchestrator.run_turn(
-        world, turn, stream_cb=on_token, verbose=True, on_timing=on_timing
+        world, turn, stream_cb=on_token, verbose=True, on_timing=on_timing,
+        on_note=on_note,
     )
     turn_elapsed = time.monotonic() - turn_start
     turn_times.append(turn_elapsed)
