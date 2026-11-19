@@ -14,12 +14,12 @@ STATE_PATH = Path(__file__).parent / "session_state.json"
 
 def seed_world() -> WorldState:
     world = WorldState(
-        location="Ashwick -- the Red Griffin tavern",
         scene_summary=(
             "Kael, a former soldier turned sellsword, has just arrived in "
             "the border town of Ashwick as night falls, looking for work."
         ),
     )
+    world.move_to("Ashwick -- the Red Griffin tavern")
     world.add_npc(NPC(
         name="Grimbold Ironfist",
         persona=(
@@ -28,6 +28,8 @@ def seed_world() -> WorldState:
             "impressed by flashy strangers or easy coin."
         ),
         important=True,
+        location=world.location,
+        aliases=["the dwarf", "the innkeeper", "the barkeep", "the bartender"],
     ))
     world.active_npc = "Grimbold Ironfist"
     world.add_fact("Kael carries a sword and modest travel gear; no known magic or renown.")
@@ -116,9 +118,12 @@ def main():
         def on_note(note):
             print(f"[DM, out of character] {note}\n")
 
+        def on_npc_line(name, line):
+            print(f"{name}: {line}\n")
+
         dm_text, verdict = orchestrator.run_turn(
             world, player_input, stream_cb=on_token, verbose=verbose,
-            on_thinking=on_thinking, on_note=on_note,
+            on_thinking=on_thinking, on_note=on_note, on_npc_line=on_npc_line,
         )
         print()
         world.save(STATE_PATH)

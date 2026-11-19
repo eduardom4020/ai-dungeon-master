@@ -34,7 +34,7 @@ def _strip_meta_prefix(player_input: str) -> tuple[str, bool]:
 
 
 def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False,
-             on_timing=None, on_thinking=None, on_note=None):
+             on_timing=None, on_thinking=None, on_note=None, on_npc_line=None):
     """on_timing(event:str, elapsed_s:float), called at key points in the turn
     (elapsed_s is measured from the start of this call):
       'verdict'     -- the Referee/Router's judgment + routing decision is
@@ -56,6 +56,14 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     out-of-character text explaining why; it is also stored in
     verdict["correction_note"] but is deliberately not part of the returned
     narration or the story history.
+
+    on_npc_line(name, text) -- called once, BEFORE the narration, when an NPC
+    agent replied this turn. The DM is told the player has already read this
+    line and continues from it, so callers must show it. Also stored in
+    verdict["npc_name"] / verdict["npc_line"] and in the story history.
+
+    After the narration, verdict["scene_update"] holds what the scene tracker
+    changed (location, new NPCs) when it ran, else None.
     """
     t0 = time.monotonic()
 
@@ -64,6 +72,13 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             on_timing(event, time.monotonic() - t0)
 
     player_input, is_meta = _strip_meta_prefix(player_input)
+
+    # Decide who the player is talking to BEFORE anything else reads
+    # world.active_npc (fast-path check, Referee's TALKING WITH line, NPC
+    # agent). Only NPCs present in the scene can be picked.
+    addressee = agents.resolve_addressee(player_input, world)
+    if addressee:
+        world.active_npc = addressee
 
     # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Skips the
     # Referee/Router call entirely for turns the heuristic judges simple.
@@ -119,6 +134,7 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     active_npc = world.npcs.get(world.active_npc)
     needs_npc = bool(
         verdict.get("addresses_npc") and active_npc and active_npc.important
+        and world.is_present(active_npc)
     )
 
     if (needs_worldbuild or needs_npc) and on_thinking:
@@ -133,7 +149,8 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             if needs_worldbuild:
                 futures["worldbuild"] = pool.submit(agents.worldbuild, world, player_input)
             if needs_npc:
-                futures["npc"] = pool.submit(agents.npc_reply, active_npc, world, player_input)
+                futures["npc"] = pool.submit(
+                    agents.npc_reply, active_npc, world, agents.npc_view_of_turn(player_input, verdict))
 
             if "worldbuild" in futures:
                 new_lore = futures["worldbuild"].result()
@@ -142,9 +159,14 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
                 if verbose:
                     print(f"[worldbuilder] {new_lore}\n")
             if "npc" in futures:
-                npc_line = futures["npc"].result()
+                # Shown to the player verbatim now, so drop the markdown
+                # emphasis the model adds despite being told not to.
+                npc_line = futures["npc"].result().replace("*", "").strip()
                 mark("npc_reply")
-                if verbose:
+                verdict["npc_name"], verdict["npc_line"] = active_npc.name, npc_line
+                if on_npc_line:
+                    on_npc_line(active_npc.name, npc_line)
+                elif verbose:
                     print(f"[{active_npc.name}] {npc_line}\n")
 
     first_token_marked = False
@@ -162,8 +184,29 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     dm_text = agents.narrate(
         world, player_input, verdict, npc_line=npc_line, new_lore=new_lore,
         stream_cb=wrapped_stream_cb if (stream_cb or on_timing) else None,
+        npc_name=active_npc.name if npc_line else None,
     )
     mark("done")
+
+    # Scene bookkeeping, after the narration so it never delays the first
+    # token. Gated on cheap signals (movement words, scene_shift, a name the
+    # world doesn't know yet) so most ordinary turns skip the call.
+    verdict["scene_update"] = None
+    if agents.scene_may_have_changed(player_input, verdict, npc_line, dm_text, world):
+        update = agents.track_scene(
+            world, player_input, dm_text, npc_line=npc_line,
+            npc_name=active_npc.name if npc_line else None,
+        )
+        if update:
+            verdict["scene_update"] = agents.apply_scene_update(
+                world, update,
+                exclude_from=player_input if verdict.get("player_assertion") else "",
+                source_text=f"{npc_line or ''}\n{dm_text}",
+                allow_move=agents.player_may_move(player_input, verdict),
+            )
+            if verbose:
+                print(f"\n[scene tracker] {update} -> {verdict['scene_update']}")
+        mark("tracked")
     # The flagged claim only protects THIS turn's narration. The raw player
     # text then sits in RECENT HISTORY, where later turns read it as plain
     # story ("three armed men storm in" -> a later recap narrated "three
@@ -175,5 +218,8 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             f' [NOT TRUE: the player claimed "{verdict["player_assertion"]}", '
             "which did NOT happen in the story]"
         )
-    world.add_turn(history_text, dm_text)
+    # Keep the NPC's actual words in the story history too: later turns (and
+    # the DM's recaps) need to know what was said, not only the reactions.
+    history_dm = f"{active_npc.name}: {npc_line}\n{dm_text}" if npc_line else dm_text
+    world.add_turn(history_text, history_dm)
     return dm_text, verdict

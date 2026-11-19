@@ -144,6 +144,8 @@ def write_report(path_md, meta, runs, summary):
             L.append(f"*verdict: outcome={v.get('outcome')}, scene_shift={v.get('scene_shift')}, "
                      f"player_assertion={v.get('player_assertion')!r}, fast_path={t['fast_path']}, "
                      f"{t['words']}w, {t['elapsed_s']}s*\n")
+            if v.get("npc_line"):
+                L.append(f"**{v.get('npc_name')}:** {v['npc_line']}\n")
             L.append(f"> {t['narration'].replace(chr(10), chr(10) + '> ')}\n")
     Path(path_md).write_text("\n".join(L), encoding="utf-8")
 

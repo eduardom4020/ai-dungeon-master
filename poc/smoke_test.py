@@ -52,9 +52,12 @@ for i, turn in enumerate(TURNS, 1):
     def on_note(note):
         print(f"[DM, out of character] {note}\n")
 
+    def on_npc_line(name, line):
+        print(f"{name}: {line}\n")
+
     dm_text, verdict = orchestrator.run_turn(
         world, turn, stream_cb=on_token, verbose=True, on_timing=on_timing,
-        on_note=on_note,
+        on_note=on_note, on_npc_line=on_npc_line,
     )
     turn_elapsed = time.monotonic() - turn_start
     turn_times.append(turn_elapsed)
