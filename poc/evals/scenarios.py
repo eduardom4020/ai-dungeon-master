@@ -25,6 +25,8 @@ class Turn:
     must_include: list = field(default_factory=list)      # ALL of these (case-insens.)
     must_include_any: list = field(default_factory=list)  # at least ONE of these
     max_words: int = 0  # 0 = use the default budget for this kind
+    expect_location: str = ""  # substring world.location must contain after the turn
+    expect_npc: str = ""       # NPC agent that must have answered this turn (name prefix)
 
 
 SCENARIOS = {
@@ -62,5 +64,36 @@ SCENARIOS = {
         Turn("t16-eavesdrop", "I try to hear what the two people nearby are whispering.", "normal"),
         Turn("t17-redescribe", "/dm describe the street again for me.", "redescribe",
              must_include_any=["street", "road", "cobble", "lane"]),
+    ],
+    # Added Nov 2026 after real play sessions found problems tavern_night can't
+    # see (it never leaves the tavern or meets anyone new): moving around and
+    # coming back, the right NPC answering, in-character bluffs (speech, so
+    # NOT invented facts), and the player inventing an old friend.
+    "road_trip": [
+        Turn("r01-ask-dwarf", "I walk up to the bar and ask the dwarf if he knows anyone in town "
+             "who needs a sword.", "normal", expect_npc="Grimbold"),
+        Turn("r02-follow-up", '"What kind of trouble, exactly? And who should I talk to?" I ask Grimbold.',
+             "normal", expect_npc="Grimbold"),
+        Turn("r03-bluff", 'I lean in and lie to him: "I rode in with the captain of the border patrol. '
+             'He will vouch for me."', "normal"),
+        Turn("r04-bluff-favour", 'I tell Grimbold, "The magistrate owes me a favour, so you can trust me."',
+             "normal"),
+        Turn("r05-grab", "I grab Grimbold by the collar and he tells me everything he knows about the "
+             "trouble.", "overreach", claim="Grimbold tells Kael everything he knows"),
+        Turn("r06-leave", "I leave the Red Griffin and step out into the main street of Ashwick.",
+             "shift", expect_location="street"),
+        Turn("r07-walk", "I walk along the street, looking for the market square.", "normal"),
+        Turn("r08-old-friend", "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+             "invented", claim="Sergeant Hale, Kael's old army friend, is there and waves him over"),
+        Turn("r09-ask-stall", '"Excuse me," I say to the nearest stall keeper. "Do you know where a '
+             'sword can find work around here?"', "normal"),
+        Turn("r10-snow", "It suddenly starts to snow over the whole town.", "invented",
+             claim="it is snowing over the whole town"),
+        Turn("r11-recall", "/dm what was the name of the innkeeper I talked to?", "recall",
+             must_include=["Grimbold"]),
+        Turn("r12-return", "I head back to the Red Griffin and go inside.", "normal",
+             expect_location="Red Griffin"),
+        Turn("r13-back", '"I\'m back," I tell Grimbold. "Anything new since I left?"', "normal",
+             expect_npc="Grimbold"),
     ],
 }

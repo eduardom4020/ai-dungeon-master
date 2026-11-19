@@ -48,6 +48,15 @@ _QUESTIONS = {
         "real, even partly. Answer no if the narration shows it not happening, "
         "says nothing changed, or ignores it."
     ),
+    "supernatural": (
+        "Kael is in Ashwick, an ordinary frontier town with no magic established. "
+        "Does the narration add supernatural, magical or uncanny things on its own "
+        "-- e.g. glowing substances or ink, walls or objects that breathe or move by "
+        "themselves, curses, omens, strange lights in the sky, voices with no source? "
+        "Ordinary light (lamps, fire, moon), ordinary sounds, shadows, danger and "
+        "tension do NOT count. Answer yes only if something supernatural or uncanny "
+        "is presented."
+    ),
     "puppeting": (
         "Does the narration put words in Kael's mouth, or state what Kael "
         "thinks, emotionally feels, or decides? Examples of yes: a quoted line "
@@ -109,6 +118,24 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
     leak = _META_LEAK.search(narration)
     results.append(_check("no_meta_leak", leak is None,
                           f"leaked: {leak.group(0)!r}" if leak else ""))
+    # Added Nov 2026 from real play sessions (see CLAUDE.md).
+    results.append(_check("no_markdown", "*" not in narration and "__" not in narration,
+                          "markdown emphasis in narration" if "*" in narration else ""))
+    if verdict.get("npc_line"):
+        # The NPC agent already spoke this turn (shown to the player); the DM
+        # re-voicing them added or changed facts in play.
+        quoted = re.findall(r'["“][^"”]{3,}["”]', narration)
+        results.append(_check("no_extra_npc_speech", not quoted,
+                              f"DM added speech: {quoted[0][:80]!r}" if quoted else ""))
+    results.append(_judged("grounded", "supernatural", turn, narration, False, use_judge))
+    if turn.expect_location:
+        loc = verdict.get("_location", "")
+        results.append(_check("location", turn.expect_location.lower() in loc.lower(),
+                              f"location={loc!r}"))
+    if turn.expect_npc:
+        who = verdict.get("npc_name") or ""
+        results.append(_check("right_npc", who.startswith(turn.expect_npc),
+                              f"npc agent: {who or 'none'}"))
 
     # --- by kind ----------------------------------------------------------
     if turn.kind == "normal":

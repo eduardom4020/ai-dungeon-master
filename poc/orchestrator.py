@@ -77,8 +77,13 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # world.active_npc (fast-path check, Referee's TALKING WITH line, NPC
     # agent). Only NPCs present in the scene can be picked.
     addressee = agents.resolve_addressee(player_input, world)
+    found_npc = None
     if addressee:
         world.active_npc = addressee
+        if not world.npcs[addressee].location:
+            # Called out on arrival and found here (see resolve_addressee).
+            world.npcs[addressee].location = world.location
+            found_npc = addressee
 
     # EXPERIMENTAL -- see CLAUDE.md "Verdict-skip experiment". Skips the
     # Referee/Router call entirely for turns the heuristic judges simple.
@@ -116,6 +121,13 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
                     twist="", scene_shift=False,
                     rationale=str(verdict.get("rationale", "")) + " | world-claim check: flagged",
                 )
+        # A "claim" that only exists inside the player's quoted speech is a
+        # lie or bluff Kael SAID -- his to choose, not an invented world fact.
+        if verdict.get("player_assertion") and agents.claim_is_only_speech(
+                player_input, verdict["player_assertion"]):
+            verdict["rationale"] = (str(verdict.get("rationale", "")) +
+                                    f" | cleared: only in quoted speech ({verdict['player_assertion']!r})")
+            verdict["player_assertion"], verdict["not_true"] = "", ""
         mark("verdict")
         if verbose:
             tag = " (forced: /dm)" if is_meta else ""
@@ -192,6 +204,7 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # token. Gated on cheap signals (movement words, scene_shift, a name the
     # world doesn't know yet) so most ordinary turns skip the call.
     verdict["scene_update"] = None
+    location_before = world.location
     if agents.scene_may_have_changed(player_input, verdict, npc_line, dm_text, world):
         update = agents.track_scene(
             world, player_input, dm_text, npc_line=npc_line,
@@ -204,6 +217,13 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
                 source_text=f"{npc_line or ''}\n{dm_text}",
                 allow_move=agents.player_may_move(player_input, verdict),
             )
+            if verdict["scene_update"]["moved_to"]:
+                came = agents.bring_companions(world, player_input, location_before)
+                found = world.npcs.get(found_npc)
+                if found and found.location == location_before:
+                    found.location = world.location  # found at the place Kael arrived at
+                    came.append(found_npc)
+                verdict["scene_update"]["came_along"] = came
             if verbose:
                 print(f"\n[scene tracker] {update} -> {verdict['scene_update']}")
         mark("tracked")

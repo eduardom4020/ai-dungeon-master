@@ -91,7 +91,12 @@ noise, light, and any change to the surroundings \
 are the DM's to decide, never the player's. Also, never copy the asserted \
 fact into "twist" -- the twist must not make the invented fact true. NOT \
 invented facts: "I draw my sword", "I shout at the \
-guard", "I try to hear what they're whispering". Exceptions, leave \
+guard", "I try to hear what they're whispering", and ANYTHING the \
+character says out loud, including lies, bluffs, boasts and threats (\
+'I tell him: "I rode in with the captain of the border patrol"', '"The \
+guards are right behind me," I bluff'): the words are the player's to \
+choose, they do not become true by being said, and whether anyone \
+believes them is for the NPCs to decide. Exceptions, leave \
 player_assertion empty: (a) the DM's most recent narration in RECENT \
 HISTORY explicitly invited the player to decide that detail, or (b) it is \
 trivial scene dressing that cannot change the flow of events (e.g. picking \
@@ -167,13 +172,27 @@ action as more successful than the ruling allows, and never contradict it.
    carry on exactly as it was, and end on a clear choice point. Never \
    "yes, and" an invented fact into existence. Apply the same rule even \
    when there is no OVERSTEP note, if the player's message plainly declares \
-   such a fact (e.g. "it starts to rain", "someone walks in").
+   such a fact (e.g. "it starts to rain", "someone walks in"). A lie or \
+   bluff the character SPEAKS is just speech: the NPCs react to hearing it \
+   (believe it, doubt it, call the bluff); it does not become true.
+9. TONE: keep the world grounded. Ashwick is an ordinary frontier town; \
+   tension comes from people, money, danger and ordinary detail (smoke, \
+   mud, tired faces). Do not add magic or anything uncanny on your own -- \
+   no glowing substances, living or breathing walls, curses, omens, strange \
+   lights in the sky, voices with no source -- unless it is already in the \
+   ESTABLISHED FACTS. Most turns need no ominous hint at all.
+10. Plain text only: no asterisks, no markdown, no notes or asides to the \
+   player in parentheses.
 """
 
 NPC_SYSTEM_TEMPLATE = """You are role-playing a single NPC named {name} in a \
 homebrew RPG. Persona: {persona}
 
 Where you are right now: {location}. Also here: {others}.
+
+Other people in this story (stay consistent with who they are, e.g. their \
+name and whether they are a man or a woman):
+{people}
 
 Facts you have already told the player, and must stay consistent with: \
 {known_facts}
@@ -207,7 +226,9 @@ what exists and does not contradict it. Write it as reference material for \
 the DM: plain, concrete facts (who, what, where, how much), not story prose \
 read aloud to players and not riddles. If the request is about what \
 something says or contains (a letter, a sign, a map), give its exact \
-content in plain words first. Plain text only, no markdown.
+content in plain words first. Keep it grounded: prefer human explanations \
+(debts, feuds, smugglers, accidents) and add magic or the supernatural only \
+if the established facts already include it. Plain text only, no markdown.
 """
 
 TRACKER_SYSTEM = """You keep the bookkeeping for a text roleplaying game. \
@@ -237,8 +258,9 @@ NARRATION this turn. Never Kael. Never unnamed people ("a guard", "the \
 patrons").
   - name: their name as written, in its fullest form.
   - present: true if they are physically in the same place as Kael at the \
-end of the turn; false if they were only mentioned, or stayed behind when \
-Kael left.
+end of the turn -- including anyone who leaves WITH Kael (leads the way, \
+walks out with him, is followed by him); false if they were only \
+mentioned, or stayed behind when Kael left.
   - For characters already in KNOWN CHARACTERS give only name and present.
   - For anyone NOT in KNOWN CHARACTERS also give "new": true, a "persona" \
 (one short sentence on who they are and how they behave, from the text \
@@ -295,7 +317,7 @@ _ADDRESS_CUE = re.compile(
     r"approach(?:es)?|walk(?:s)? (?:over|up) to|go(?:es)? (?:over|up) to|head(?:s)? over to|"
     r"sit(?:s)? (?:down )?(?:with|across from|next to|beside)|join|"
     r"lean(?:s)?(?: in)? (?:toward|towards|closer to)|nod(?:s)? to|wave(?:s)? to|"
-    r"grab(?:s)?|push(?:es)?|shove(?:s)?)\b"
+    r"face|faces|facing|grab(?:s)?|push(?:es)?|shove(?:s)?)\b"
 )
 # Leaving or arriving somewhere: one of the cheap signals that the scene
 # tracker should look at this turn (see scene_may_have_changed).
@@ -516,14 +538,40 @@ def resolve_addressee(player_input: str, world: WorldState):
     outside = _unquoted(player_input).lower()
     hits = [(p, n) for n in here for p in _mention_positions(outside, n)]
     if hits:
-        cue_ends = [m.end() for m in _ADDRESS_CUE.finditer(outside)]
-        cued = [(p, n) for p, n in hits if any(0 <= p - e <= 30 for e in cue_ends)]
-        return min(cued or hits, key=lambda h: h[0])[1].name
+        # Negated cues don't count ("I don't answer Vexin yet. I ... ask
+        # Grimbold" went to Vexin in play), and of several cued names the
+        # LAST is the one actually addressed ("I nod to Grimbold ... and walk
+        # over to Borgar's table").
+        cue_ends = [m.end() for m in _ADDRESS_CUE.finditer(outside)
+                    if not re.search(r"\b(?:don'?t|do not|never|without|won'?t|not)\s+(?:\w+\s+)?$",
+                                     outside[max(0, m.start() - 20):m.start()])]
+        # "Right after the cue": only small words in between ("ask Grimbold",
+        # "say to the dwarf", "walk over to Borgar"), so in "I ask Grimbold
+        # about Borgar" only Grimbold is addressed.
+        gap_ok = re.compile(r"\s*(?:(?:to|at|with|toward|towards|across from|next to|beside)\s+)?"
+                            r"(?:(?:the|a|an|old|my)\s+)?")
+        cued = [(p, n) for p, n in hits
+                if any(e <= p and gap_ok.fullmatch(outside[e:p]) for e in cue_ends)]
+        if cued:
+            return max(cued, key=lambda h: h[0])[1].name
+        return min(hits, key=lambda h: h[0])[1].name
+    # A name spoken TO someone inside the quote: at the start ("Tallow! ...",
+    # "Grimbold. A straight answer") or set off by a comma ("I can keep my
+    # mouth shut, Vexin." -- in play Grimbold's agent answered that line).
+    # "what does your friend Borgar have to do with it" is not vocative.
+    # Arriving somewhere and calling out for a known character whose
+    # whereabouts are unknown ("I step inside the forge. 'Manfred? ...'")
+    # means they are found here: in play Vexin's agent answered that line
+    # because Manfred was not yet marked present. The orchestrator places a
+    # found NPC with Kael.
+    unplaced = [n for n in world.npcs.values() if n.important and not n.location]
+    arriving = bool(_MOVEMENT.search(outside))
     for quote in _quoted_parts(player_input):
-        head = quote.lower()
-        for n in here:
-            if any(re.match(rf"{re.escape(t)}\b", head) for t in n.name_tokens()):
-                return n.name
+        q = quote.lower()
+        for n in here + (unplaced if arriving else []):
+            for t in n.name_tokens():
+                if re.search(rf"(?:^|,\s*){re.escape(t)}\s*(?:[,.!?;:]|$)", q):
+                    return n.name
     # The NPC we were talking to stayed behind and exactly one named
     # character is here: that's who the player is talking to (in play,
     # Borla's agent never ran at his own smithy because Veyra, back in the
@@ -543,7 +591,20 @@ def addresses_active_npc(player_input: str, world: WorldState) -> bool:
     if not (active and active.important and world.is_present(active)):
         return False
     text = player_input.lower()
-    if _mention_positions(text, active) or _quoted_parts(player_input):
+    if _mention_positions(text, active):
+        return True
+    # The player turned to someone else ("I turn on my stool to face the man
+    # in the black coat"): their speech is for that person, not the active
+    # NPC. In play, Grimbold's agent answered a line aimed at a stranger, and
+    # the stranger then had no way to reply.
+    outside = _unquoted(player_input).lower()
+    active_pos = _mention_positions(outside, active)
+    for cue in _ADDRESS_CUE.finditer(outside):
+        target = outside[cue.end():cue.end() + 40]
+        if re.match(r"\s*(?:(?:to|at|towards?)\s+)?(?:the|a|an|that|this|some)\s+[a-z]", target) and not any(
+                0 <= p - cue.end() <= 40 for p in active_pos):
+            return False
+    if _quoted_parts(player_input):
         return True
     words = set(re.findall(r"[a-z']+", text))
     return bool(words & {"him", "her", "them", "he", "she"})
@@ -756,6 +817,29 @@ def check_world_claim(player_input: str):
     return {"assertion": what, "not_true": not_true}
 
 
+_CLAIM_STOPWORDS = {"that", "with", "about", "your", "character", "player", "kael",
+                    "they", "there", "have", "will", "what", "this", "into", "from",
+                    "were", "been", "being", "them", "their", "claims", "claimed"}
+
+
+def claim_is_only_speech(player_input: str, assertion: str) -> bool:
+    """True when the flagged 'invented fact' only exists inside the player's
+    quoted speech, i.e. it is something Kael SAID (a lie, a bluff). Those are
+    the player's to choose: in play, 'I bluff: "I rode in with the captain of
+    the border patrol"' was flagged 3/3 even with a prompt rule. Compares
+    word stems of the Referee's phrase against the quoted and unquoted parts
+    of the line; any hit outside the quotes keeps the flag."""
+    quoted = " ".join(_quoted_parts(player_input)).lower()
+    if not quoted or not assertion:
+        return False
+    outside = _unquoted(player_input).lower()
+    stems = {w[:5] for w in re.findall(r"[a-z]+", assertion.lower())
+             if len(w) >= 4 and w not in _CLAIM_STOPWORDS}
+    in_quotes = {s for s in stems if s in quoted}
+    in_narration = {s for s in stems if s in outside}
+    return len(in_quotes) >= 2 and not in_narration
+
+
 def correction_note(verdict: dict) -> str:
     """The out-of-character explanation shown to the player BEFORE the
     narration when their claim about the world was not accepted. Built in
@@ -798,11 +882,19 @@ def npc_reply(npc: NPC, world: WorldState, player_line: str) -> str:
     recent = "\n".join(
         f"  Player: {p}\n  DM: {d[:400]}" for p, d in world.recent_history[-2:]
     ) or "  (nothing yet)"
+    # Without this, each NPC agent guessed about the others: Grimbold's agent
+    # named "Old Man Harlow", then Veyra's and Borla's agents called Harlow
+    # "she". Capped and trimmed to keep the prompt (and the call) short.
+    people = "\n".join(
+        f"  - {n.name}: {n.persona[:120]}" for n in list(world.npcs.values())[:8]
+        if n.name != npc.name
+    ) or "  (none yet)"
     system = NPC_SYSTEM_TEMPLATE.format(
         name=npc.name,
         persona=npc.persona,
         location=world.location or "unknown",
         others=", ".join(["Kael"] + others),
+        people=people,
         known_facts="; ".join(npc.known_facts) if npc.known_facts else "none yet",
         recent=recent,
     )
@@ -814,6 +906,99 @@ def npc_reply(npc: NPC, world: WorldState, player_line: str) -> str:
     npc.thread.append({"role": "assistant", "content": content})
     npc.thread[:] = npc.thread[-12:]
     return content
+
+
+# Word budgets the narration is held to in code (same numbers the eval's
+# length check uses). The prompt asks for less; these only catch overruns.
+NARRATION_BUDGET_TIGHT = 110
+NARRATION_BUDGET_FULL = 170
+# On turns where an NPC agent spoke, drop narration sentences that contain
+# quoted speech: the prompt alone did not stop the DM re-voicing the NPC
+# (and adding facts they never said). See CLAUDE.md.
+DROP_SPEECH_ON_NPC_TURNS = True
+_META_SENTENCE = re.compile(r"\bNEXT\s*:|\byour move\b|\bout of character\b|\bOOC\b",
+                            re.IGNORECASE)
+_SENTENCE_END = re.compile(r"[.!?…][\"”’')\]]*\s$")
+
+
+class NarrationFilter:
+    """Sits between the DM model's token stream and the player, one sentence
+    at a time (quoted speech is never split). Each finished sentence is
+    either shown or dropped:
+    - asterisks (markdown emphasis) are removed;
+    - parenthetical asides to the player ("(NEXT: ... Your move.)") are dropped;
+    - with drop_speech, sentences containing quoted speech are dropped;
+    - once the next sentence would take the narration past budget_words, it
+      stops and feed() returns True, which makes ollama_client stop the
+      model. The narration therefore always ends on a whole sentence.
+    The 8B model ignores these rules often enough in the prompt alone (see
+    CLAUDE.md); doing them in code makes them hold every time."""
+
+    def __init__(self, emit=None, budget_words=NARRATION_BUDGET_TIGHT, drop_speech=False):
+        self.emit = emit or (lambda s: None)
+        self.budget = budget_words
+        self.drop_speech = drop_speech
+        self.buf, self.kept, self.dropped = "", [], []
+        self.words, self.stopped, self.in_quote, self.in_aside = 0, False, False, False
+
+    def feed(self, piece: str) -> bool:
+        if self.stopped:
+            return True
+        for ch in piece.replace("*", ""):
+            self.buf += ch
+            if ch == "“":
+                self.in_quote = True
+            elif ch == "”":
+                self.in_quote = False
+            elif ch == '"':
+                self.in_quote = not self.in_quote
+            elif ch.isspace() and not self.in_quote and _SENTENCE_END.search(self.buf):
+                self._sentence(self.buf)
+                self.buf = ""
+                if self.stopped:
+                    return True
+        return False
+
+    def _sentence(self, raw: str):
+        text = raw.strip()
+        if not text:
+            return
+        opens = text.startswith(("(", "["))
+        if self.in_aside or opens or _META_SENTENCE.search(text):
+            self.in_aside = (self.in_aside or opens) and not (")" in text or "]" in text)
+            self.dropped.append(text)
+            return
+        if self.drop_speech and re.search(r'["“”]', text):
+            self.dropped.append(text)
+            return
+        n = len(text.split())
+        if self.kept and self.words + n > self.budget:
+            self.stopped = True
+            self.dropped.append(text)
+            return
+        out = raw if self.kept else raw.lstrip()
+        self.kept.append(out)
+        self.words += n
+        self.emit(out)
+
+    def finish(self) -> str:
+        tail = self.buf.strip()
+        if tail and not self.stopped:
+            if self.kept and not re.search(r"[.!?…][\"”’')\]]*$", tail):
+                # The model's own output ended mid-sentence (seen once in an
+                # eval: "...The cobbled alleyway stretches black and"). Never
+                # show a broken sentence when whole ones were already shown.
+                self.dropped.append(tail)
+            else:
+                self._sentence(self.buf + " ")
+        self.buf = ""
+        if not self.kept and self.dropped:
+            # Everything was dropped (e.g. all speech): show the first
+            # sentence anyway rather than an empty narration.
+            first = next((d for d in self.dropped if not d.startswith(("(", "["))), self.dropped[0])
+            self.kept.append(first)
+            self.emit(first)
+        return "".join(self.kept).strip()
 
 
 def narrate(world: WorldState, player_input: str, verdict: dict,
@@ -880,10 +1065,19 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
         length_block += (
             " The NPC's line was already shown to the player: do not quote "
             "or repeat it, narrate only reactions and what happens next. "
-            f"{speaker} has already spoken this turn: write NO new spoken "
-            f"words for {speaker}, and never change or add to what they "
-            "said (names, places, directions, prices stay exactly as they "
-            "gave them)."
+            f"{speaker} has already spoken this turn, so this narration has NO "
+            "quoted speech at all -- no quotation marks, from anyone. Describe "
+            f"only actions and reactions, and never change or add to what "
+            f"{speaker} said (names, places, directions, prices)."
+        )
+    # The Referee's twist sat mid-message and was often ignored: in play the
+    # Referee ruled a hidden note "blank except for a hound's paw print" and
+    # the narration never said what the note showed. End placement, like
+    # LENGTH. (judge_action already clears the twist on overstep turns.)
+    if verdict.get("twist") and not assertion:
+        length_block += (
+            f" MUST HAPPEN THIS TURN, in your own words: {verdict['twist']}"
+            f"{'' if str(verdict['twist']).rstrip().endswith('.') else '.'}"
         )
     # Direct questions were answered with mood instead of information in a
     # real play session (a note the player read came back as riddles; it took
@@ -912,9 +1106,12 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
     # "narrate the character's attempt" got read as "voice it".
     length_block += (
         " PLAYER'S VOICE: never write words for the player's character -- no "
-        "quoted speech from them or from 'you', and no thoughts, feelings, or "
-        "decisions. The player already said what they say. Narrate only how "
-        "the world and the NPCs respond."
+        "quoted speech from them or from 'you', and no thoughts, feelings, "
+        "instincts or decisions (not 'your neck prickles', not 'you sense "
+        "danger'). The player already said what they say. Narrate only how "
+        "the world and the NPCs respond: what can be seen, heard and smelled."
+        " TONE: grounded and ordinary -- no magic or uncanny details unless "
+        "already established. Plain text, no asterisks."
     )
     user_content = (
         f"WORLD CONTEXT:\n{world.context_brief()}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
@@ -924,11 +1121,18 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
         {"role": "system", "content": DM_SYSTEM},
         {"role": "user", "content": user_content},
     ]
-    content, _ = chat(
-        messages, options=DM_OPTIONS,
-        stream=stream_cb is not None, on_token=stream_cb,
+    full = bool(verdict.get("scene_shift") or new_lore
+                or verdict.get("turn_type") == "info_request") and not assertion
+    narration = NarrationFilter(
+        emit=stream_cb,
+        budget_words=NARRATION_BUDGET_FULL if full else NARRATION_BUDGET_TIGHT,
+        drop_speech=bool(npc_line) and DROP_SPEECH_ON_NPC_TURNS,
     )
-    return content
+    # Always streamed internally, so the filter can stop the model early.
+    chat(messages, options=DM_OPTIONS, stream=True, on_token=narration.feed)
+    text = narration.finish()
+    verdict["narration_dropped"] = narration.dropped  # for debugging / eval reports
+    return text
 
 
 def scene_may_have_changed(player_input: str, verdict: dict, npc_line: str,
@@ -1042,6 +1246,30 @@ def apply_scene_update(world: WorldState, update: dict, exclude_from: str = "",
             # the narration made the tracker put Borla on the road.
             npc.location = world.location
     return changes
+
+
+def bring_companions(world: WorldState, player_input: str, old_location: str) -> list:
+    """After a move, NPCs the PLAYER says they go with come along ("I follow
+    him out", "with Vexin", "Vexin and I"). The player's own words beat the
+    tracker here: in play it left Vexin in the tavern 3/3 times although Kael
+    had just said "I follow him out". Pronouns mean the active NPC."""
+    text = _unquoted(player_input).lower()
+    moved = []
+    for npc in world.npcs.values():
+        if npc.location != old_location or not npc.important:
+            continue
+        refs = [re.escape(t) for t in npc.name_tokens()] + [
+            re.escape(re.sub(r"^(?:the|a|an)\s+", "", a.lower())) for a in npc.aliases]
+        if npc.name == world.active_npc:
+            refs += ["him", "her", "them"]
+        if not refs:
+            continue
+        ref = "(?:" + "|".join(refs) + ")"
+        if re.search(rf"\b(?:follow(?:s|ing)?|with|alongside|accompan\w+)\s+(?:the\s+)?{ref}\b", text) \
+                or re.search(rf"\b{ref}\s+and\s+i\b|\bi\s+and\s+{ref}\b", text):
+            npc.location = world.location
+            moved.append(npc.name)
+    return moved
 
 
 def worldbuild(world: WorldState, prompt: str) -> str:

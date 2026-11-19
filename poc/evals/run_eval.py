@@ -61,6 +61,8 @@ def run_scenario(turns, use_judge, run_idx, total_runs):
                     raise
                 marks.clear()
         elapsed = time.monotonic() - t0
+        verdict["_location"] = world.location
+        verdict["_present"] = [n.name for n in world.present_npcs()]
         results = checks.run_checks(turn, narration, verdict, use_judge=use_judge)
         fails = [r["name"] for r in results if r["passed"] is False]
         print(f"  run {run_idx}/{total_runs} {turn.id:<22} {len(narration.split()):>4}w "

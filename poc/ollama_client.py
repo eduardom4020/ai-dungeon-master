@@ -13,7 +13,9 @@ def chat(messages, model=DEFAULT_MODEL, stream=False, options=None,
     options: dict of generation params (temperature, top_k, top_p, ...) --
         left to the caller so each agent role can carry its own tuning.
     json_format: request strict JSON output (Ollama's `format: "json"`).
-    on_token: callback(piece:str) invoked per chunk when stream=True.
+    on_token: callback(piece:str) invoked per chunk when stream=True. If it
+        returns True, generation stops early (the connection is closed, which
+        makes Ollama stop generating) and the content so far is returned.
 
     keep_alive: how long Ollama keeps the model loaded in VRAM after this
         call. -1 means indefinitely -- fine here since every agent role
@@ -54,8 +56,9 @@ def chat(messages, model=DEFAULT_MODEL, stream=False, options=None,
             piece = chunk.get("message", {}).get("content", "")
             if piece:
                 content_parts.append(piece)
-                if on_token:
-                    on_token(piece)
+                if on_token and on_token(piece) is True:
+                    meta = {"stopped_early": True}
+                    break
             if chunk.get("done"):
                 meta = chunk
     return "".join(content_parts), meta
