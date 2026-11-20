@@ -108,6 +108,25 @@ for line, claim, want in [
 ]:
     check(line, agents.claim_is_only_speech(line, claim), want)
 
+print("\n== strip_claim (what the DM/NPC hear on a refused-claim turn)")
+for line, claim, want in [
+    ("Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into "
+     "surrendering instantly, no fight needed.", "three armed men storm in", "I draw my sword."),
+    ("It starts to rain heavily outside.", "it starts to rain heavily", ""),
+    ("On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+     "Sergeant Hale, Kael's old army friend, is there", ""),
+    ("As I walk toward the pit, it suddenly starts pouring rain, so the guards run for cover and leave "
+     "me alone with Hale.", "it starts to rain heavily", "As I walk toward the pit."),
+    ("I slide a coin across her table and lean in close. She can't resist the money, so she tells me "
+     "the safe way into the mill.", "Veyra cannot resist the money and tells me the safe way into the mill",
+     "I slide a coin across her table."),
+]:
+    check(line, agents.strip_claim(line, claim), want)
+check("NPC line: sentence echoing the claim dropped, quotes kept",
+      agents.drop_claim_sentences('Grimbold grunts. "Storm\'s comin\', mark me." He pours another ale. '
+                                  'The rain hammers the roof.', "it starts to rain heavily"),
+      'Grimbold grunts. "Storm\'s comin\', mark me." He pours another ale.')
+
 print("\n== NarrationFilter (markdown, asides, NPC speech, budget, broken tail)")
 f = agents.NarrationFilter(budget_words=110)
 f.feed('The forge **glows**. Borla spits. *(NEXT: Borla shifts to a new demand--or does he? Your move.)* ')
@@ -126,6 +145,18 @@ check("broken trailing fragment dropped", f.finish(), "The door groans shut behi
 f = agents.NarrationFilter(budget_words=20)
 f.feed('He says, "Go to the mill. Ask for Harlow. Tell her I sent you." Then he turns away. ')
 check("multi-sentence quote not split", f.finish(), 'He says, "Go to the mill. Ask for Harlow. Tell her I sent you." Then he turns away.')
+
+sim = agents._claim_similarity("it starts to rain heavily")
+f = agents.NarrationFilter(reject=lambda s: sim(s) >= agents.CLAIM_SENTENCE_SIM,
+                           fallback=agents.REFUSED_FALLBACK_LINE)
+f.feed("Grimbold wipes the bar. The sudden, violent thud of rain on the tin roof fills the room. "
+       "The miner keeps drinking. ")
+check("refused claim: sentence making it true is dropped", f.finish(),
+      "Grimbold wipes the bar. The miner keeps drinking.")
+f = agents.NarrationFilter(reject=lambda s: sim(s) >= agents.CLAIM_SENTENCE_SIM,
+                           fallback=agents.REFUSED_FALLBACK_LINE)
+f.feed("The rain falls in sheets against the windows. ")
+check("refused claim: never falls back to a rejected sentence", f.finish(), agents.REFUSED_FALLBACK_LINE)
 
 print("\n== apply_scene_update guards (the tracker model is unreliable)")
 w = tavern_world()

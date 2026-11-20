@@ -840,6 +840,59 @@ def claim_is_only_speech(player_input: str, assertion: str) -> bool:
     return len(in_quotes) >= 2 and not in_narration
 
 
+# --- Keeping refused claims out of the story ----------------------------
+# Even with the PLAYER OVERSTEP block, the DM sometimes narrated the refused
+# claim as true ("The rain falls in sheets..."), roughly 1 in 10-25 invented
+# turns by the judge -- and the judge itself passed several more ("the rain
+# remains steady outside", "Then the first armed man screams"). Two causes,
+# two fixes: the DM was shown the claim verbatim in the PLAYER line (it
+# continued it), and nothing checked the output. Calibrated on all saved
+# eval narrations: the offending sentence is nearly always the one most
+# similar to the claim (sentence-embedding cosine >= ~0.40; the median for a
+# narration's closest sentence on good turns is 0.22).
+CLAIM_SENTENCE_SIM = 0.40   # narration/NPC sentences at or above this are dropped
+CLAIM_FRAGMENT_SIM = 0.50   # player-line fragments at or above this are removed
+_FIRST_PERSON_START = re.compile(r"^(?:[\w'’-]+\s+){0,3}(?:i|i'm|i've|i'll|i'd|my)\b", re.IGNORECASE)
+_OTHER_START = re.compile(r"^(?:he|she|they|it|who|which|that|someone|somebody|everyone|everybody|"
+                          r"nobody|there)\b", re.IGNORECASE)
+REFUSED_FALLBACK_LINE = "Everything around you carries on exactly as before."
+
+
+def _claim_similarity(assertion: str):
+    """Returns sim(text) -> cosine similarity of text to the refused claim."""
+    model = _get_embed_model()
+    claim_vec = model.encode([assertion], convert_to_tensor=True)
+    return lambda text: float(util.cos_sim(claim_vec, model.encode([text], convert_to_tensor=True))[0][0])
+
+
+def strip_claim(player_input: str, assertion: str) -> str:
+    """The player's line with the refused claim taken out, for the DM and
+    the NPC agent: only the character's own first-person attempts (and what
+    they say in quotes) are kept, minus fragments close to the claim.
+    "Three armed men storm in. I draw my sword and ... intimidate all three"
+    -> "I draw my sword." ; "It starts to rain heavily outside." -> ""."""
+    sim = _claim_similarity(assertion)
+    keep = []
+    for frag in re.split(r"[.!?;]+\s*|,\s*(?:and\s+|so\s+|then\s+|but\s+)?|\s+(?:and|so|then|but)\s+",
+                         _unquoted(player_input)):
+        frag = frag.strip(" ,:")
+        if len(frag.split()) < 2 or _OTHER_START.match(frag) or not _FIRST_PERSON_START.search(frag):
+            continue  # someone or something else is the subject: not the player's to decide
+        if sim(frag) >= CLAIM_FRAGMENT_SIM:
+            continue
+        keep.append(frag[0].upper() + frag[1:] + ".")
+    keep += [f'"{q}"' for q in _quoted_parts(player_input) if q]
+    return " ".join(keep)
+
+
+def drop_claim_sentences(text: str, assertion: str) -> str:
+    """Remove the sentences of an NPC line that echo the refused claim (an
+    NPC muttering about 'the storm' made a refused rain claim half-true)."""
+    sim = _claim_similarity(assertion)
+    parts = re.findall(r'.+?(?:[.!?…]+["”’]?(?=\s|$)|$)', text, re.S)
+    return " ".join(p.strip() for p in parts if p.strip() and sim(p) < CLAIM_SENTENCE_SIM).strip()
+
+
 def correction_note(verdict: dict) -> str:
     """The out-of-character explanation shown to the player BEFORE the
     narration when their claim about the world was not accepted. Built in
@@ -934,10 +987,14 @@ class NarrationFilter:
     The 8B model ignores these rules often enough in the prompt alone (see
     CLAUDE.md); doing them in code makes them hold every time."""
 
-    def __init__(self, emit=None, budget_words=NARRATION_BUDGET_TIGHT, drop_speech=False):
+    def __init__(self, emit=None, budget_words=NARRATION_BUDGET_TIGHT, drop_speech=False,
+                 reject=None, fallback=None):
         self.emit = emit or (lambda s: None)
         self.budget = budget_words
         self.drop_speech = drop_speech
+        # reject(sentence) -> True drops it for good (never used as the
+        # fallback either): on refused-claim turns, sentences echoing the claim.
+        self.reject, self.fallback, self.rejected = reject, fallback, []
         self.buf, self.kept, self.dropped = "", [], []
         self.words, self.stopped, self.in_quote, self.in_aside = 0, False, False, False
 
@@ -968,6 +1025,9 @@ class NarrationFilter:
             self.in_aside = (self.in_aside or opens) and not (")" in text or "]" in text)
             self.dropped.append(text)
             return
+        if self.reject and self.reject(text):
+            self.rejected.append(text)
+            return
         if self.drop_speech and re.search(r'["“”]', text):
             self.dropped.append(text)
             return
@@ -992,12 +1052,15 @@ class NarrationFilter:
             else:
                 self._sentence(self.buf + " ")
         self.buf = ""
-        if not self.kept and self.dropped:
+        if not self.kept:
             # Everything was dropped (e.g. all speech): show the first
-            # sentence anyway rather than an empty narration.
-            first = next((d for d in self.dropped if not d.startswith(("(", "["))), self.dropped[0])
-            self.kept.append(first)
-            self.emit(first)
+            # sentence anyway rather than an empty narration -- but never a
+            # rejected one; then the fallback line, if given.
+            first = next((d for d in self.dropped if not d.startswith(("(", "["))), None)
+            first = first or self.fallback
+            if first:
+                self.kept.append(first)
+                self.emit(first)
         return "".join(self.kept).strip()
 
 
@@ -1113,9 +1176,18 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
         " TONE: grounded and ordinary -- no magic or uncanny details unless "
         "already established. Plain text, no asterisks."
     )
+    if assertion:
+        # Never show the DM the refused claim as the player's line: it tended
+        # to continue it. Only the character's own attempt is passed on.
+        kept = strip_claim(player_input, assertion)
+        player_block = ("PLAYER (the invented part of their message has been removed -- "
+                        "see PLAYER OVERSTEP below): "
+                        + (kept or "(nothing else: they only declared the claim, which did not happen)"))
+    else:
+        player_block = f"PLAYER: {player_input}"
     user_content = (
         f"WORLD CONTEXT:\n{world.context_brief()}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
-        f"PLAYER: {player_input}\n\n{length_block}"
+        f"{player_block}\n\n{length_block}"
     )
     messages = [
         {"role": "system", "content": DM_SYSTEM},
@@ -1123,15 +1195,19 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
     ]
     full = bool(verdict.get("scene_shift") or new_lore
                 or verdict.get("turn_type") == "info_request") and not assertion
+    claim_sim = _claim_similarity(assertion) if assertion else None
     narration = NarrationFilter(
         emit=stream_cb,
         budget_words=NARRATION_BUDGET_FULL if full else NARRATION_BUDGET_TIGHT,
         drop_speech=bool(npc_line) and DROP_SPEECH_ON_NPC_TURNS,
+        reject=(lambda s: claim_sim(s) >= CLAIM_SENTENCE_SIM) if assertion else None,
+        fallback=REFUSED_FALLBACK_LINE if assertion else None,
     )
     # Always streamed internally, so the filter can stop the model early.
     chat(messages, options=DM_OPTIONS, stream=True, on_token=narration.feed)
     text = narration.finish()
     verdict["narration_dropped"] = narration.dropped  # for debugging / eval reports
+    verdict["narration_rejected"] = narration.rejected
     return text
 
 

@@ -1,0 +1,920 @@
+{
+  "meta": {
+    "label": "claims-after-road",
+    "scenario": "road_trip",
+    "runs": 5,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "6d03418+dirty",
+    "timestamp": "2026-11-20 00:30",
+    "turn_ids": [
+      "r08-old-friend",
+      "r10-snow"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "explained": {
+        "pass": 10,
+        "n": 10,
+        "judged": false,
+        "rate": 1.0
+      },
+      "flagged": {
+        "pass": 10,
+        "n": 10,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 8,
+        "n": 10,
+        "judged": true,
+        "rate": 0.8
+      },
+      "length": {
+        "pass": 10,
+        "n": 10,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 10,
+        "n": 10,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 10,
+        "n": 10,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 10,
+        "n": 10,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_made_true": {
+        "pass": 10,
+        "n": 10,
+        "judged": true,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "invented": {
+        "mean": 68.9,
+        "max": 75
+      }
+    },
+    "latency_mean_s": 16.84,
+    "first_token_mean_s": 11.5,
+    "fast_path_rate": 0.0,
+    "turns": 10
+  },
+  "runs": [
+    [
+      {
+        "id": "r08-old-friend",
+        "kind": "invented",
+        "player": "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+        "narration": "The tavern\u2019s lanterns cast flickering pools of light over the rough-hewn floorboards, untouched by any stranger claiming old acquaintances. A barmaid wipes a cup with a rag too worn to hide the damp, her focus steady on the polishing rather than the empty doorway where no new face arrived. Behind the bar, Grimbold\u2019s brows lower fractionally over his ale stein as his hawk-like gaze sweeps the same half-lit space again\u2014nothing has shifted.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "I spot an old friend of mine named Sergeant Hale waiting by the tavern entrance",
+          "not_true": "no one resembling Sergeant Hale is present in the tavern area",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The DM never introduced a Sergeant Hale, and the player\u2019s assertion alters the scene without plausible evidence in the given context.",
+          "correction_note": "Sorry, but in this case no one resembling Sergeant Hale is present in the tavern area. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.93,
+        "first_token_s": 14.76,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration only describes ordinary light ('lanterns'), ordinary objects ('rough-hewn floorboards', 'cup', 'rag', 'ale stein'), and mundane human actions ('wipes', 'focus steady', 'sweeps').",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='I spot an old friend of mine named Sergeant Hale waiting by the tavern entrance'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one resembling Sergeant Hale is present in the tavern area. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"nothing has shifted\"** and **\"no new face arrived\"** explicitly contradict the player\u2019s claim of Sergeant Hale\u2019s presence or greeting.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical observations and NPC reactions without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "r10-snow",
+        "kind": "invented",
+        "player": "It suddenly starts to snow over the whole town.",
+        "narration": "The bar\u2019s lanterns dim slightly as a cold wind rattles an upper-floor window\u2014old glass groaning against its frame, not snow. Grimbold\u2019s fingers tighten around his ale stein, and the barmaid\u2019s rag stills mid-wipe, her sharp ears tuning for anything beyond the wind. The tavern\u2019s usual hum of voices doesn\u2019t falter, but the smell of woodsmoke grows heavier where the fire\u2019s draft shifts.",
+        "words": 62,
+        "verdict": {
+          "player_assertion": "it starts to snow over the whole town",
+          "not_true": "the snow does not suddenly begin falling",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the player invented a weather event to alter tension, but the DM controls atmospheric shifts.",
+          "correction_note": "Sorry, but in this case the snow does not suddenly begin falling. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 10.57,
+        "first_token_s": 8.89,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "62 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical reactions (wind rattling windows, draft shifting) without any supernatural or uncanny elements like curses, omens, or unexplained phenomena.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to snow over the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the snow does not suddenly begin falling. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration explicitly states the window rattles from a **cold wind** and mentions **old glass groaning**, with no mention of snow or a snowstorm.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing them to Kael's internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r08-old-friend",
+        "kind": "invented",
+        "player": "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+        "narration": "Grimbold\u2019s grizzled eyebrows lift just enough to slice the faint slant of evening light, but his tone stays blunt. He doesn\u2019t turn to look outside; his voice betrays no suspicion, just dry, knowing dismissiveness.\n\nThe air in the tavern hums with the low murmur of patrons shifting in their seats, but the doorframe\u2019s still shadowed where the entrance should be. Kael\u2019s arrival seems to have stirred nothing else\u2014no curious glances, no sudden shift in conversation.",
+        "words": 75,
+        "verdict": {
+          "player_assertion": "I spot an old friend of mine named Sergeant Hale waiting by the tavern entrance",
+          "not_true": "no one resembling Sergeant Hale is present at the tavern entrance",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented a fact (Sergeant Hale\u2019s presence) that wasn\u2019t established, so the DM must intervene to ground the scene\u2014Grimbold\u2019s reaction creates tension without granting the invented detail.",
+          "correction_note": "Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "\u201cSergeant Hale? Ain\u2019t seen nor heard of him in Ashwick this month\u2014maybe the one that left with the Black Hand last week?\u201d"
+          ],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 19.57,
+        "first_token_s": 10.54,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "75 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'the faint slant of evening light' and 'shadowed where the entrance should be,' but these are ordinary light/shadow effects.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='I spot an old friend of mine named Sergeant Hale waiting by the tavern entrance'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration explicitly states the doorframe remains shadowed and \u2018no curious glances, no sudden shift in conversation\u2019 occurs, ignoring Kael\u2019s claim of seeing Sergeant Hale.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes the tavern's atmosphere and Grimbold's reactions, without attributing any internal state or speech to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "r10-snow",
+        "kind": "invented",
+        "player": "It suddenly starts to snow over the whole town.",
+        "narration": "The tavern\u2019s lanterns flicker wildly for a fraction of a second\u2014just enough to make the walls shimmer as if something brushed past the open door before it swings shut again, catching on the wind. The murmur of the bar stiffens into silence for half a heartbeat, then resumes in hushed tones, though no one glances toward the entrance. Grimbold\u2019s jaw clenches, his fingers tightening around the tankard he wasn\u2019t drinking from.",
+        "words": 71,
+        "verdict": {
+          "player_assertion": "the whole town starts to snow",
+          "not_true": "it is not snowing",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "weather is a DM-invented detail, not a player-controlled action, and contradicting the scene\u2019s calm tension would require a clear narrative cue.",
+          "correction_note": "Sorry, but in this case it is not snowing. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 10.35,
+        "first_token_s": 9.02,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes the walls 'shimmering as if something brushed past the open door' without any explanation or context for this phenomenon.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='the whole town starts to snow'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case it is not snowing. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes atmospheric effects (lanterns flickering, wind, silence) but **never mentions snow or weather changes**\u2014only implied disturbances.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reactions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r08-old-friend",
+        "kind": "invented",
+        "player": "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+        "narration": "The bar\u2019s lantern light flickers as the air hums with casual chatter over spilled ale and the clink of tankards. Grimbold wipes a mug with a rag\u2014already worn threadbare at the hem\u2014and doesn\u2019t look up at the door, his eyes resting on the fire\u2019s glow instead. A stray sliver of smoke curls into his beard as he mutters, \"That\u2019ll be a copper for the mug, and no sneaking off till your debt\u2019s paid.\"",
+        "words": 73,
+        "verdict": {
+          "player_assertion": "I spot an old friend of mine named Sergeant Hale waiting by the tavern",
+          "not_true": "no one resembling Sergeant Hale is present at the tavern entrance",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player invented a character not established in the world, which cannot be assumed.",
+          "correction_note": "Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 17.6,
+        "first_token_s": 8.81,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "73 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'a stray sliver of smoke curls into his beard'\u2014a minor but figurative description that does not imply supernatural or uncanny behavior, as smoke is a natural phenomenon.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='I spot an old friend of mine named Sergeant Hale waiting by the tavern'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses solely on Grimbold\u2019s actions and the bar\u2019s atmosphere, with no mention of Sergeant Hale or any arrival.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes the environment, Grimbold\u2019s actions, and dialogue\u2014none of which involve Kael speaking, thinking, or deciding.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "r10-snow",
+        "kind": "invented",
+        "player": "It suddenly starts to snow over the whole town.",
+        "narration": "The lantern\u2019s flame spits a puff of black smoke toward the ceiling, startling a drunk at the corner table into cursing. Grimbold wipes his hands on his apron but doesn\u2019t glance up, his stubbled jaw firming as he studies the hearth\u2019s glow. Outside, wind howls through the empty streets, but no fresh flakes dance in the lantern\u2019s glow\u2014just the same dull gray of frozen cobbles, untouched since the storm began.",
+        "words": 70,
+        "verdict": {
+          "player_assertion": "it starts to snow heavily over the whole town",
+          "not_true": "the snow does not begin suddenly over Ashwick",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "weather is an invented fact, not a character action, and cannot be asserted by the player.",
+          "correction_note": "Sorry, but in this case the snow does not begin suddenly over Ashwick. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 23.43,
+        "first_token_s": 21.49,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "70 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical phenomena (wind, snow, lantern smoke, firelight) without introducing any supernatural or uncanny elements like curses, omens, or unnatural lights.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to snow heavily over the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the snow does not begin suddenly over Ashwick. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"no fresh flakes dance in the lantern\u2019s glow\u2014just the same dull gray of frozen cobbles, untouched since the storm began\"** explicitly contradicts the claim of snowing.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and environmental details without attributing them to Kael's thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r08-old-friend",
+        "kind": "invented",
+        "player": "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+        "narration": "A crease deepens in Grimbold\u2019s bushy brows as he leans back from wiping a tankard, sniffing the cold evening air. The dwarf\u2019s gaze flicks toward the tavern door like he\u2019s listening for something\u2014then settles back on the hearth\u2019s sputtering fire. \u201cHate to hear folks dreaming of old comrades at dusk,\u201d he mutters, pouring another ale with a practiced clatter of glass. The tavern\u2019s usual murmur hums on without change.",
+        "words": 69,
+        "verdict": {
+          "player_assertion": "I spot my old army friend Sergeant Hale waiting outside the Red Griffin",
+          "not_true": "no one resembling your old army friend is present outside the tavern",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player invented a character not established in the world, and the scene is tightly controlled by the DM.",
+          "correction_note": "Sorry, but in this case no one resembling your old army friend is present outside the tavern. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 12.55,
+        "first_token_s": 10.6,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "69 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions Grimbold\u2019s gaze \u2018like he\u2019s listening for something\u2019 without specifying a source, which could imply supernatural perception, but no explicit supernatural elements are described.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='I spot my old army friend Sergeant Hale waiting outside the Red Griffin'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one resembling your old army friend is present outside the tavern. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration never mentions Sergeant Hale or any interaction with him, instead focusing solely on Grimbold\u2019s internal reactions and the tavern\u2019s atmosphere.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Grimbold\u2019s actions and dialogue, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "r10-snow",
+        "kind": "invented",
+        "player": "It suddenly starts to snow over the whole town.",
+        "narration": "Grimbold\u2019s eyebrows twitch, but his face stays impassive as he squints toward the gloom at the door\u2014then exhales through his nose, shaking his head with a flick of his mug. A plump patron in a grease-stained apron turns from polishing a pewter platter, eyeing the draft from outside like it might contain secrets. The fire\u2019s embers flicker without a trace of snowflakes, and the tavern\u2019s stale warmth wraps tighter around the bar.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "it starts to snow heavily over the whole town",
+          "not_true": "the snow does not begin to fall across Ashwick",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the DM controls weather and environment, not the player, so the assertion is invalid; the tavern\u2019s warmth and the dwarf\u2019s immediate reaction make it a notable shift.",
+          "correction_note": "Sorry, but in this case the snow does not begin to fall across Ashwick. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 18.15,
+        "first_token_s": 9.8,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a snowstorm in a non-magical town without any supernatural elements like glowing embers, curses, or omens.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to snow heavily over the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the snow does not begin to fall across Ashwick. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The fire\u2019s embers flicker without a trace of snowflakes\"** explicitly contradicts the claim of snow outside.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reactions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r08-old-friend",
+        "kind": "invented",
+        "player": "On the corner I spot my old army friend, Sergeant Hale, who waves me over.",
+        "narration": "Grimbold\u2019s gnarled fingers pause mid-buss of a mug, his dark beard twitching like he\u2019s just caught a fly in amber. His grizzled glare follows the direction of the doorway, but all is quiet\u2014just the usual nighttime murmur of Ashwick\u2019s streets outside, the distant clink of a far-off cart\u2019s chain. \"No Hale,\" he grumbles, voice rough as cracked oak, before wiping his hands on his apron and shifting his beer back in place.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "I spot an old army friend named Sergeant Hale waiting by the tavern entrance",
+          "not_true": "no one resembling Sergeant Hale is present at the tavern entrance",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented a character not established in the world, but the DM\u2019s response must engage the scene\u2019s tension\u2014Grimbold\u2019s suspicion is a natural obstacle.",
+          "correction_note": "Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 18.89,
+        "first_token_s": 10.91,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes Grimbold\u2019s dark beard twitching like he\u2019s just caught a fly in amber, which implies an uncanny or supernatural observation.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='I spot an old army friend named Sergeant Hale waiting by the tavern entrance'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one resembling Sergeant Hale is present at the tavern entrance. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"No Hale\" is explicitly stated by Grimbold, and the narration describes no visual or auditory confirmation of Hale\u2019s presence or waving.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Grimbold\u2019s actions and dialogue, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "r10-snow",
+        "kind": "invented",
+        "player": "It suddenly starts to snow over the whole town.",
+        "narration": "The tavern\u2019s single lantern flickers against the sudden silence\u2014no snowflakes, only the cold bite of autumn wind sifting through a loose shutter. Grimbold\u2019s brows knit deeper over his mug, breathing slow, like a man who\u2019s heard too many false alarms to react. Inside, someone\u2019s horse whinnies softly in the stables beyond the barroom.",
+        "words": 53,
+        "verdict": {
+          "player_assertion": "it starts to snow heavily over the whole town",
+          "not_true": "it does not start to snow",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the player invented a weather event without context or foreshadowing, so it cannot just happen\u2014nature does not obey their whim.",
+          "correction_note": "Sorry, but in this case it does not start to snow. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 15.38,
+        "first_token_s": 10.22,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "53 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes only ordinary sounds (whinnying horse), light (flickering lantern), and environmental conditions (wind, cold) without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to snow heavily over the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case it does not start to snow. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration explicitly states 'no snowflakes' and describes 'the cold bite of autumn wind' instead, contradicting the claim of snow.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing them to Kael or stating his internal state, thoughts, or speech.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}

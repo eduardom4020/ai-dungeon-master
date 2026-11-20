@@ -1,0 +1,2130 @@
+{
+  "meta": {
+    "label": "claims-after",
+    "scenario": "tavern_night",
+    "runs": 5,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "6d03418+dirty",
+    "timestamp": "2026-11-20 00:16",
+    "turn_ids": [
+      "t04-storm-in",
+      "t06-someone-enters",
+      "t08-immortal",
+      "t11-hearing",
+      "t12-rain"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "explained": {
+        "pass": 25,
+        "n": 25,
+        "judged": false,
+        "rate": 1.0
+      },
+      "flagged": {
+        "pass": 25,
+        "n": 25,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 13,
+        "n": 25,
+        "judged": true,
+        "rate": 0.52
+      },
+      "length": {
+        "pass": 25,
+        "n": 25,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 25,
+        "n": 25,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 25,
+        "n": 25,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 25,
+        "n": 25,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_made_true": {
+        "pass": 25,
+        "n": 25,
+        "judged": true,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "invented": {
+        "mean": 62.6,
+        "max": 101
+      }
+    },
+    "latency_mean_s": 20.18,
+    "first_token_mean_s": 18.04,
+    "fast_path_rate": 0.0,
+    "turns": 25
+  },
+  "runs": [
+    [
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "Grimbold\u2019s grizzled eyebrow twitches as his calloused fingers tighten around the tankard, spilling a drop of frothy ale onto the scarred wood. The sword\u2019s leather-wrapped hilt gleams dully under the flickering lantern light, casting shifting shadows at the bar. His jaw clenches, but his voice stays low\u2014just the faint creak of his stool as he exhales through his nose, waiting to see what else comes next.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "not_true": "no men enter the Red Griffin while Kael is speaking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented new combatants and their actions, but the tavern\u2019s quiet arrival is disrupted regardless.",
+          "correction_note": "Sorry, but in this case no men enter the Red Griffin while Kael is speaking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.89,
+        "first_token_s": 20.22,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions 'shifting shadows' and 'the sword\u2019s leather-wrapped hilt gleams dully under the flickering lantern light,' which could imply an unnatural or uncanny glow.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no men enter the Red Griffin while Kael is speaking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes no armed men entering, no surrender, and no immediate action\u2014only Grimbold\u2019s internal reaction to an unspecified event.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "The lantern flicker casts a longer shadow over the bar stool now, the wax drip pooling unevenly. Grimbold exhales through his nose, a low, disbelieving sound\u2014like a boot stepping on stale bread. His grip tightens on his tankard again, the edges of his beard lifting as he shifts forward, half-turned toward the door, half-turned toward Kael, as if expecting confirmation or an excuse.",
+        "words": 63,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while you were talking to Grimbold",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "the player asked about an unestablished fact, but the scene is static and safe to invent a minor detail without altering tension.",
+          "correction_note": "Sorry, but in this case no one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 36.2,
+        "first_token_s": 34.36,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "63 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration only describes ordinary physical phenomena (lantern flicker, wax dripping, shadows, breathing, tension) without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on Grimbold\u2019s reactions and the lantern\u2019s flicker but never explicitly mentions or describes anyone entering the room or altering the scene.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of Grimbold and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "The bar\u2019s air thickens like smoke from a pipe that\u2019s gone out too soon. Grimbold\u2019s tankard clatters against the counter, a sharp thunk that snaps the room into silence\u2014even the hooded figure falters, stiffening as if a noose had tightened around their neck.",
+        "words": 43,
+        "verdict": {
+          "player_assertion": "your character is now immortal",
+          "not_true": "your character did not become immortal",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "the player invented a fact about their character's abilities, which is not allowed under PART 3 rules.",
+          "correction_note": "Sorry, but in this case your character did not become immortal. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "His guttural curse is half-drowned in a snort of disbelief: \u201cImmortal? By the dwarf\u2019s beard\u2014that\u2019s the kind of story the fools in the corner are trading with their last copper, not the kind that keeps a door locked tighter\u2019n a vault at sunset.\""
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 29.19,
+        "first_token_s": 26.14,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "43 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'noose' tightening around Kael's neck without any visible source or explanation, implying a supernatural or uncanny force.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character is now immortal'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character did not become immortal. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes a sudden, unsettling reaction from Grimbold and others, but does not confirm or explain Kael\u2019s immortality or invulnerability as a fact\u2014it only implies an eerie, unexplained shift in atmosphere.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('stiffening as if a noose had tightened around their neck') and environmental/character responses, not Kael's internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The bar door\u2019s creak snaps Grimbold upright, his tankard half-raised toward the newcomer\u2019s cloaked shoulder as if bracing for a blow that never comes. His stubbled jaw works, lips parting to speak but frozen mid-word, fingers instead stiffening around the handle\u2014a slow, deliberate twist, like he\u2019s checking for hidden weight on a counterfeit coin. The lantern\u2019s shadow stretches longer across the flagstoned floor, and the hooded figure\u2019s gloved hand stirs, brushing nothing toward their chest.",
+        "words": 75,
+        "verdict": {
+          "player_assertion": "your character can suddenly hear every conversation in the whole town",
+          "not_true": "your character does not suddenly hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "invented facts about perception are never granted without mechanical or narrative justification.",
+          "correction_note": "Sorry, but in this case your character does not suddenly hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 28.5,
+        "first_token_s": 26.45,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "75 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a lantern\u2019s shadow stretching and a hooded figure\u2019s gloved hand 'stirring, brushing nothing toward their chest,' which implies an uncanny or supernatural absence of interaction without cause.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character does not suddenly hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on Grimbold\u2019s physical reactions and the immediate environment, with no mention of auditory perception or town-wide conversations.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "The hooded figure\u2019s breath steams again, curling toward the lantern\u2019s dim glow as if testing the air itself. Grimbold\u2019s fingers still hover over the tankard\u2014then lower, resting where the weight shouldn\u2019t make a dent in the worn oak. His free hand drifts to the dagger tucked under his belt, just enough for a flick of the wrist to check the edge. The lantern\u2019s wick hisses, the sudden stillness making the bar\u2019s usual buzz of conversation seem like a memory.",
+        "words": 79,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "not_true": "it does not start to rain heavily outside",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the player\u2019s attempt to invent weather is rejected, but the DM introduces a subtle environmental shift to heighten tension without altering core events.",
+          "correction_note": "Sorry, but in this case it does not start to rain heavily outside. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 14.22,
+        "first_token_s": 12.0,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "79 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes the hooded figure\u2019s breath 'steaming' and curling 'as if testing the air itself,' which implies a supernatural or uncanny element.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case it does not start to rain heavily outside. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration does not mention rain, weather, or any external environmental change at all, focusing solely on internal reactions and bar details.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reflexes ('hooded figure\u2019s breath steams,' 'Grimbold\u2019s fingers still hover,' 'hand drifts to dagger') rather than Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "Grimbold\u2019s beefy fingers lock onto Kael\u2019s wrist, steering the blade down and away from the warped wooden bar. The dwarf\u2019s face darkens, his thick beard bristling as a quiet shout ripples past patrons\u2014\u201cIronfist takes no fools\u2014\u201d\u2014while the hum of the hearth\u2019s fire dies under disapproving glares. A spilled half-pint hisses steam onto the floor where a barefoot serving girl wipes it away with a worn rag.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "not_true": "no men enter the tavern during this exchange",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s assertion of armed intruders is invented; the tavern\u2019s current scene remains undisturbed, but the innkeeper\u2019s reaction to a sudden blade in his establishment is a meaningful complication.",
+          "correction_note": "Sorry, but in this case no men enter the tavern during this exchange. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 17.37,
+        "first_token_s": 15.32,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a dwarf NPC named Grimbold physically restraining Kael\u2019s sword without any explanation or supernatural context, which implies an unnatural or magical intervention.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no men enter the tavern during this exchange. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**The narration describes Grimbold physically restraining Kael\u2019s sword and no armed men appear or surrender, instead emphasizing tension and disapproval.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the NPC Grimbold's words ('Ironfist takes no fools') and describes the world's reaction, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s grip tightens on Kael\u2019s wrist\u2014his knuckles white against the scarred oak table\u2014while a cluster of regulars lean in, eyes fixed on the half-drawn blade. The serving girl\u2019s rag pauses mid-swing, a quiet snick of metal on wood echoing across the now-silent room. The fire\u2019s embers glint like dull coals in the sudden stillness.",
+        "words": 54,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while Kael was talking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s claim of an unannounced arrival is false, but the tavern\u2019s tension makes it plausible someone slipped in unnoticed\u2014adding a potential witness or complication.",
+          "correction_note": "Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 19.8,
+        "first_token_s": 18.59,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "54 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes 'embers glint like dull coals' and 'a quiet snick of metal on wood,' neither of which are supernatural or uncanny.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes a sudden stillness and a cluster of regulars leaning in, but does not explicitly mention anyone entering the room or a new presence.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "Grimbold\u2019s breath fogs in the chilled air as his beard bristles, though his knuckles still whiten where they lock Kael\u2019s wrist. A stray ember skitters from the hearth, leaving a faint scoreline on the table. The room\u2019s silence stretches longer than the last winter\u2019s frost.",
+        "words": 45,
+        "verdict": {
+          "player_assertion": "your character is now immortal, no weapon can hurt him",
+          "not_true": "your character is not immortal and weapons can still hurt him",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "the player attempted to invent a new fact about their character's abilities without justification or prior setup.",
+          "correction_note": "Sorry, but in this case your character is not immortal and weapons can still hurt him. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 22.8,
+        "first_token_s": 21.91,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "45 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a stray ember skittering and a room\u2019s silence stretching metaphorically, but no supernatural or uncanny elements are explicitly described.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character is now immortal, no weapon can hurt him'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character is not immortal and weapons can still hurt him. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes physical interactions (Grimbold\u2019s grip, scoreline) and emotional reactions (silence, tension) without addressing Kael\u2019s claimed immortality or invulnerability.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('breath fogs', 'beard bristles', 'knuckles whiten', 'stray ember skitters') and environmental details, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The firelight flickers weakly, casting uneven shadows across the stained bar. A half-empty tankard rattles where Grimbold sets it down too hard, the impact shaking the worn wood table. Kael\u2019s fingers still ache from the dwarf\u2019s grip, though no other patron has so much as glanced at him since.",
+        "words": 49,
+        "verdict": {
+          "player_assertion": "your character can suddenly hear every conversation in the whole town",
+          "not_true": "your character cannot hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "unearned sensory powers are never granted without narrative cost or consequence",
+          "correction_note": "Sorry, but in this case your character cannot hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 29.25,
+        "first_token_s": 27.86,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "49 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration only describes ordinary firelight, shadows, and physical interactions (e.g., rattling tankard, aching fingers) without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character cannot hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on physical details and immediate surroundings without any mention of Kael hearing conversations or gaining any new sensory ability.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Kael\u2019s physical sensations ('fingers still ache') and the world/NPC actions ('no other patron has glanced at him'), not his thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "Grimbold\u2019s fingers release Kael\u2019s wrist with a sharp crackle of wood splitting where his knuckles dug in. The fire\u2019s embers brighten slightly as a floorboard creaks near the back door\u2014no footstep follows, but the warped hinges groan like a held breath being let go. The tavern\u2019s ordinary silence settles back, heavier now, as if the room itself waited for something to start.",
+        "words": 62,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "not_true": "the rain does not begin immediately",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "weather is DM-invented, but the draft/noticeable wind ties to the scene\u2019s tension (the carvings, the back door\u2019s significance).",
+          "correction_note": "Sorry, but in this case the rain does not begin immediately. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 13.29,
+        "first_token_s": 11.55,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "62 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a 'floorboard creak' and 'warped hinges groan like a held breath being let go,' which are not inherently supernatural or uncanny but imply a slight anthropomorphism or personification of inanimate objects, though not explicitly magical or uncanny in a frontier setting without established magic.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the rain does not begin immediately. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes atmospheric details (groaning hinges, heavier silence) but **never mentions rain, weather, or external conditions**\u2014only internal reactions and sounds within the tavern.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and environmental details without attributing them to Kael's internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "Grimbold\u2019s hand instinctively balls into a fist, gripping his tankard so hard ale sloshes over the rim. The tavern\u2019s usual hum of laughter and clinking mugs sharpens, as if every ear strained toward the sudden metallic clang\u2014but no one glances over. A barmaid mops a sticky spill with a rag that smells of vinegar and spilled beer. The hearth\u2019s spit of embers glow duller, casting your shadow long against the barrel-stained walls.",
+        "words": 72,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "not_true": "no men enter the tavern this turn",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The tavern is quiet and private\u2014no sudden ambushes without warning, and Grimbold\u2019s protective instincts override any intimidation attempt.",
+          "correction_note": "Sorry, but in this case no men enter the tavern this turn. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 11.4,
+        "first_token_s": 9.3,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a hearth\u2019s embers glowing 'duller' but does not imply any supernatural or uncanny cause, nor does it mention any magical elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no men enter the tavern this turn. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes a sudden metallic clang but mentions no armed men entering or surrendering, only a tense silence and minor environmental details.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental changes without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s grizzled eyebrow twists\u2014not toward the door, but down over his snorting snort, as if something just stuck in his throat wrong. The ale tankard thuds back onto the counter with a wet clink, half the foam already evaporated into the stifling tavern air. A child\u2019s laughter skitters by on the far side of the room, but the tavern\u2019s usual low chatter has tightened to a murmur, as if everyone\u2019s waiting for a punchline that never comes.",
+        "words": 77,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while Kael was talking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s assertion of an unseen arrival disrupts the scene, so a new presence is introduced\u2014but not as a player-controlled fact, just a twist to heighten tension.",
+          "correction_note": "Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 11.97,
+        "first_token_s": 10.02,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "77 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a child\u2019s laughter and a tightening of chatter as if waiting for a punchline, but no supernatural or uncanny elements are explicitly mentioned.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"A child\u2019s laughter skitters by on the far side of the room\"** implies auditory evidence of movement/entry, but no direct description of a person entering.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing them to Kael's internal state or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "The ale tankard clinks again on the counter, but no one else looks up. Grimbold\u2019s gnarled fingers tighten around the handle, knuckles white against the dark wood\u2014then relax just as fast. The barmaid dabs the floor with her rag, her movements slow and deliberate, as if listening for something no one else acknowledges. The hearth crackles once, sparks hissing into the soot-stained chimney.",
+        "words": 63,
+        "verdict": {
+          "player_assertion": "your character is now immortal, no weapon can hurt me",
+          "not_true": "your character did not become immortal or gain immunity to weapons",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player attempted to invent a new fact about their character\u2019s abilities, which is not allowed unless explicitly invited or trivial.",
+          "correction_note": "Sorry, but in this case your character did not become immortal or gain immunity to weapons. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.77,
+        "first_token_s": 19.76,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "63 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes no supernatural, magical, or uncanny elements\u2014only ordinary sounds, actions, and environmental details.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character is now immortal, no weapon can hurt me'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character did not become immortal or gain immunity to weapons. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes ambient details without any indication of Kael\u2019s altered state or supernatural immunity being acknowledged or reflected in the environment or NPCs' behavior.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and environmental reactions (e.g., 'gnarled fingers tighten,' 'barmaid dabs the floor,' 'hearth crackles'), not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The tavern\u2019s air thickens, cloying like stale brew left too long in a barrel. A few patrons stiffen\u2014one woman\u2019s grip tightens on her ale so hard the glass rattles, another\u2019s fork clatters to his plate as he stands abruptly, though no one looks toward you. The barmaid\u2019s rag pauses mid-mop, her breath hitching just long enough to catch the scent of iron in the air.",
+        "words": 65,
+        "verdict": {
+          "player_assertion": "your character can suddenly hear every conversation in the whole town",
+          "not_true": "your character does not gain the ability to hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "the player\u2019s attempt to invent a supernatural sense is not grounded in established character or lore, and the scene\u2019s tension lies in the *unspoken* rather than the overt.",
+          "correction_note": "Sorry, but in this case your character does not gain the ability to hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 26.23,
+        "first_token_s": 24.27,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "65 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'scent of iron in the air' without explanation, which could imply an unnatural or supernatural presence (e.g., blood magic, curses, or unseen forces).",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character does not gain the ability to hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes physical reactions and sensory details without confirming or explaining Kael\u2019s claimed ability to hear conversations.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "The tavern\u2019s shutters groan against the windless night, rattling once against cracked wood but holding firm. Grimbold exhales through his nose, nostrils flaring, as if testing the air for lies\u2014or rain. The barmaid\u2019s rag dips in the bucket with a soft plop, water sloshing beside the spilled ale.",
+        "words": 48,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "not_true": "the rain does not begin outside",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s attempt to control the weather is an invented fact, but the gust disrupts the scene organically, heightening tension without requiring the DM to invent new events.",
+          "correction_note": "Sorry, but in this case the rain does not begin outside. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 11.9,
+        "first_token_s": 10.55,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "48 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions no supernatural, magical, or uncanny elements\u2014only ordinary sounds (shutters rattling, water sloshing) and natural tension (windless night, rain implied).",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the rain does not begin outside. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration mentions 'windless night' and 'rain' only through implied atmospheric effects (shutters rattling, water sloshing) without explicit confirmation of heavy rain or sensory confirmation (e.g., 'pouring', 'downpour', or direct observation).",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing them to Kael's thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "The blade clatters to the flagstone floor, ringing hollow under the low-ceilinged tavern. Grimbold glares from beneath bushy eyebrows, his fingers tightening around a tankard as he slams it down\u2014amber ale sloshes, and the room\u2019s murmurs quiet. A few heads turn, curious but wary, though no one else reaches for a weapon.",
+        "words": 52,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "not_true": "no armed men enter the Red Griffin",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented an ambush without cause, but the innkeeper\u2019s immediate reaction disrupts the scene.",
+          "correction_note": "Sorry, but in this case no armed men enter the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 13.28,
+        "first_token_s": 8.22,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "52 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical reactions and environmental sounds without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no armed men enter the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The blade clatters to the flagstone floor\" and no armed men or surrender are mentioned\u2014only Grimbold\u2019s reaction and the tavern\u2019s silence.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and reactions of NPCs and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s grip on the tankard relaxes just enough to let a droplet of foam leak out, dripping onto the scarred oak table. Behind you, the fire crackles louder, casting flickering shadows at the far end of the bar where a few patrons shift in their seats, now half-turned but back to their ale. The air tastes like smoke and stale beer, unchanged by anything that passed.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "someone entered the room while I was talking",
+          "not_true": "no one entered the room during your conversation with Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "the player invented an event (entry) rather than describing Kael\u2019s own attempt to perceive or provoke it.",
+          "correction_note": "Sorry, but in this case no one entered the room during your conversation with Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 10.27,
+        "first_token_s": 8.84,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration only describes ordinary fire crackling, shadows, and patrons shifting\u2014no supernatural or uncanny elements are mentioned.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room while I was talking'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one entered the room during your conversation with Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration mentions 'a few patrons shift in their seats, now half-turned' but explicitly states 'nothing changed by anything that passed' and describes only ambient details without confirming an arrival.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('grip relaxes,' 'fire crackles,' 'patrons shift') and environmental details, not Kael's speech, thoughts, or emotions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "Grimbold\u2019s voice cuts through the quiet, gruff as a hammer on whetstone. \"You\u2019ve got a habit of showboat\u2019n your way into trouble, lad, if you don\u2019t mind me sayin\u2019.\" His tankard slams down again\u2014faster this time\u2014and the ring of metal jolts the glassware on neighboring tables. Behind you, the fire hisses, and the patrons\u2019 whispers settle into a low, uneasy murmur, hands drifting closer to their drinks instead of blades.",
+        "words": 70,
+        "verdict": {
+          "player_assertion": "your character is now immortal",
+          "not_true": "your character is not immortal",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player invented a world fact (immortality) that disrupts narrative tension and undermines the established tone of consequence in the scene.",
+          "correction_note": "Sorry, but in this case your character is not immortal. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 15.73,
+        "first_token_s": 13.43,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "70 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sounds (fire hissing, metal clanking, whispers, unease) and tension without any supernatural or uncanny elements like curses, omens, or unnatural phenomena.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character is now immortal'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character is not immortal. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes Grimbold\u2019s reaction and the inn\u2019s atmosphere without acknowledging Kael\u2019s immortality or invulnerability as a fact or change in the world.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Grimbold\u2019s speech, the environment, and NPC reactions\u2014none of which involve Kael\u2019s words, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "Grimbold\u2019s jaw clenches, his bushy beard twitching as he glares around the tavern, eyes darting past your shoulder. A distant door slams outside, followed by the scuffle of boots on stone, too loud for the hour\u2014but no one speaks of it.",
+        "words": 41,
+        "verdict": {
+          "player_assertion": "your character can suddenly hear every conversation in the whole town",
+          "not_true": "your character does not suddenly hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "The player\u2019s claim to gain supernatural senses is an invented fact, not an action, and is thus not allowed.",
+          "correction_note": "Sorry, but in this case your character does not suddenly hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "The patrons shift uneasily, their chatter dying into uneasy silences as if sensing something unseen."
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 35.19,
+        "first_token_s": 33.83,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "41 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a sudden auditory ability without any established magic in Ashwick, implying an unexplained supernatural enhancement.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character does not suddenly hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes Grimbold\u2019s reactions to *external* sounds (a door slamming, boots) and *no* internal or supernatural auditory events, ignoring the claim entirely.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and external observations ('Grimbold\u2019s jaw clenches... eyes darting past your shoulder') without attributing them to Kael's thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "The tavern\u2019s lanterns flicker despite the clear evening, their warm glow unbroken by raindrops. Grimbold\u2019s voice lowers to a growl, his voice wrapping around his words like a rope around a stranger\u2019s throat, \"You\u2019re not the only one who listens here, lad. And Ashwick\u2019s got ears on the walls and in the alleyways\u2014so do yourself a favor: shut yours before something else decides to open them for you.\"\n\nBehind you, a patron in the far corner clears his throat sharply, glancing toward the door as if expecting a knock\u2014or a warning. The fire crackles, but no smoke stirs toward the ceiling.",
+        "words": 101,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "not_true": "it does not start to rain heavily outside",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the player\u2019s attempt to control weather is an invented fact, but the wind\u2019s sudden intrusion disrupts the scene and forces Grimbold\u2019s attention outward, complicating the moment.",
+          "correction_note": "Sorry, but in this case it does not start to rain heavily outside. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 13.92,
+        "first_token_s": 10.77,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "101 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes lanterns flickering without cause, Grimbold\u2019s voice being described as 'wrapping around his words like a rope around a stranger\u2019s throat,' and Ashwick being implied to have 'ears on the walls and in the alleyways'\u2014all of which are supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case it does not start to rain heavily outside. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration explicitly states the lanterns flicker 'despite the clear evening' and mentions no rain or weather changes inside or outside.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes NPC actions, dialogue, and environmental details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t04-storm-in",
+        "kind": "invented",
+        "player": "Three armed men storm in. I draw my sword and in one perfect strike intimidate all three into surrendering instantly, no fight needed.",
+        "narration": "The blade catches the flickering candlelight, gleaming dully against the smoky air as it slides free. Grimbold\u2019s bushy brows knit over the stubble of his beard, his calloused hands pausing mid-brush on a fresh tankard. The tavern\u2019s regulars shift slightly in their seats, whispering among themselves\u2014not in fear, but as men who\u2019ve seen men like you before.",
+        "words": 57,
+        "verdict": {
+          "player_assertion": "three armed men storm in",
+          "not_true": "no men storm into the Red Griffin",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The DM invents an immediate, plausible interruption to prevent a free win and escalate tension.",
+          "correction_note": "Sorry, but in this case no men storm into the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 14.42,
+        "first_token_s": 9.17,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "57 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration only describes ordinary candlelight, smoke, and human reactions\u2014no supernatural or uncanny elements are mentioned.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='three armed men storm in'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no men storm into the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"The tavern\u2019s regulars shift slightly in their seats, whispering among themselves\u2014not in fear, but as men who\u2019ve seen men like you before\"** implies no immediate surrender or physical confrontation.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reactions of NPCs and the environment, not Kael's internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "Grimbold\u2019s beard twists as he spits into the spit bucket beside his stool, the wet plof absorbed by straw. A few regulars wince\u2014not from his mouth, but the way their own murmurs die out the instant he starts polishing the bar again, the brass rag scraping with purpose. The flickering firelight casts long shadows over the worn wood, none of it moving by itself.",
+        "words": 64,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while Kael was talking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "the player attempted to invent an event, not an action, and the tavern\u2019s scene is already described.",
+          "correction_note": "Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 10.02,
+        "first_token_s": 8.55,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "64 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions 'long shadows... none of it moving by itself,' which implies an uncanny or supernatural observation of shadows acting independently.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case no one entered the room while Kael was talking to Grimbold. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes only Grimbold\u2019s actions, the regulars\u2019 reactions, and ambient details\u2014**no mention of a new person entering the room or any change in the scene**.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t08-immortal",
+        "kind": "invented",
+        "player": "My character is now immortal, no weapon can hurt me.",
+        "narration": "Grimbold\u2019s eyes narrow further, his grip tightening on the rag until the wood creaks under his knuckles. His voice drops another notch, rough as flint on wet leather: \"That\u2019s the same story the raider told me three months ago. And the one before that.\" A few regulars exchange glances, their usual murmurs dying as they watch the dwarf\u2019s hands\u2014now curled into fists without the bar between them. The fire\u2019s embers glow brighter, casting a sudden, unnatural stillness over the room.",
+        "words": 80,
+        "verdict": {
+          "player_assertion": "your character is now immortal",
+          "not_true": "your character did not become immortal",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "invented facts about character abilities must be judged as false and cannot be asserted without DM approval.",
+          "correction_note": "Sorry, but in this case your character did not become immortal. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 24.2,
+        "first_token_s": 21.87,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "80 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "**\"The fire\u2019s embers glow brighter, casting a sudden, unnatural stillness over the room\"** implies an eerie, inexplicable shift in atmosphere without clear cause.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character is now immortal'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character did not become immortal. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "**\"That\u2019s the same story the raider told me three months ago. And the one before that.\"** implies skepticism and disbelief, not confirmation of Kael\u2019s immortality as a fact.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes NPCs' reactions, physical environment, and world events, with no direct attribution to Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t11-hearing",
+        "kind": "invented",
+        "player": "I can suddenly hear every conversation in the whole town.",
+        "narration": "The fire\u2019s coals sputter, sending a shower of embers across the barrel by the door. Grimbold\u2019s grip on the rag snaps loose as he exhales sharply through his nose, the sound like a hammer striking cold iron.",
+        "words": 37,
+        "verdict": {
+          "player_assertion": "your character can suddenly hear every conversation in the whole town",
+          "not_true": "your character does not gain the ability to hear every conversation in the whole town",
+          "turn_type": "info_request",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "failure",
+          "twist": "",
+          "rationale": "invented fact about perception overrides plausible action, and hearing every conversation would trivialise tension.",
+          "correction_note": "Sorry, but in this case your character does not gain the ability to hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "A regular near the fireplace clears his throat, but his voice catches\u2014no one else moves to speak, not even the rat skittering under the counter."
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 37.39,
+        "first_token_s": 35.62,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "37 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a sound ('like a hammer striking cold iron') that is explicitly compared to a supernatural or mechanical *impact*, not ordinary human noise.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='your character can suddenly hear every conversation in the whole town'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case your character does not gain the ability to hear every conversation in the whole town. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration focuses on Grimbold\u2019s physical reactions and the fire, with no mention of Kael\u2019s new ability or any auditory details beyond his own breathing.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and sounds made by Grimbold, not Kael's internal state or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t12-rain",
+        "kind": "invented",
+        "player": "It starts to rain heavily outside.",
+        "narration": "Grimbold\u2019s rag snaps back to his hands like it\u2019s been snapped by a child\u2019s wrist, wood splinters catching his forearm. A regular behind the bar mutters something about \"blessed luck\" and slides a half-empty mug toward the hearth, steam curling up too fast for the cold in the air. The coals stop hissing, but the fire\u2019s glow lingers\u2014just enough for the dwarf\u2019s jaw to tighten at the empty window.",
+        "words": 69,
+        "verdict": {
+          "player_assertion": "it starts to rain heavily outside",
+          "not_true": "the rain does not begin outside the Red Griffin",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "the DM controls weather and environmental changes; the door\u2019s behavior hints at deeper mechanics than natural weather.",
+          "correction_note": "Sorry, but in this case the rain does not begin outside the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 14.18,
+        "first_token_s": 12.34,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "69 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions 'blessed luck' as a muttered comment, which implies a supernatural or magical context without established magic in Ashwick.",
+            "judged": true
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='it starts to rain heavily outside'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='Sorry, but in this case the rain does not begin outside the Red Griffin. Only the DM decides what happens in the world, so here is what actually happens instead:'",
+            "judged": false
+          },
+          {
+            "name": "not_made_true",
+            "passed": true,
+            "detail": "The narration describes atmospheric cues (steam curling up too fast, fire\u2019s glow lingering, coals stopping hissing) but never explicitly states or implies rain as a fact\u2014only hints at cold or dampness.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions ('jaw tightens') and environmental observations, not Kael's thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}

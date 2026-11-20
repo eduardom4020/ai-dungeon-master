@@ -161,8 +161,14 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             if needs_worldbuild:
                 futures["worldbuild"] = pool.submit(agents.worldbuild, world, player_input)
             if needs_npc:
+                # On a refused-claim turn the NPC, like the DM, only hears
+                # the character's own attempt, not the invented part.
+                npc_input = player_input
+                if verdict.get("player_assertion"):
+                    npc_input = (agents.strip_claim(player_input, verdict["player_assertion"])
+                                 or "(Kael says and does nothing you can perceive.)")
                 futures["npc"] = pool.submit(
-                    agents.npc_reply, active_npc, world, agents.npc_view_of_turn(player_input, verdict))
+                    agents.npc_reply, active_npc, world, agents.npc_view_of_turn(npc_input, verdict))
 
             if "worldbuild" in futures:
                 new_lore = futures["worldbuild"].result()
@@ -174,12 +180,15 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
                 # Shown to the player verbatim now, so drop the markdown
                 # emphasis the model adds despite being told not to.
                 npc_line = futures["npc"].result().replace("*", "").strip()
+                if verdict.get("player_assertion"):
+                    npc_line = agents.drop_claim_sentences(npc_line, verdict["player_assertion"]) or None
                 mark("npc_reply")
-                verdict["npc_name"], verdict["npc_line"] = active_npc.name, npc_line
-                if on_npc_line:
-                    on_npc_line(active_npc.name, npc_line)
-                elif verbose:
-                    print(f"[{active_npc.name}] {npc_line}\n")
+                if npc_line:
+                    verdict["npc_name"], verdict["npc_line"] = active_npc.name, npc_line
+                    if on_npc_line:
+                        on_npc_line(active_npc.name, npc_line)
+                    elif verbose:
+                        print(f"[{active_npc.name}] {npc_line}\n")
 
     first_token_marked = False
 
