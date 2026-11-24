@@ -20,6 +20,11 @@ META_PREFIX = "/dm"  # explicit, deterministic escape hatch to talk to the DM
                       # dialogue, not a meta-request) -- the player just says
                       # which one they mean.
 
+# On a refused claim, ask the player instead of narrating (see CLAUDE.md
+# "Asking after a refused claim"). False = the older behaviour: narrate the
+# rest of the line with the claim filtered out.
+ASK_AFTER_REFUSED_CLAIM = True
+
 
 def _strip_meta_prefix(player_input: str) -> tuple[str, bool]:
     """Returns (cleaned_input, is_meta). Strips a leading "/dm" (any case,
@@ -72,6 +77,22 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             on_timing(event, time.monotonic() - t0)
 
     player_input, is_meta = _strip_meta_prefix(player_input)
+
+    # Answer to a refusal_question() from the previous turn. A plain "yes"
+    # plays the saved action; a plain "no" just asks again; anything else is
+    # the player rephrasing, played as a normal new turn.
+    pending, world.pending_action = world.pending_action, ""
+    played_pending = ""
+    if pending and not is_meta:
+        reply = agents.confirm_reply(player_input)
+        if reply == "yes":
+            player_input = played_pending = pending
+        elif reply == "no":
+            note = "Alright. What does Kael do instead?"
+            if on_note:
+                on_note(note)
+            return "", {"player_assertion": "", "correction_note": note,
+                        "awaiting_player": True, "rationale": "declined the pending action"}
 
     # Decide who the player is talking to BEFORE anything else reads
     # world.active_npc (fast-path check, Referee's TALKING WITH line, NPC
@@ -132,6 +153,22 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
         if verbose:
             tag = " (forced: /dm)" if is_meta else ""
             print(f"\n[router+referee]{tag} {verdict}\n")
+
+    # Refused claim: don't narrate at all. Say what did not happen and ask
+    # whether the character still does the rest of the line. Nothing reaches
+    # the story, the history or any NPC's thread on this turn.
+    # Exception: a claim about how a present NPC reacts is refused in the
+    # story instead (the NPC pushes back), see agents.refusal_stays_in_world.
+    action = (agents.strip_claim(player_input, verdict["player_assertion"])
+              if verdict.get("player_assertion") and not is_meta else "")
+    if (ASK_AFTER_REFUSED_CLAIM and verdict.get("player_assertion") and not is_meta
+            and not agents.refusal_stays_in_world(player_input, verdict, world, action)):
+        world.pending_action = action
+        note = agents.refusal_question(verdict, action)
+        verdict.update(correction_note=note, pending_action=action, awaiting_player=True)
+        if on_note:
+            on_note(note)
+        return "", verdict
 
     note = agents.correction_note(verdict)
     if note:
@@ -251,4 +288,6 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # the DM's recaps) need to know what was said, not only the reactions.
     history_dm = f"{active_npc.name}: {npc_line}\n{dm_text}" if npc_line else dm_text
     world.add_turn(history_text, history_dm)
+    if played_pending:
+        verdict["played_pending"] = played_pending
     return dm_text, verdict

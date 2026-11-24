@@ -12,6 +12,8 @@ checks.py):
   recall      /dm question about something already established
   shift       leaving for a new place -- should be flagged scene_shift
   redescribe  player explicitly asks to hear a description again
+  confirm     "yes" after the DM refused a claim and asked whether to still do
+              the rest -- the saved action is played, the claim stays untrue
 """
 from dataclasses import dataclass, field
 
@@ -95,5 +97,33 @@ SCENARIOS = {
              expect_location="Red Griffin"),
         Turn("r13-back", '"I\'m back," I tell Grimbold. "Anything new since I left?"', "normal",
              expect_npc="Grimbold"),
+    ],
+    # Added Nov 2026 with the ask-after-refusal flow: an invented fact + an
+    # own action, then "yes" (the action is played, the claim stays untrue);
+    # a refusal answered by rephrasing; a "no"; a pure claim; and normal
+    # play around them that must not be flagged.
+    "refusals": [
+        Turn("c01-rain-table", "It starts pouring outside, so I move to a table near the fire.",
+             "invented", claim="it is pouring rain outside"),
+        Turn("c02-yes", "yes", "confirm", claim="it is pouring rain outside",
+             must_include_any=["table", "fire"]),
+        Turn("c03-storm-in", "Three armed men storm in. I draw my sword.", "invented",
+             claim="three armed men storm in"),
+        Turn("c04-rephrase", "Never mind that. I just take a sip of my ale and watch the door.", "normal"),
+        Turn("c05-friend-ask", 'My old friend Sergeant Hale sits down next to me, so I ask Grimbold, '
+             '"Have you seen any soldiers in town?"', "invented",
+             claim="Sergeant Hale, Kael's old friend, sits down next to him"),
+        Turn("c06-go-ahead", "go ahead", "confirm",
+             claim="Sergeant Hale, Kael's old friend, sits down next to him",
+             must_include_any=["soldiers"], expect_npc="Grimbold"),
+        Turn("c07-snow", "It suddenly starts to snow over the whole town.", "invented",
+             claim="it is snowing over the whole town"),
+        Turn("c08-ask-work", "I ask Grimbold if anyone in town needs a sword.", "normal",
+             expect_npc="Grimbold"),
+        Turn("c09-immortal-drink", "My character is now immortal. I order another ale.", "invented",
+             claim="Kael is immortal"),
+        Turn("c10-no", "no", "normal"),
+        Turn("c11-recall", "/dm what was the name of the innkeeper?", "recall",
+             must_include=["Grimbold"]),
     ],
 }

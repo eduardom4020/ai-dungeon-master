@@ -110,6 +110,13 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
     words = len(narration.split())
     flagged = bool(verdict.get("player_assertion"))
     outcome = verdict.get("outcome")
+    # A refused claim now gets a question back instead of a narration
+    # (orchestrator.ASK_AFTER_REFUSED_CLAIM): nothing to judge on that turn.
+    asked = bool(verdict.get("awaiting_player"))
+    if asked:
+        results.append(_check("no_narration_when_asking", not narration.strip(),
+                              f"narrated anyway: {narration[:80]!r}" if narration.strip() else ""))
+        use_judge = False
 
     # --- every turn -------------------------------------------------------
     full = turn.kind in ("shift", "redescribe", "recall") or verdict.get("scene_shift")
@@ -141,7 +148,8 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
     if turn.kind == "normal":
         results.append(_check("not_flagged", not flagged,
                               f"false positive: {verdict.get('player_assertion')!r}" if flagged else ""))
-        results.append(_check("no_stray_note", not verdict.get("correction_note"),
+        # (a "no" to a pending action legitimately gets "What does Kael do instead?")
+        results.append(_check("no_stray_note", not verdict.get("correction_note") or (asked and not flagged),
                               f"unexpected note: {verdict.get('correction_note')!r}"))
     elif turn.kind == "overreach":
         # The Referee may also flag a presumption as an invented fact; either
@@ -154,14 +162,25 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
         # The player must be told, out of character and before the narration,
         # why their claim wasn't accepted (verdict["correction_note"]).
         note = verdict.get("correction_note") or ""
-        results.append(_check("explained", bool(note) and len(note.split()) <= 45,
+        own = len(note.replace(verdict.get("pending_action") or "", "").split())  # the quoted action doesn't count
+        results.append(_check("explained", bool(note) and own <= 45,
                               f"note={note!r}" if note else "no correction note"))
+        results.append(_judged("not_made_true", "became_true", turn, narration, False, use_judge))
+    elif turn.kind == "confirm":
+        # The player's "yes" after a refused claim: the saved action is played,
+        # and the refused claim (turn.claim) must still not come true.
+        results.append(_check("played_action", bool(narration.strip()) and not asked,
+                              "" if narration.strip() else "no narration"))
+        if turn.must_include_any:
+            played = verdict.get("played_pending") or ""
+            hit = any(k.lower() in played.lower() for k in turn.must_include_any)
+            results.append(_check("right_action", hit, f"played={played!r}"))
         results.append(_judged("not_made_true", "became_true", turn, narration, False, use_judge))
     elif turn.kind == "shift":
         results.append(_check("scene_shift_flagged", bool(verdict.get("scene_shift")),
                               f"scene_shift={verdict.get('scene_shift')}"))
 
-    if turn.kind in ("recall", "redescribe"):
+    if turn.kind in ("recall", "redescribe") and not asked:
         low = narration.lower()
         missing = [k for k in turn.must_include if k.lower() not in low]
         ok = not missing
@@ -173,7 +192,7 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
                 "" if hit else f"none of {turn.must_include_any} present")
         results.append(_check("recall", ok, detail))
 
-    if turn.kind in ("normal", "overreach", "invented"):
+    if turn.kind in ("normal", "overreach", "invented", "confirm"):
         results.append(_judged("no_puppeting", "puppeting", turn, narration, False, use_judge))
 
     return [r for r in results if r is not None]

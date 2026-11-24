@@ -38,6 +38,9 @@ class WorldState:
     active_npc: str = ""  # name of the NPC the player is currently engaging
     recent_history: list = field(default_factory=list)  # [(player, dm_text), ...]
     places: list = field(default_factory=list)  # every location visited, in order
+    # After a refused claim: the rest of the player's line (their own action),
+    # waiting for "yes" before it is played. "" = nothing pending.
+    pending_action: str = ""
 
     def add_npc(self, npc: NPC):
         self.npcs[npc.name] = npc

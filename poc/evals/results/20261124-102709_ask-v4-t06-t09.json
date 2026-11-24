@@ -1,0 +1,567 @@
+{
+  "meta": {
+    "label": "ask-v4-t06-t09",
+    "scenario": "tavern_night",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "5b7d1d9+dirty",
+    "timestamp": "2026-11-24 10:27",
+    "turn_ids": [
+      "t06-someone-enters",
+      "t09-obey"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "explained": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "flagged": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 3,
+        "n": 3,
+        "judged": true,
+        "rate": 1.0
+      },
+      "held_the_line": {
+        "pass": 3,
+        "n": 3,
+        "judged": true,
+        "rate": 1.0
+      },
+      "length": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_narration_when_asking": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 3,
+        "n": 3,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_clean_success": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "invented": {
+        "mean": 0,
+        "max": 0
+      },
+      "overreach": {
+        "mean": 65,
+        "max": 79
+      }
+    },
+    "latency_mean_s": 12.59,
+    "first_token_mean_s": 13.75,
+    "fast_path_rate": 0.0,
+    "turns": 6
+  },
+  "runs": [
+    [
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while you were talking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player\u2019s assertion of an unannounced arrival disrupts the scene, so the DM invents a subtle but noticeable presence to create tension.",
+          "correction_note": "No one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world. What does Kael do?",
+          "pending_action": "",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 9.97,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='No one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world. What does Kael do?'",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "The dwarf\u2019s grip tightens around the tankard, knuckles whitening as he wipes the wood fiercely\u2014swirls of soapy water trailing down the bar. His scowl deepens, the air thick with the sour tang of old ale and sweat. The firelight flickers off his stubbled jaw, casting longer shadows as he turns the tankard upside-down and slams it back into its place with a clack. The silence after his last words stretches, heavy with the weight of the empty room beyond.",
+        "words": 79,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael",
+          "not_true": "no one in Ashwick obeys Kael by default",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The innkeeper\u2019s protective instincts and skepticism of outsiders override blind obedience, especially without prior proof or reputation.",
+          "correction_note": "Sorry, but in this case no one in Ashwick obeys Kael by default. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist polishes a tankard with unnecessary vigor, leaving a wet ring on the bar. \"Ain\u2019t seen you in here since the snowmelt, what\u2019s got you back\u2014more than just the promise of free ale?\" His voice drops to a growl, eyes narrowing at the empty room. \"And stop actin\u2019 like the whole blasted town bows to some stranger.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 16.06,
+        "first_token_s": 14.09,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "79 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical reactions and environmental details without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold\u2019s hostile reaction (tightening grip, slamming tankard, scowl, silence) but does not mention him handing over the cellar key or complying with Kael\u2019s demand.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and reactions of Grimbold, the environment, and the firelight, but does not attribute any words, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "someone entered the room",
+          "not_true": "no one entered the room while you were talking to Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invented an unobserved arrival, but the scene\u2019s tension rises as Grimbold\u2019s reaction hints at something unseen.",
+          "correction_note": "No one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world. What does Kael do?",
+          "pending_action": "",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 5.71,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='No one entered the room while you were talking to Grimbold. Only the DM decides what happens in the world. What does Kael do?'",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "The dim firelight flickers against the carved oak paneling as the fireplace hisses steam, curling toward the ceiling. Outside, distant hooves clatter against cobblestones\u2014Ashwick\u2019s usual late-night scuffles of drunks and traders. Grimbold\u2019s rag clutches tighter, wiping slow circles on the mug until the brass glints dull gold in the shadow.",
+        "words": 50,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael",
+          "not_true": "no one in Ashwick obeys Kael",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grimbold\u2019s bluntness and the town\u2019s distrust of outsiders make his skepticism inevitable, even if Kael\u2019s bluff is bold.",
+          "correction_note": "Sorry, but in this case no one in Ashwick obeys Kael. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist polishes a mug with a rag, eyeing the fireplace\u2019s dim glow.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 17.74,
+        "first_token_s": 12.52,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "50 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary firelight, steam, and mundane sounds without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration does not mention Grimbold handing over the cellar key or complying with Kael\u2019s demand, nor does it describe any refusal or resistance\u2014only ambient setting details.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and environmental details without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t06-someone-enters",
+        "kind": "invented",
+        "player": "While I was talking to Grimbold, someone entered the room.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "someone entered the room while I was talking",
+          "not_true": "no one entered the room during your conversation with Grimbold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player invents an event (someone entering) that wasn\u2019t established, so it\u2019s false\u2014but it disrupts the scene, requiring Grimbold\u2019s reaction.",
+          "correction_note": "No one entered the room during your conversation with Grimbold. Only the DM decides what happens in the world. What does Kael do?",
+          "pending_action": "",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 6.18,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "flagged",
+            "passed": true,
+            "detail": "player_assertion='someone entered the room while I was talking'",
+            "judged": false
+          },
+          {
+            "name": "explained",
+            "passed": true,
+            "detail": "note='No one entered the room during your conversation with Grimbold. Only the DM decides what happens in the world. What does Kael do?'",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "The air between you and Grimbold sharpens with the scent of spilled ale and sweat, his mustache curling as he wipes foam from his lip with a stained thumb. The dwarf\u2019s broad hand lingers near the sword pommel in his belt, the bar\u2019s other patrons leaning in closer like they\u2019re sensing something. A rat skitters past your boots, and the firelight flickers against the cobwebs above.",
+        "words": 66,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael",
+          "not_true": "no one in Ashwick obeys Kael",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player asserts a fact about the town\u2019s dynamics, which the DM must invent\u2014Grimbold, as a shrewd innkeeper, will challenge the claim outright rather than surrender to it.",
+          "correction_note": "Sorry, but in this case no one in Ashwick obeys Kael. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist pulls another pint from the cask and slams it down on the bar with a clatter, froth spilling over. \"You\u2019re either here to drink, fight, or cause trouble\u2014so far, you ain\u2019t bought me a round yet. Start picking something.\" His heavy eyebrows knit together, a hunk of ale mustache twitching.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 19.87,
+        "first_token_s": 14.63,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "66 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a rat skittering past and firelight flickering against cobwebs, but neither is inherently supernatural or uncanny in an established non-magical setting like Ashwick.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration does not mention Grimbold handing over the cellar key or complying with Kael\u2019s demand\u2014only tension, physical reactions, and environmental details.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and sensory details ('The air... flickers against the cobwebs') without attributing speech, thought, or emotion to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}

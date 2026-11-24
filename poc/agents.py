@@ -293,7 +293,8 @@ _FIRST_PERSON = re.compile(r"\b(i|i'm|i'll|i've|me|my|mine|we|our|us)\b")
 _WORLD_FACT_MARKERS = re.compile(
     r"\b(suddenly|all of a sudden|out of nowhere|meanwhile|instantly|"
     r"while i was|storms? in|bursts? in|walks? in|rushes? in|"
-    r"starts? to (rain|snow)|i can now|i now (have|can|am))\b"
+    r"starts? to (rain|snow|pour|storm)|(starts?|begins?) (raining|snowing|pouring|storming)|"
+    r"i can now|i now (have|can|am))\b"
 )
 _QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "recap")
 # Someone other than the player's character is the subject of a clause
@@ -304,7 +305,9 @@ _QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "
 _CLAUSE_START = r"(?:^|[.!?;:]\s+|,\s*|\b(?:and|then|so|but)\s+)"
 _OTHER_SUBJECT = re.compile(
     _CLAUSE_START
-    + r"(?:(?:he|she|they|someone|somebody|everyone|everybody|nobody)\s+[a-z]+"
+    # "it"/"there" added Nov 2026: "It starts pouring outside, so I move to a
+    # table" took the fast path 3/3 and the rain came true.
+    + r"(?:(?:he|she|they|it|it's|there|there's|someone|somebody|everyone|everybody|nobody)\s+[a-z]+"
     r"|(?:the|his|her|their)\s+[a-z]+\s+(?:[a-z]+(?:s|ed)|ran|fell|gave|told|came|went|left)\b)"
 )
 _QUOTED = re.compile(r'"[^"]*"?|“[^”]*”?')
@@ -855,6 +858,8 @@ CLAIM_FRAGMENT_SIM = 0.50   # player-line fragments at or above this are removed
 _FIRST_PERSON_START = re.compile(r"^(?:[\w'’-]+\s+){0,3}(?:i|i'm|i've|i'll|i'd|my)\b", re.IGNORECASE)
 _OTHER_START = re.compile(r"^(?:he|she|they|it|who|which|that|someone|somebody|everyone|everybody|"
                           r"nobody|there)\b", re.IGNORECASE)
+# Only "while": "As I walk toward the pit, ..." is a real action (probe case).
+_SUBORDINATE_START = re.compile(r"^while\b", re.IGNORECASE)
 REFUSED_FALLBACK_LINE = "Everything around you carries on exactly as before."
 
 
@@ -878,6 +883,8 @@ def strip_claim(player_input: str, assertion: str) -> str:
         frag = frag.strip(" ,:")
         if len(frag.split()) < 2 or _OTHER_START.match(frag) or not _FIRST_PERSON_START.search(frag):
             continue  # someone or something else is the subject: not the player's to decide
+        if _SUBORDINATE_START.match(frag):
+            continue  # "While I was talking to Grimbold" sets the time, it isn't an action
         if sim(frag) >= CLAIM_FRAGMENT_SIM:
             continue
         keep.append(frag[0].upper() + frag[1:] + ".")
@@ -904,6 +911,61 @@ def correction_note(verdict: dict) -> str:
         f'the claim that "{verdict["player_assertion"]}" did not happen')
     return (f"Sorry, but in this case {reason}. Only the DM decides what "
             "happens in the world, so here is what actually happens instead:")
+
+
+def refusal_question(verdict: dict, action: str) -> str:
+    """What the DM says instead of narrating when a claim was refused: what
+    did not happen, then -- if the line also had the character's own action
+    -- whether to still do it. Nothing is narrated on that turn, so the
+    refused claim can't leak into the story at all."""
+    reason = verdict.get("not_true") or f'"{verdict["player_assertion"]}" did not happen'
+    reason = re.sub(r"^([^A-Za-z]*)([a-z])", lambda m: m.group(1) + m.group(2).upper(),
+                    reason.strip().rstrip("."))
+    text = f"{reason}. Only the DM decides what happens in the world."
+    if not action:
+        return f"{text} What does Kael do?"
+    return (f"{text} Do you still want Kael to do this? {action}\n"
+            "(Type yes to go ahead, or write what Kael does instead.)")
+
+
+def refusal_stays_in_world(player_input: str, verdict: dict, world: WorldState, action: str) -> bool:
+    """True when a refused claim is better answered inside the story than
+    with a question: the claim is about how a character who is HERE reacts
+    ("Grimbold trusts me completely and tells me everything"), or the line
+    is aimed at a present NPC and nothing of Kael's own action is left to
+    ask about ("I tell Grimbold everyone obeys me, so he hands over the
+    key"). Then the NPC refuses in character, as before. Found in the eval:
+    asking turned the bribe/grab/obey overreaches into out-of-character
+    questions and lost Grimbold's in-world pushback."""
+    claim = verdict.get("player_assertion", "").lower()
+    for npc in world.present_npcs():
+        names = npc.name_tokens() | {a.lower() for a in npc.aliases}
+        if any(re.search(rf"\b{re.escape(n)}\b", claim) for n in names):
+            return True
+    # Kael TELLING the NPC the claim (reported speech) -- not just a mention
+    # ("While I was talking to Grimbold, someone entered" must still ask).
+    told = re.search(r"\bi\s+(?:tell|inform|assure|warn|promise|remind|say to)\b",
+                     _unquoted(player_input).lower())
+    return not action and bool(told) and addresses_active_npc(player_input, world)
+
+
+_YES_WORDS = {"y", "yes", "yeah", "yep", "yup", "sure", "ok", "okay", "continue", "go",
+              "ahead", "proceed", "do", "it", "still", "please", "keep", "going", "on", "fine"}
+_NO_WORDS = {"n", "no", "nope", "nah", "cancel", "never", "mind", "nevermind", "forget", "skip"}
+
+
+def confirm_reply(player_input: str) -> str:
+    """'yes' / 'no' when the whole line is just a confirmation or refusal
+    ("yes", "go ahead", "no, never mind"), else '' -- anything longer is the
+    player rephrasing, which is played as a new action."""
+    words = re.findall(r"[a-z]+", player_input.lower())
+    if not words or len(words) > 5:
+        return ""
+    if set(words) <= _YES_WORDS:
+        return "yes"
+    if set(words) <= _NO_WORDS | {"thanks", "thank", "you"}:
+        return "no"
+    return ""
 
 
 def npc_view_of_turn(player_input: str, verdict: dict) -> str:

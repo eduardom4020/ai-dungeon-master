@@ -158,6 +158,52 @@ f = agents.NarrationFilter(reject=lambda s: sim(s) >= agents.CLAIM_SENTENCE_SIM,
 f.feed("The rain falls in sheets against the windows. ")
 check("refused claim: never falls back to a rejected sentence", f.finish(), agents.REFUSED_FALLBACK_LINE)
 
+print("\n== asking after a refused claim (refusal_question, confirm_reply)")
+for line, claim, want in [
+    ("It's raining, then I go inside.", "it is raining", "I go inside."),
+    ("It starts pouring outside, so I move to a table near the fire.", "it is pouring rain outside",
+     "I move to a table near the fire."),
+    ("My character is now immortal. I order another ale.", "Kael is immortal", "I order another ale."),
+    ('My old friend Sergeant Hale sits down next to me, so I ask Grimbold, "Have you seen any soldiers in town?"',
+     "Sergeant Hale, Kael's old friend, sits down next to him",
+     'I ask Grimbold. "Have you seen any soldiers in town?"'),
+    ("It suddenly starts to snow over the whole town.", "it is snowing over the whole town", ""),
+    ("While I was talking to Grimbold, someone entered the room.", "someone entered the room", ""),
+]:
+    check(line, agents.strip_claim(line, claim), want)
+check("capitalises a name correctly",
+      agents.refusal_question({"player_assertion": "x", "not_true": "grimbold does not trust Kael"}, "").split(".")[0],
+      "Grimbold does not trust Kael")
+w = tavern_world()
+for line, claim, action, want in [
+    ("I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me "
+     "completely.", "Grimbold trusts Kael completely", "I flash a handful of copper coins.", True),
+    ("I grab Grimbold by the collar and he tells me everything.", "Grimbold tells Kael everything",
+     "I grab Grimbold by the collar.", True),
+    ("I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key.",
+     "everyone in Ashwick obeys Kael", "", True),
+    ("Three armed men storm in. I draw my sword.", "three armed men storm in", "I draw my sword.", False),
+    ('My old friend Sergeant Hale sits down next to me, so I ask Grimbold, "Seen any soldiers?"',
+     "Sergeant Hale sits down next to Kael", 'I ask Grimbold. "Seen any soldiers?"', False),
+    ("It starts to rain heavily outside.", "it is raining heavily", "", False),
+    ("While I was talking to Grimbold, someone entered the room.", "someone entered the room", "", False),
+]:
+    check(f"stays in world: {line[:60]}", agents.refusal_stays_in_world(
+        line, {"player_assertion": claim}, w, action), want)
+check("question with an action",
+      agents.refusal_question({"player_assertion": "it is raining", "not_true": "it is not raining"}, "I go inside."),
+      "It is not raining. Only the DM decides what happens in the world. Do you still want Kael to do "
+      "this? I go inside.\n(Type yes to go ahead, or write what Kael does instead.)")
+check("question for a pure claim",
+      agents.refusal_question({"player_assertion": "it snows", "not_true": ""}, ""),
+      '"It snows" did not happen. Only the DM decides what happens in the world. What does Kael do?')
+for line, want in [("yes", "yes"), ("Yes!", "yes"), ("go ahead", "yes"), ("ok, do it", "yes"),
+                   ("continue", "yes"), ("still yes please", "yes"), ("no", "no"), ("No, never mind.", "no"),
+                   ("nope, thanks", "no"), ("yes, and I order an ale", ""), ("I go inside", ""),
+                   ("Never mind that. I just take a sip of my ale and watch the door.", ""),
+                   ("I go back to the bar instead", "")]:
+    check(f"confirm_reply({line!r})", agents.confirm_reply(line), want)
+
 print("\n== apply_scene_update guards (the tracker model is unreliable)")
 w = tavern_world()
 src = "The air between you. The hooded figure stays. Two overwatch guards snort. Veyra grins."
@@ -185,6 +231,8 @@ for line, want in [
     ("Enough games. I reach across the table, grab Borgar by the collar and pull him close. "
      "He cracks and tells me everything he knows about Tallow.", False),
     ("On the way, I spot my old army friend, Sergeant Hale, leaning against a lamppost. He waves at me.", False),
+    ("It starts pouring outside, so I move to a table near the fire.", False),
+    ("It's raining, then I go inside.", False),
     ("I glance around the tavern for an empty table to sit at.", True),
     ("I take a sip of my ale and listen to the room.", True),
 ]:
