@@ -94,6 +94,19 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
             return "", {"player_assertion": "", "correction_note": note,
                         "awaiting_player": True, "rationale": "declined the pending action"}
 
+    # The party (Day 4): companions the player leaves behind stop following
+    # BEFORE any move this turn. Heading to a known place by name to talk to
+    # someone who is there moves Kael first, so that NPC's agent answers.
+    # Both are undone if the turn ends in a refusal question.
+    start_location = world.location
+    were_here = {n.name for n in world.present_npcs()}
+    left_behind =[] if is_meta else agents.party_leavers(player_input, world)
+    for name in left_behind:
+        world.leave_party(name)
+    early_place = "" if is_meta else agents.arrival_place(player_input, world)
+    if early_place:
+        world.move_to(early_place)
+
     # Decide who the player is talking to BEFORE anything else reads
     # world.active_npc (fast-path check, Referee's TALKING WITH line, NPC
     # agent). Only NPCs present in the scene can be picked.
@@ -164,6 +177,10 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     if (ASK_AFTER_REFUSED_CLAIM and verdict.get("player_assertion") and not is_meta
             and not agents.refusal_stays_in_world(player_input, verdict, world, action)):
         world.pending_action = action
+        if early_place:
+            world.move_to(start_location)
+        for name in left_behind:
+            world.join_party(name, by="player")
         note = agents.refusal_question(verdict, action)
         verdict.update(correction_note=note, pending_action=action, awaiting_player=True)
         if on_note:
@@ -250,7 +267,6 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # token. Gated on cheap signals (movement words, scene_shift, a name the
     # world doesn't know yet) so most ordinary turns skip the call.
     verdict["scene_update"] = None
-    location_before = world.location
     if agents.scene_may_have_changed(player_input, verdict, npc_line, dm_text, world):
         update = agents.track_scene(
             world, player_input, dm_text, npc_line=npc_line,
@@ -261,18 +277,30 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
                 world, update,
                 exclude_from=player_input if verdict.get("player_assertion") else "",
                 source_text=f"{npc_line or ''}\n{dm_text}",
-                allow_move=agents.player_may_move(player_input, verdict),
+                # Not on a refused-claim turn (Day 4 play session: "I follow
+                # her out" with "Silas leads you out" refused; the narration
+                # kept everyone inside, but the tracker moved Kael and Silas).
+                allow_move=(agents.player_may_move(player_input, verdict)
+                            and not verdict.get("player_assertion")),
             )
-            if verdict["scene_update"]["moved_to"]:
-                came = agents.bring_companions(world, player_input, location_before)
-                found = world.npcs.get(found_npc)
-                if found and found.location == location_before:
-                    found.location = world.location  # found at the place Kael arrived at
-                    came.append(found_npc)
-                verdict["scene_update"]["came_along"] = came
             if verbose:
                 print(f"\n[scene tracker] {update} -> {verdict['scene_update']}")
         mark("tracked")
+    if world.location != start_location:
+        # Companions already followed (world.move_to moves the party). NPCs
+        # the player says they go with now join it.
+        came = [n.name for n in world.party() if n.name not in left_behind]
+        came += [n for n in agents.bring_companions(world, player_input, start_location, were_here)
+                 if n not in came]
+        found = world.npcs.get(found_npc)
+        if found and found.location == start_location:
+            found.location = world.location  # found at the place Kael arrived at
+            came.append(found_npc)
+        verdict["scene_update"] = verdict["scene_update"] or {"moved_to": world.location, "added": []}
+        verdict["scene_update"]["came_along"] = came
+    verdict["party"] = [n.name for n in world.party()]
+    if left_behind:
+        verdict["left_behind"] = left_behind
     # The flagged claim only protects THIS turn's narration. The raw player
     # text then sits in RECENT HISTORY, where later turns read it as plain
     # story ("three armed men storm in" -> a later recap narrated "three

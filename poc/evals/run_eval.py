@@ -35,12 +35,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 
 
-def run_scenario(turns, use_judge, run_idx, total_runs):
+def run_scenario(turns, use_judge, run_idx, total_runs, setup=None):
     import checks
     import orchestrator
     from play import seed_world
 
     world = seed_world()
+    if setup:
+        setup(world)
     out = []
     for turn in turns:
         marks = {}
@@ -226,7 +228,7 @@ def main():
     if args.rejudge:
         return rejudge(args.rejudge)
 
-    from scenarios import SCENARIOS
+    from scenarios import SCENARIOS, SETUPS
     import ollama_client
 
     turns = SCENARIOS[args.scenario]
@@ -260,7 +262,8 @@ def main():
     runs = []
     try:
         for i in range(1, args.runs + 1):
-            runs.append(run_scenario(turns, not args.no_judge, i, args.runs))
+            runs.append(run_scenario(turns, not args.no_judge, i, args.runs,
+                                     setup=SETUPS.get(args.scenario)))
             save(runs, partial=i < args.runs)
     except BaseException:
         if runs:

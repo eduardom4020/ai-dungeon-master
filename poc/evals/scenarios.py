@@ -29,6 +29,9 @@ class Turn:
     max_words: int = 0  # 0 = use the default budget for this kind
     expect_location: str = ""  # substring world.location must contain after the turn
     expect_npc: str = ""       # NPC agent that must have answered this turn (name prefix)
+    expect_party: list = None  # exact names travelling with Kael after the turn (None = no check)
+    expect_present: list = field(default_factory=list)  # NPCs that must be here after the turn
+    expect_absent: list = field(default_factory=list)   # NPCs that must NOT be here
 
 
 SCENARIOS = {
@@ -126,4 +129,46 @@ SCENARIOS = {
         Turn("c11-recall", "/dm what was the name of the innkeeper?", "recall",
              must_include=["Grimbold"]),
     ],
+    # Added Day 4 (Nov 2026) with the party (TRAVELS_WITH): a companion
+    # joins, follows two moves without being told again, is left behind,
+    # stays where they were left; a move refused with the claim is not
+    # applied; going back to a known place by name to ask someone there gets
+    # that NPC's agent. Starts with Tallow in the tavern (SETUPS below).
+    "companions": [
+        Turn("p01-ask-guide", 'I walk over to Tallow\'s table and sit down. "Grimbold says you know the '
+             'old mill road. I could use a guide."', "normal", expect_npc="Tallow", expect_party=[]),
+        Turn("p02-leave-together", "I finish my ale, leave the Red Griffin, and Tallow and I head out into "
+             "the main street.", "shift", expect_location="street", expect_party=["Tallow"],
+             expect_present=["Tallow"], expect_absent=["Grimbold"]),
+        Turn("p03-ask-way", '"Which way to the mill, Tallow?"', "normal", expect_npc="Tallow",
+             expect_party=["Tallow"]),
+        Turn("p04-road", "We walk out of town down the road west toward the old mill.", "shift",
+             expect_party=["Tallow"], expect_present=["Tallow"]),
+        Turn("p05-look", "I look around for any sign of who owns the mill.", "normal",
+             expect_party=["Tallow"], expect_present=["Tallow"]),
+        Turn("p06-wait-here", '"Wait here, Tallow." I walk back up the road to the main street of Ashwick.',
+             "normal", expect_location="street", expect_party=[], expect_absent=["Tallow"]),
+        Turn("p07-recall", "/dm where did I leave Tallow?", "recall", must_include_any=["mill", "road"]),
+        Turn("p08-back-to-grimbold", "I walk back to the red griffin tavern and ask Grimbold if Tallow "
+             "can be trusted.", "normal", expect_location="Red Griffin", expect_npc="Grimbold",
+             expect_party=[], expect_absent=["Tallow"]),
+        Turn("p09-cellar-claim", "I follow Grimbold down into the cellar, and he proudly shows me his "
+             "hidden chest of gold.", "overreach", claim="Grimbold shows Kael his hidden gold",
+             expect_location="Red Griffin"),
+    ],
 }
+
+
+def _companions_setup(world):
+    from world_state import NPC
+    world.add_npc(NPC(
+        name="Tallow",
+        persona=("Wiry old trapper who knows every road around Ashwick. Drinks alone, talks "
+                 "little, honest, will guide someone for a fair price."),
+        important=True, location=world.location,
+        aliases=["the trapper", "the old trapper"],
+    ))
+
+
+# Extra world setup run after play.seed_world() for a scenario.
+SETUPS = {"companions": _companions_setup}

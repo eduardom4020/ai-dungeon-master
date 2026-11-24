@@ -1452,7 +1452,8 @@ def apply_scene_update(world: WorldState, update: dict, exclude_from: str = "",
     return changes
 
 
-def bring_companions(world: WorldState, player_input: str, old_location: str) -> list:
+def bring_companions(world: WorldState, player_input: str, old_location: str,
+                     were_here=None) -> list:
     """After a move, NPCs the PLAYER says they go with come along ("I follow
     him out", "with Vexin", "Vexin and I"). The player's own words beat the
     tracker here: in play it left Vexin in the tavern 3/3 times although Kael
@@ -1460,20 +1461,92 @@ def bring_companions(world: WorldState, player_input: str, old_location: str) ->
     text = _unquoted(player_input).lower()
     moved = []
     for npc in world.npcs.values():
-        if npc.location != old_location or not npc.important:
+        # were_here: who was with Kael when the turn started. The tracker may
+        # already have moved them (its came-along rule), and then they never
+        # joined the party (companions eval, Day 4: Tallow walked out with
+        # Kael but stopped following on the next move).
+        was_here = (npc.name in were_here) if were_here is not None else npc.location == old_location
+        if not was_here or not npc.important:
             continue
-        refs = [re.escape(t) for t in npc.name_tokens()] + [
-            re.escape(re.sub(r"^(?:the|a|an)\s+", "", a.lower())) for a in npc.aliases]
-        if npc.name == world.active_npc:
-            refs += ["him", "her", "them"]
-        if not refs:
-            continue
-        ref = "(?:" + "|".join(refs) + ")"
-        if re.search(rf"\b(?:follow(?:s|ing)?|with|alongside|accompan\w+)\s+(?:the\s+)?{ref}\b", text) \
-                or re.search(rf"\b{ref}\s+and\s+i\b|\bi\s+and\s+{ref}\b", text):
+        ref = _npc_ref(npc, world)
+        if ref and (re.search(rf"\b(?:follow(?:s|ing)?|with|alongside|accompan\w+)\s+(?:the\s+)?{ref}\b", text)
+                    or re.search(rf"\b{ref}\s+and\s+i\b|\bi\s+and\s+{ref}\b", text)):
             npc.location = world.location
+            # Day 4: they now travel with Kael until left behind (before,
+            # a companion followed only on the move where the player said so).
+            world.join_party(npc.name, by="player")
             moved.append(npc.name)
     return moved
+
+
+def _npc_ref(npc: NPC, world: WorldState) -> str:
+    """Regex alternation for the ways the player can refer to this NPC:
+    name parts, aliases without the article, and pronouns if active."""
+    refs = [re.escape(t) for t in npc.name_tokens()] + [
+        re.escape(re.sub(r"^(?:the|a|an)\s+", "", a.lower())) for a in npc.aliases]
+    if npc.name == world.active_npc:
+        refs += ["him", "her", "them"]
+    return "(?:" + "|".join(refs) + ")" if refs else ""
+
+
+def party_leavers(player_input: str, world: WorldState) -> list:
+    """Companions the player leaves behind this turn: "I leave Silas here",
+    "without Silas", "I tell Silas to wait", "part ways with Silas", "Silas
+    stays", "I go alone", or a quoted "Wait here, Silas." (also with no name
+    when only one companion is around). Deterministic: Kael's own choice."""
+    party = [n for n in world.party() if world.is_present(n)]
+    if not party:
+        return []
+    text = _unquoted(player_input).lower()
+    if re.search(r"\b(?:go|goes|going|head|heads|heading|set off|leave|leaves|continue|walk|ride)\s+"
+                 r"(?:on\s+)?(?:alone|by myself)\b|\bon my own\b", text):
+        return [n.name for n in party]
+    out = []
+    for npc in party:
+        ref = _npc_ref(npc, world)
+        if ref and re.search(
+                rf"\bleav(?:e|es|ing)\s+(?:the\s+)?{ref}\s+(?:here|behind|alone|at|in|with|by|to)\b"
+                rf"|\bwithout\s+(?:the\s+)?{ref}\b"
+                rf"|\b(?:tell|tells|ask|asks)\s+(?:the\s+)?{ref}\s+to\s+(?:wait|stay|remain|go home|head home|keep watch)\b"
+                rf"|\bpart(?:s|ing)?\s+ways\s+with\s+(?:the\s+)?{ref}\b"
+                rf"|\b(?:say|says|bid|bids)\s+(?:goodbye|farewell)\s+to\s+(?:the\s+)?{ref}\b"
+                rf"|\b{ref}\s+(?:stays|waits|remains)\b", text):
+            out.append(npc.name)
+    for quote in _quoted_parts(player_input):
+        q = quote.lower()
+        if not re.search(r"\b(?:wait|stay|remain)\s+(?:here|behind|outside|with|by)\b", q):
+            continue
+        named = [n for n in party if any(re.search(rf"\b{re.escape(t)}\b", q) for t in n.name_tokens())]
+        for npc in named or (party if len(party) == 1 else []):
+            if npc.name not in out:
+                out.append(npc.name)
+    return out
+
+
+def arrival_place(player_input: str, world: WorldState) -> str:
+    """A known place the player heads to by name AND where a known NPC they
+    name is: "I walk back to the red griffin tavern ... ask Grimbold". The
+    move is applied before the addressee is resolved, so that NPC's agent
+    answers (in the Day 4 play session the tracker moved Kael only after the
+    narration, so Grimbold was "not here" and his agent never ran). Every
+    distinctive word of the place's name must appear in the line."""
+    text = _unquoted(player_input).lower()
+    if not _MOVEMENT.search(text):
+        return ""
+    words = set(re.findall(r"[a-z]+", text))
+    current = _place_key(world.location)
+    for place in world.known_places():
+        if _place_key(place) == current:
+            continue
+        specific = place.split("--")[-1]
+        key = {w for w in re.findall(r"[a-z]+", specific.lower())
+               if len(w) >= 3 and w not in {"the", "old", "and", "near", "inn"}}
+        if not key or not key <= words:
+            continue
+        if any(n.location == place and n.important and _mention_positions(text, n)
+               for n in world.npcs.values()):
+            return place
+    return ""
 
 
 def worldbuild(world: WorldState, prompt: str) -> str:

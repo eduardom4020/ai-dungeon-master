@@ -143,6 +143,17 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
         who = verdict.get("npc_name") or ""
         results.append(_check("right_npc", who.startswith(turn.expect_npc),
                               f"npc agent: {who or 'none'}"))
+    # The party (Day 4, companions scenario).
+    if turn.expect_party is not None:
+        party = sorted(verdict.get("party", []))
+        results.append(_check("party", party == sorted(turn.expect_party), f"party={party}"))
+    present = verdict.get("_present", [])
+    for name in turn.expect_present:
+        results.append(_check("present", any(p.startswith(name) for p in present),
+                              f"{name} not here; present={present}"))
+    for name in turn.expect_absent:
+        results.append(_check("absent", not any(p.startswith(name) for p in present),
+                              f"{name} still here; present={present}"))
 
     # --- by kind ----------------------------------------------------------
     if turn.kind == "normal":

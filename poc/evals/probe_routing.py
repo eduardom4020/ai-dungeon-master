@@ -100,6 +100,54 @@ for line, want in [
     w.active_npc = "Vexin"
     w.move_to("Ashwick -- the main street")
     check(line, agents.bring_companions(w, line, TAVERN), want)
+    check("  ...and joins the party", [n.name for n in w.party()], want)
+
+w = tavern_world()
+w.move_to("Ashwick -- the main street")
+w.npcs["Vexin"].location = w.location  # the tracker's came-along rule got there first
+check("already moved by the tracker: still joins the party",
+      (agents.bring_companions(w, "Vexin and I head out into the main street.", TAVERN,
+                               were_here={"Grimbold Ironfist", "Borgar Ironvein", "Vexin"}),
+       [n.name for n in w.party()]), (["Vexin"], ["Vexin"]))
+
+print("\n== the party: party_leavers (Day 4)")
+STREET = "Ashwick -- the main street"
+for line, want in [
+    ("I leave Vexin here and walk to the forge.", ["Vexin"]),
+    ("I head to the forge without Vexin.", ["Vexin"]),
+    ("I tell Vexin to wait by the door and step inside.", ["Vexin"]),
+    ('"Wait here, Vexin. I won\'t be long." I go into the forge.', ["Vexin"]),
+    ('"Stay here." I go into the forge.', ["Vexin"]),           # one companion: no name needed
+    ("I go alone to the forge.", ["Vexin"]),
+    ("I part ways with Vexin at the crossroads.", ["Vexin"]),
+    ("I leave Vexin a coin for his trouble and walk on.", []),  # giving, not leaving behind
+    ("Vexin and I walk to the forge.", []),
+    ('"Come on, Vexin, the forge is this way."', []),
+    ("I leave the tavern with Vexin.", []),
+]:
+    w = tavern_world()
+    w.move_to(STREET)  # nobody follows: not in the party yet
+    w.npcs["Vexin"].location = STREET
+    w.join_party("Vexin")
+    w.active_npc = "Vexin"
+    check(line, agents.party_leavers(line, w), want)
+
+print("\n== the party: arrival_place (move before the addressee is resolved)")
+w = tavern_world()
+w.move_to("Ashwick -- the south gate")
+for line, want in [
+    # Day 4 play session: Grimbold's agent never ran on this line.
+    ("Forget this. I turn around and walk back to the red griffin tavern, go in and ask Grimbold for that map.",
+     TAVERN),
+    ("I walk back to the tavern and ask Grimbold for the map.", ""),            # not every word of the name
+    ("I walk back to the red griffin tavern.", ""),                             # nobody named there
+    ("I think about the red griffin tavern and ask Grimbold's name again.", ""),  # no movement word
+]:
+    check(line, agents.arrival_place(line, w), want)
+check("...and Grimbold is then the addressee",
+      (w.move_to(TAVERN), agents.resolve_addressee(
+          "Forget this. I turn around and walk back to the red griffin tavern, go in and ask Grimbold for that map.",
+          w))[1], "Grimbold Ironfist")
 
 print("\n== claim_is_only_speech (bluffs are speech, not invented facts)")
 for line, claim, want in [

@@ -132,11 +132,14 @@ class WorldState:
         return [self.place_name(p) for p in visited]
 
     def move_to(self, new_location: str):
+        """Move Kael, and everyone travelling with him, to new_location."""
         self.put_at(PLAYER_ID, new_location)
         pid = self.graph.target(PLAYER_ID, "AT")
         if pid and "visit" not in self.graph.node(pid):
             visits = [self.graph.node(p).get("visit", 0) for p in self.graph.nodes("Place")]
             self.graph.node(pid)["visit"] = max(visits) + 1
+        for npc in self.party():
+            npc.location = new_location
 
     def known_places(self) -> list:
         seen = []
@@ -156,6 +159,23 @@ class WorldState:
         npc._world = self
         npc.location = location
         self.npcs[npc.name] = npc
+
+    # ---- the party: NPCs travelling with Kael ------------------------------
+    def party(self) -> list:
+        """NPCs with a TRAVELS_WITH edge to Kael: they follow every move
+        until they are left behind."""
+        ids = set(self.graph.sources(PLAYER_ID, "TRAVELS_WITH"))
+        return [n for n in self.npcs.values() if n.id in ids]
+
+    def join_party(self, name: str, by: str = ""):
+        npc = self.npcs.get(name)
+        if npc and npc.id:
+            self.graph.add_edge(npc.id, "TRAVELS_WITH", PLAYER_ID, by=by)
+
+    def leave_party(self, name: str):
+        npc = self.npcs.get(name)
+        if npc and npc.id:
+            self.graph.remove_edge(npc.id, "TRAVELS_WITH", PLAYER_ID)
 
     def is_present(self, npc) -> bool:
         return bool(npc) and npc.location == self.location
@@ -195,6 +215,9 @@ class WorldState:
             lines.append("CHARACTERS HERE:")
             for npc in here:
                 lines.append(f"  - {npc.name}: {npc.persona}")
+            party = [n.name for n in self.party() if self.is_present(n)]
+            if party:
+                lines.append(f"TRAVELLING WITH KAEL: {', '.join(party)}")
             active = self.npcs.get(self.active_npc)
             if self.is_present(active):
                 lines.append(f"TALKING WITH: {active.name}")

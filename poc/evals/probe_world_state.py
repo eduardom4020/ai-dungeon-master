@@ -99,6 +99,25 @@ check("round-trip: places in order", w2.places, w.places)
 w2.add_npc(NPC(name="Borla", persona="Blacksmith."))
 check("round-trip: id counter continues", w2.npcs["Borla"].id, "C3")
 
+# ---- the party (TRAVELS_WITH) --------------------------------------------
+p = WorldState()
+p.move_to("tavern")
+for name in ("Silas", "Grimbold"):
+    p.add_npc(NPC(name=name, persona=".", important=True, location="tavern"))
+p.join_party("Silas", by="player")
+p.move_to("street")
+check("companion follows a move", p.npcs["Silas"].location, "street")
+check("non-companion stays", p.npcs["Grimbold"].location, "tavern")
+p.move_to("forge")
+check("...and keeps following on the next move", p.npcs["Silas"].location, "forge")
+check("party in the brief", "TRAVELLING WITH KAEL: Silas" in p.context_brief(), True)
+q = WorldState.from_dict(json.loads(json.dumps(p.to_dict())))
+check("party survives save/load", [n.name for n in q.party()], ["Silas"])
+q.leave_party("Silas")
+q.move_to("gate")
+check("left behind: stays at the forge", (q.npcs["Silas"].location, q.party()), ("forge", []))
+check("no party line when empty", "TRAVELLING WITH" in q.context_brief(), False)
+
 # ---- old saves -------------------------------------------------------------
 legacy = {
     "location": "Ashwick -- the smithy", "scene_summary": "Old save.",
