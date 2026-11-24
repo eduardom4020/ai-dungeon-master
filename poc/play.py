@@ -40,6 +40,7 @@ def print_help():
     print(
         "\nCommands:\n"
         "  /state              show current world state\n"
+        "  /graph              show the world graph (node ids, values, edges)\n"
         "  /npc <name>         set which important NPC is active in the scene\n"
         "  /worldbuild <topic> invent new lore and add it to established facts\n"
         "  /verbose            toggle showing referee verdicts and raw NPC lines\n"
@@ -79,6 +80,9 @@ def main():
             break
         if player_input == "/state":
             print("\n" + world.context_brief())
+            continue
+        if player_input == "/graph":
+            print("\n" + world.graph.describe())
             continue
         if player_input == "/verbose":
             verbose = not verbose
