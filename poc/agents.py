@@ -294,7 +294,10 @@ _WORLD_FACT_MARKERS = re.compile(
     r"\b(suddenly|all of a sudden|out of nowhere|meanwhile|instantly|"
     r"while i was|storms? in|bursts? in|walks? in|rushes? in|"
     r"starts? to (rain|snow|pour|storm)|(starts?|begins?) (raining|snowing|pouring|storming)|"
-    r"i can now|i now (have|can|am))\b"
+    r"i can now|i now (have|can|am)|"
+    # Live session Nov 2026: "I find a loaded crossbow lying behind the
+    # crates" took the fast path and the crossbow became real.
+    r"i (find|found|discover|discovered|stumble (on|upon)) (a|an|some))\b"
 )
 _QUESTION_STARTERS = ("what", "who", "where", "when", "why", "how", "tell me", "recap")
 # Someone other than the player's character is the subject of a clause
@@ -308,7 +311,11 @@ _OTHER_SUBJECT = re.compile(
     # "it"/"there" added Nov 2026: "It starts pouring outside, so I move to a
     # table" took the fast path 3/3 and the rain came true.
     + r"(?:(?:he|she|they|it|it's|there|there's|someone|somebody|everyone|everybody|nobody)\s+[a-z]+"
-    r"|(?:the|his|her|their)\s+[a-z]+\s+(?:[a-z]+(?:s|ed)|ran|fell|gave|told|came|went|left)\b)"
+    r"|(?:the|his|her|their)\s+[a-z]+\s+(?:[a-z]+(?:s|ed)|ran|fell|gave|told|came|went|left)\b"
+    # "Inside, a chest full of gold sits in the middle of the floor" (live
+    # session: fast path, the gold came true). A clause led by a/an/some
+    # with a verb within a few words.
+    r"|(?:a|an|some)\s+(?:[a-z]+\s+){0,4}?(?:[a-z]+(?:s|ed)|is|are|was|were|lies|stands|sits)\b)"
 )
 _QUOTED = re.compile(r'"[^"]*"?|“[^”]*”?')
 # Words that make the player's line about engaging a specific person, used to
@@ -644,6 +651,18 @@ def _is_common_word(word: str) -> bool:
     return word.lower() in tok.get_vocab()
 
 
+def _npc_is_subject(text_lower: str, world: WorldState) -> bool:
+    """A clause led by a known NPC's name or alias, then a verb within a
+    couple of words (an aside in commas allowed): 'and Rurik, impressed,
+    finally tells me ...', 'the dwarf nods'."""
+    for npc in world.npcs.values():
+        for name in npc.name_tokens() | {a.lower() for a in npc.aliases}:
+            if re.search(_CLAUSE_START + re.escape(name) +
+                         r"\b(?:\s*,[^,.]{0,30},)?\s+(?:[a-z]+\s+){0,2}?[a-z]+(?:s|ed)\b", text_lower):
+                return True
+    return False
+
+
 def looks_simple(player_input: str, world: WorldState) -> bool:
     """True if this turn's CONTENT looks low-risk enough to skip
     judge_action() entirely -- no stakes, no overreach, no info-request
@@ -671,6 +690,11 @@ def looks_simple(player_input: str, world: WorldState) -> bool:
     # Hale"). Quoted speech is excluded: what Kael SAYS is his to decide.
     narration_part = _unquoted(player_input)
     if _OTHER_SUBJECT.search(narration_part.lower()) or unknown_names(narration_part, world):
+        return False
+    # A KNOWN character as the subject: "... and Rurik, impressed, finally
+    # tells me the whole job and pays me half up front" (live session: fast
+    # path, Rurik folded and paid).
+    if _npc_is_subject(narration_part.lower(), world):
         return False
 
     model = _get_embed_model()
@@ -855,7 +879,9 @@ def claim_is_only_speech(player_input: str, assertion: str) -> bool:
 # narration's closest sentence on good turns is 0.22).
 CLAIM_SENTENCE_SIM = 0.40   # narration/NPC sentences at or above this are dropped
 CLAIM_FRAGMENT_SIM = 0.50   # player-line fragments at or above this are removed
-_FIRST_PERSON_START = re.compile(r"^(?:[\w'’-]+\s+){0,3}(?:i|i'm|i've|i'll|i'd|my)\b", re.IGNORECASE)
+# "we" counts: Kael acting with a companion ("so we walk straight in" was lost).
+_FIRST_PERSON_START = re.compile(r"^(?:[\w'’-]+\s+){0,3}(?:i|i'm|i've|i'll|i'd|my|we|we're|our)\b",
+                                 re.IGNORECASE)
 _OTHER_START = re.compile(r"^(?:he|she|they|it|who|which|that|someone|somebody|everyone|everybody|"
                           r"nobody|there)\b", re.IGNORECASE)
 # Only "while": "As I walk toward the pit, ..." is a real action (probe case).

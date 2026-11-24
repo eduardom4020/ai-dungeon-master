@@ -169,6 +169,8 @@ for line, claim, want in [
      'I ask Grimbold. "Have you seen any soldiers in town?"'),
     ("It suddenly starts to snow over the whole town.", "it is snowing over the whole town", ""),
     ("While I was talking to Grimbold, someone entered the room.", "someone entered the room", ""),
+    ("The warehouse door is already wide open and unguarded, so we walk straight in.",
+     "the warehouse door is already wide open and unguarded", "We walk straight in."),
 ]:
     check(line, agents.strip_claim(line, claim), want)
 check("capitalises a name correctly",
@@ -232,6 +234,12 @@ for line, want in [
      "He cracks and tells me everything he knows about Tallow.", False),
     ("On the way, I spot my old army friend, Sergeant Hale, leaning against a lamppost. He waves at me.", False),
     ("It starts pouring outside, so I move to a table near the fire.", False),
+    ("I find a loaded crossbow lying behind the crates, so I pick it up and ask Rurik where we're headed.", False),
+    ("Inside, a chest full of gold sits in the middle of the floor, so I draw my sword and step inside.", False),
+    ("I walk past the butcher's sign to the old warehouse and check the door.", True),
+    ("I've had enough riddles. I slam my fist on the table and Grimbold, impressed, finally tells me "
+     "the whole job and pays me half up front.", False),
+    ("I sit at the bar and ask Grimbold about work.", True),
     ("It's raining, then I go inside.", False),
     ("I glance around the tavern for an empty table to sit at.", True),
     ("I take a sip of my ale and listen to the room.", True),
