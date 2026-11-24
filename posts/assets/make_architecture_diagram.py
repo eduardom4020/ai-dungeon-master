@@ -316,6 +316,6 @@ ink_rect(foot_box, width=3, wash=(203, 178, 128))
 center_text("Built with Ollama \u00b7 ministral-3:8b \u00b7 sentence-transformers \u2014 all local, no paid APIs",
             f_footer, W / 2, 1592, INK)
 
-out_path = "C:/Users/Eduardo Braga/Projects/ai-dungeon-master/posts/assets/architecture.png"
+out_path = __import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "architecture.png")
 img.convert("RGB").save(out_path)
 print("saved", out_path)

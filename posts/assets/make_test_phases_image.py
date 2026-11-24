@@ -296,6 +296,6 @@ ink_rect(foot_box, width=3, wash=(203, 178, 128))
 goal_text = "GOAL \u2014 an immersive, consistent DM that still makes you earn the story, not one that agrees with everything"
 center_text(goal_text, f_footer, W / 2, foot_box[1] + 32, INK)
 
-out_path = "C:/Users/Eduardo Braga/Projects/ai-dungeon-master/posts/assets/test-phases.png"
+out_path = __import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "test-phases.png")
 img.convert("RGB").save(out_path)
 print("saved", out_path)
