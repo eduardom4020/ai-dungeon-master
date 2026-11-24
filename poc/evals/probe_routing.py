@@ -60,6 +60,12 @@ for line, want in [
     ('I follow the smell of smoke to the forge and step inside. "Manfred? Grimbold sent me."',
      "Manfred the Smith"),
     ('"Manfred is a fool," I say to the dwarf.', "Grimbold Ironfist"),
+    # Day 4 play session: Grimbold's agent answered a line aimed at Silas.
+    ('I ignore Grimbold and turn to her. "Vexin, then. I\'m Kael. Grimbold says you know the mines."',
+     "Vexin"),
+    ('I turn away from the dwarf. "Borgar, what do you think?"', "Borgar Ironvein"),
+    ("I ignore the dwarf and ask Vexin about the Black Dog.", "Vexin"),
+    ("I leave Grimbold a coin for the ale.", "Grimbold Ironfist"),
 ]:
     check(line, agents.resolve_addressee(line, w), want)
 
@@ -120,8 +126,33 @@ for line, claim, want in [
     ("I slide a coin across her table and lean in close. She can't resist the money, so she tells me "
      "the safe way into the mill.", "Veyra cannot resist the money and tells me the safe way into the mill",
      "I slide a coin across her table."),
+    # Day 4 play session: a claim about someone else's reaction shares nouns
+    # with Kael's attempt (0.54-0.56); the attempt must survive.
+    ('I press three silver coins into the young guard\'s hand. "For your trouble." He pockets them, '
+     "gives me his name and tells me exactly who is paying for work in the Hollows.",
+     "guard pockets coins and reveals info",
+     "I press three silver coins into the young guard's hand. \"For your trouble.\""),
+    ("I grab Grimbold by the collar and he tells me everything he knows about the trouble.",
+     "Grimbold tells you everything he knows", "I grab Grimbold by the collar."),
+    ("I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+     "everyone in Ashwick obeys you", ""),
+    ("I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+     "everyone in Ashwick obeys Kael", ""),
 ]:
     check(line, agents.strip_claim(line, claim), want)
+
+print("\n== second-opinion gate (suspects_world_fact)")
+for line, want in [
+    ('I press three silver coins into the young guard\'s hand. "For your trouble." He pockets them, '
+     "gives me his name and tells me exactly who is paying for work in the Hollows.", True),
+    ("I grab Grimbold by the collar and he tells me everything he knows about the trouble.", True),
+    ("It starts to rain heavily outside.", True),
+    ("I hand the guard three silver coins and ask him who is paying for work in the Hollows.", False),
+    ('I press a coin into the guard\'s hand. "For your trouble. He said you know who is hiring."', False),
+    ("I ask the guard if he knows who is hiring.", False),
+    ("I grab Grimbold by the collar and demand that he tell me everything.", False),
+]:
+    check(line, agents.suspects_world_fact(line), want)
 check("NPC line: sentence echoing the claim dropped, quotes kept",
       agents.drop_claim_sentences('Grimbold grunts. "Storm\'s comin\', mark me." He pours another ale. '
                                   'The rain hammers the roof.', "it starts to rain heavily"),

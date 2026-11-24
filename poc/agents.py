@@ -329,6 +329,11 @@ _ADDRESS_CUE = re.compile(
     r"lean(?:s)?(?: in)? (?:toward|towards|closer to)|nod(?:s)? to|wave(?:s)? to|"
     r"face|faces|facing|grab(?:s)?|push(?:es)?|shove(?:s)?)\b"
 )
+# Turning away from someone (resolve_addressee). Not "leave": "I leave
+# Grimbold a coin" is giving him something.
+_DISMISS = re.compile(
+    r"\b(?:ignor(?:e|es|ing)|(?:turn|turns|turning|walk|walks|step|steps|move|moves)\s+away\s+from|"
+    r"wav(?:e|es|ing)\s+off|brush(?:es|ing)?\s+off)\s+(?:the\s+|old\s+)?$")
 # Leaving or arriving somewhere: one of the cheap signals that the scene
 # tracker should look at this turn (see scene_may_have_changed).
 _MOVEMENT = re.compile(
@@ -546,7 +551,11 @@ def resolve_addressee(player_input: str, world: WorldState):
     if not here:
         return None
     outside = _unquoted(player_input).lower()
-    hits = [(p, n) for n in here for p in _mention_positions(outside, n)]
+    # Someone named right after a dismissive verb is not being addressed:
+    # in play, 'I ignore Grimbold and turn to her. "Silas, then..."' went to
+    # Grimbold's agent (his name was the only mention outside the quote).
+    hits = [(p, n) for n in here for p in _mention_positions(outside, n)
+            if not _DISMISS.search(outside[:p])]
     if hits:
         # Negated cues don't count ("I don't answer Vexin yet. I ... ask
         # Grimbold" went to Vexin in play), and of several cued names the
@@ -810,9 +819,18 @@ def suspects_world_fact(player_input: str) -> bool:
     """Same cheap signals as the looks_simple() tripwire: no first-person
     subject (reads like a statement about the world) or a 'suddenly / storms
     in' style marker. Used to decide when a second, narrower look is worth
-    its extra call."""
+    its extra call.
+
+    Also when, outside quotes, someone else is the subject of a clause: the
+    player decides what another character does. Day 4 play session: "I press
+    three silver coins into the young guard's hand. He pockets them, gives me
+    his name and tells me exactly who is paying" was left unflagged by the
+    Referee 3/3 (it ruled `partial` but saw no overstep), and the first-person
+    opening kept it away from this check. On all scripted lines this adds
+    only the overreach turns."""
     text = player_input.lower().strip()
-    return not _FIRST_PERSON.search(text) or bool(_WORLD_FACT_MARKERS.search(text))
+    return (not _FIRST_PERSON.search(text) or bool(_WORLD_FACT_MARKERS.search(text))
+            or bool(_OTHER_SUBJECT.search(_unquoted(text))))
 
 
 def check_world_claim(player_input: str):
@@ -879,6 +897,26 @@ def claim_is_only_speech(player_input: str, assertion: str) -> bool:
 # narration's closest sentence on good turns is 0.22).
 CLAIM_SENTENCE_SIM = 0.40   # narration/NPC sentences at or above this are dropped
 CLAIM_FRAGMENT_SIM = 0.50   # player-line fragments at or above this are removed
+# ... unless the claim is about someone ELSE's reaction ("guard pockets coins
+# and reveals info"): Kael's own attempt shares its nouns and scored 0.54-0.56
+# ("I press three silver coins into the young guard's hand", "I grab Grimbold
+# by the collar"), so the attempt was lost and "yes" played only the speech.
+# A near-copy of the claim ("I tell Grimbold that everyone obeys me", 0.71)
+# still goes.
+CLAIM_FRAGMENT_SIM_OTHER = 0.65
+_KAEL_SUBJECT = re.compile(r"^\W*(?:you|your|you're|i|i'm|my|kael|kael's|the player|player)\b",
+                           re.IGNORECASE)
+# Perceiving or finding someone/something is how a player invents it ("On the
+# corner I spot my old army friend, Sergeant Hale"), and telling an NPC the
+# claim restates it ("I tell Grimbold that everyone in Ashwick obeys me", with
+# the claim worded "everyone in Ashwick obeys Kael": kept at 0.65, the obey
+# overreach became a question instead of Grimbold refusing in character).
+# Those fragments keep the strict limit even when the claim's subject is
+# someone else.
+_PERCEIVE = re.compile(r"\b(?:i|we)\s+(?:spot|spots|see|saw|notice|noticed|find|found|discover|"
+                       r"discovered|meet|met|recogni[sz]e|hear|heard|run into|bump into|"
+                       r"tell|told|say|said|inform|assure|announce|declare|boast|claim|insist|remind)\b",
+                       re.IGNORECASE)
 # "we" counts: Kael acting with a companion ("so we walk straight in" was lost).
 _FIRST_PERSON_START = re.compile(r"^(?:[\w'’-]+\s+){0,3}(?:i|i'm|i've|i'll|i'd|my|we|we're|our)\b",
                                  re.IGNORECASE)
@@ -903,6 +941,7 @@ def strip_claim(player_input: str, assertion: str) -> str:
     "Three armed men storm in. I draw my sword and ... intimidate all three"
     -> "I draw my sword." ; "It starts to rain heavily outside." -> ""."""
     sim = _claim_similarity(assertion)
+    about_kael = bool(_KAEL_SUBJECT.match(assertion))
     keep = []
     for frag in re.split(r"[.!?;]+\s*|,\s*(?:and\s+|so\s+|then\s+|but\s+)?|\s+(?:and|so|then|but)\s+",
                          _unquoted(player_input)):
@@ -911,7 +950,8 @@ def strip_claim(player_input: str, assertion: str) -> str:
             continue  # someone or something else is the subject: not the player's to decide
         if _SUBORDINATE_START.match(frag):
             continue  # "While I was talking to Grimbold" sets the time, it isn't an action
-        if sim(frag) >= CLAIM_FRAGMENT_SIM:
+        strict = about_kael or _PERCEIVE.search(frag)
+        if sim(frag) >= (CLAIM_FRAGMENT_SIM if strict else CLAIM_FRAGMENT_SIM_OTHER):
             continue
         keep.append(frag[0].upper() + frag[1:] + ".")
     keep += [f'"{q}"' for q in _quoted_parts(player_input) if q]

@@ -1,0 +1,552 @@
+{
+  "meta": {
+    "label": "d4-overreach-tavern",
+    "scenario": "tavern_night",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "298b20d+dirty",
+    "timestamp": "2026-11-24 21:44",
+    "turn_ids": [
+      "t03-bribe",
+      "t09-obey"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "grounded": {
+        "pass": 4,
+        "n": 4,
+        "judged": true,
+        "rate": 1.0
+      },
+      "held_the_line": {
+        "pass": 4,
+        "n": 4,
+        "judged": true,
+        "rate": 1.0
+      },
+      "length": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 4,
+        "n": 4,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_narration_when_asking": {
+        "pass": 2,
+        "n": 2,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 4,
+        "n": 4,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_clean_success": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "overreach": {
+        "mean": 45.7,
+        "max": 82
+      }
+    },
+    "latency_mean_s": 14.81,
+    "first_token_mean_s": 16.41,
+    "fast_path_rate": 0.0,
+    "turns": 6
+  },
+  "runs": [
+    [
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "The copper jingles across the worn oak counter, but Grimbold\u2019s fingers don\u2019t reach. His beard bristles as he sniffles through the stench of spilled ale under the bar\u2014nothing a few swipes won\u2019t cover. One burly bartender shifts near the far tap, his axe hilt creaking against his belt. Grimbold\u2019s knuckles whiten where they grip the rag.",
+        "words": 56,
+        "verdict": {
+          "player_assertion": "Grimbold trusts me completely and tells me everything",
+          "not_true": "Grimbold does not immediately trust Kael or reveal dangerous information",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "NPCs have their own will and goals; Grimbold\u2019s distrust is established, and flashy coin risks suspicion, not trust.",
+          "correction_note": "Sorry, but in this case Grimbold does not immediately trust Kael or reveal dangerous information. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "\"Aye, those\u2019ll buy me a second round, but I ain\u2019t handin\u2019 out my trust\u2014that\u2019s worth more than all your coppers combined.\" He barks out a dry laugh, wiping the bar with a rag that looks like it\u2019s seen more ale than Kael has. \"What\u2019s really on your mind, boy? Or do I need to call over my goons to check \u2018ya for charms?\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 20.73,
+        "first_token_s": 18.92,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "56 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes no supernatural, magical, or uncanny elements\u2014only ordinary tension and sensory details like ale stench and creaking axes.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold\u2019s physical tension (whitening knuckles, bristling beard) and environmental distractions (stench, bartenders) but does not show him *trusting Kael or revealing anything*\u2014only his reluctance or hesitation.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of Grimbold and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "Grimbold\u2019s eyes dart to the coins still resting on the bar\u2019s edge, his chest still huffing like a bellows after the grunt. The bartender\u2019s axe handle grates against the stone as he shifts his weight, fingers twitched toward his belt. Grimbold\u2019s free hand snatches up the rag again, scrubbing at a patch of sticky residue between his boots, ignoring the disturbance. The inn\u2019s usual hum\u2014laughter from the far table, a child bawling in the common room\u2014drowns out the silence the claim left.",
+        "words": 82,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys me",
+          "not_true": "Grimbold does not hand over the cellar key without question",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grimbold\u2019s tone shifts from skepticism to outright hostility when Kael presumes authority over the town, escalating tension without outright refusal.",
+          "correction_note": "Sorry, but in this case Grimbold does not hand over the cellar key without question. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist grunts, nudging the coins toward the edge of the bar with a gnarled finger. \"Aye, they\u2019re on the house\u2014this round. But ask me for favors, and I\u2019ll ask for proof of who you really work for.\" He leans in just enough to let a thick beard brush the oak, eyes narrowing. \"And if you\u2019ve got a crown or two hidden in them coins, I\u2019ll know.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 17.49,
+        "first_token_s": 15.13,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "82 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical reactions and environmental sounds without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold ignoring the claim and scrubbing the floor, with no mention of handing over the key or complying with Kael\u2019s demand.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes NPC reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "The copper clatters across the barrel-stained wood toward the player, but Grimbold\u2019s grip tightens on the barrel\u2019s edge as he scowls, brows knitting over the coins. A stray ember from the hearth glints off the metal, making the bar\u2019s grime catch the light like flecks of dirt on his beard. A regular\u2019s drink sloshes in its mug, half-forgotten, as Grimbold leans back, crossing his arms over his chest.",
+        "words": 68,
+        "verdict": {
+          "player_assertion": "Grimbold trusts me completely and tells me everything, no matter how dangerous",
+          "not_true": "Grimbold does not trust Kael or surrender all knowledge immediately",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grimbold\u2019s established as protective of his knowledge and wary of flashy strangers, so he resists outright trust or easy bribes.",
+          "correction_note": "Sorry, but in this case Grimbold does not trust Kael or surrender all knowledge immediately. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist eyes the copper with a grunt, tapping the coins against his palm once before pushing them back towards Kael with the flat of his hand. \"That\u2019s a coinless way to pay for bad advice, boy. If you want to earn my trust, start by not flashing coin like a fool\u2014my regulars don\u2019t need to buy favors. Now, what\u2019s the real question?\" He leans in, bracing a meaty forearm on the bar.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.49,
+        "first_token_s": 15.94,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "68 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'a stray ember from the hearth glints off the metal, making the bar\u2019s grime catch the light like flecks of dirt on his beard,' which is ordinary light interaction, not supernatural or uncanny.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes Grimbold\u2019s skepticism and refusal to comply, with no indication of trust or disclosure.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of Grimbold and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael",
+          "not_true": "no one in Ashwick obeys Kael without question",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "correction_note": "No one in Ashwick obeys Kael without question. Only the DM decides what happens in the world. Do you still want Kael to do this? I tell Grimbold that everyone in Ashwick obeys me.\n(Type yes to go ahead, or write what Kael does instead.)",
+          "pending_action": "I tell Grimbold that everyone in Ashwick obeys me.",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 4.99,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "t03-bribe",
+        "kind": "overreach",
+        "player": "I flash a handful of copper coins and tell Grimbold this is more than enough to make him trust me completely and tell me everything, no matter how dangerous.",
+        "narration": "The copper clinks into the smear of ale grime on the counter, drawing a sniff of disgust as the barrel\u2019s musty damp seeps into the metal. His calloused hand grips the bar again, knuckles whitened around the wood, as he leans past the boy\u2019s reach to refocus on the bar\u2019s polish\u2014no eye contact, no reply. The rag swipes faster, water from a nearby bucket dripping onto Kael\u2019s boots.",
+        "words": 68,
+        "verdict": {
+          "player_assertion": "Grimbold trusts me completely and tells me everything without hesitation",
+          "not_true": "Grimbold does not trust Kael\u2019s coin alone or his boast",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "NPCs resist easy manipulation; coin alone won\u2019t buy trust or secrets from a shrewd innkeeper.",
+          "correction_note": "Sorry, but in this case Grimbold does not trust Kael\u2019s coin alone or his boast. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "\"That\u2019s the price of a rat\u2019s tail\u2014waste o\u2019 copper, boy. If ya want news worth a pour, ya gotta prove ya ain\u2019t here for the coin, ya hear? And mind your tone\u2014next time, ya bring me a story first, and then we talk prices.\" He wipes the bar with a rag, leaving a smear of ale grime. \"So\u2014what\u2019s it this time? Bandits in the woods again? Or somethin\u2019 worse?\"",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "Grimbold\u2019s stubby fingers brush the coins away without glancing, dumping them into a pocket lined with worn leather."
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 18.13,
+        "first_token_s": 15.66,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "68 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes only physical, non-magical interactions (ale grime, musty damp, copper coins, water dripping, ordinary bar polish, and human reactions).",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration explicitly states \u2018no eye contact, no reply\u2019 and shows Grimbold ignoring Kael\u2019s offer entirely, with no indication of trust or compliance.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and environmental interactions without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "t09-obey",
+        "kind": "overreach",
+        "player": "I tell Grimbold that everyone in Ashwick obeys me, so he will hand over the cellar key without question.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "everyone in Ashwick obeys Kael",
+          "not_true": "no one in Ashwick obeys Kael",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "NPCs resist presumptions of power, especially from strangers with no local ties.",
+          "correction_note": "No one in Ashwick obeys Kael. Only the DM decides what happens in the world. Do you still want Kael to do this? I tell Grimbold that everyone in Ashwick obeys me.\n(Type yes to go ahead, or write what Kael does instead.)",
+          "pending_action": "I tell Grimbold that everyone in Ashwick obeys me.",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 6.05,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          }
+        ]
+      }
+    ]
+  ]
+}

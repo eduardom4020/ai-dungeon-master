@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "label": "d4-overreach-road",
+    "scenario": "road_trip",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "298b20d+dirty",
+    "timestamp": "2026-11-24 21:46",
+    "turn_ids": [
+      "r05-grab"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "grounded": {
+        "pass": 2,
+        "n": 3,
+        "judged": true,
+        "rate": 0.667
+      },
+      "held_the_line": {
+        "pass": 3,
+        "n": 3,
+        "judged": true,
+        "rate": 1.0
+      },
+      "length": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 3,
+        "n": 3,
+        "judged": true,
+        "rate": 1.0
+      },
+      "not_clean_success": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "overreach": {
+        "mean": 49.3,
+        "max": 74
+      }
+    },
+    "latency_mean_s": 18.81,
+    "first_token_mean_s": 15.36,
+    "fast_path_rate": 0.0,
+    "turns": 3
+  },
+  "runs": [
+    [
+      {
+        "id": "r05-grab",
+        "kind": "overreach",
+        "player": "I grab Grimbold by the collar and he tells me everything he knows about the trouble.",
+        "narration": "The tankard shatters against a stall\u2019s leg, but it\u2019s his voice that cuts deeper\u2014low, guttural\u2014when he barks the barmaid\u2019s name at her. She bolts from behind the counter with a shriek, grabbing a rag from the wash bucket. The tavern\u2019s usual hum of murmurings dies sharp as a coin drop. Every pair of eyes now watches fingers hover a hairsbreadth from Kael\u2019s throat. The stink of spilled ale thickens with sweat and stale tension.",
+        "words": 74,
+        "verdict": {
+          "player_assertion": "Grimbold tells me everything he knows about the trouble",
+          "not_true": "Grimbold does not immediately surrender all knowledge to Kael\u2019s rough handling",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Physical coercion risks escalating conflict with an NPC who has agency and no prior reason to comply.",
+          "correction_note": "Sorry, but in this case Grimbold does not immediately surrender all knowledge to Kael\u2019s rough handling. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "\"Mister 'no-nonsense', I don\u2019t like the tone neither\u2014loose my shirt or you\u2019ll be dragging an ear out of my bar.\" His free hand smashes a tankard down hard, sending ale sloshing near Kael\u2019s boots, while the other fingers dig like a vice into the lapels. \"Next time you pull that shite, it\u2019s the other fist you\u2019ll taste.\"",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "Grimbold\u2019s face twists, veins bulging purple under his beard as his free hand jerks upward, fingers curling into claws."
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.72,
+        "first_token_s": 19.8,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "74 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes tension and ordinary sensory details but does not mention any supernatural, magical, or uncanny elements like curses, omens, or unexplained phenomena.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**\"The tankard shatters... fingers hover a hairsbreadth from Kael\u2019s throat\"**\u2014no dialogue or submission from Grimbold is shown, only tension and resistance.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the NPC Grimbold's voice and actions, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r05-grab",
+        "kind": "overreach",
+        "player": "I grab Grimbold by the collar and he tells me everything he knows about the trouble.",
+        "narration": "Steam curls up from the ale pipes behind the bar, curling into the air like lazy smoke. The hammers on his biceps shift as he exhales through his nose, slow and heavy, his gaze flicking to Kael\u2019s sword hilt\u2014not with interest, but with the quiet calculation of a man measuring how fast a fight could spill before dawn.",
+        "words": 58,
+        "verdict": {
+          "player_assertion": "Kael grabs Grimbold by the collar",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Physical coercion is risky with an NPC who has will and no prior reason to comply, especially when the player skips dialogue to demand information outright.",
+          "correction_note": "Sorry, but in this case the claim that \"Kael grabs Grimbold by the collar\" did not happen. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "His hand tightens on the wooden bar\u2014no welcome. \"Well now, if it ain\u2019t someone who\u2019s got fashion on their mind. Come to grab coin or just the neck of that ale?\"",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "Grimbold\u2019s gnarled hands freeze mid-wipe of a tankard, the cloth twitching half an inch from the rim."
+          ],
+          "scene_update": null,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 15.09,
+        "first_token_s": 12.93,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "58 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'steam curling up from the ale pipes' which is a natural, non-supernatural occurrence, and no other supernatural elements are present.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration focuses on Grimbold\u2019s physical reaction and internal calculation, not on him verbally complying or revealing information.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and observations (e.g., 'hammers on his biceps shift,' 'gaze flicking,' 'quiet calculation') without attributing speech, thought, or emotion to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "r05-grab",
+        "kind": "overreach",
+        "player": "I grab Grimbold by the collar and he tells me everything he knows about the trouble.",
+        "narration": "The tavern\u2019s air stills. drowns it out. Your sword\u2019s hilt hums warmly against your thigh, untouched.",
+        "words": 16,
+        "verdict": {
+          "player_assertion": "Grimbold tells Kael everything he knows about the trouble",
+          "not_true": "Grimbold does not immediately surrender all his knowledge upon being grabbed",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grabbing an NPC is an attempt, but their reaction is invented; Grimbold\u2019s resistance is expected given his gruff nature and the presumption of violence.",
+          "correction_note": "Sorry, but in this case Grimbold does not immediately surrender all his knowledge upon being grabbed. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "\"Boy, I ain\u2019t tellin\u2019 nobody nothin\u2019\u2014that\u2019s just how it works. Loosen your grip, or I\u2019ll loosen more than that.\" He glares over your shoulder at the rest of the tavern as if daring them to notice.",
+          "narration_dropped": [
+            "A few heads turn, but none stay long; the clatter of drinking horns and a waitress\u2019s sharp \"Get a move on, ya lot!\""
+          ],
+          "narration_rejected": [
+            "Grimbold\u2019s stubbled face twists in fury, but his hands lock around your wrist instead of yanking back\u2014only enough to force your fingers open, the grip gone."
+          ],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 19.62,
+        "first_token_s": 13.35,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "16 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions a sword\u2019s hilt 'hums warmly,' which implies a magical or supernatural effect.",
+            "judged": true
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "**The narration describes the tavern\u2019s air stilling and the sword\u2019s warmth but does not mention Grimbold speaking or complying with Kael\u2019s demand.**",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('grab Grimbold by the collar') but does not include any spoken words, thoughts, emotions, or decisions attributed to Kael or 'you'.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}
