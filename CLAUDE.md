@@ -201,7 +201,12 @@ If asked to improve `looks_simple()` further: grow `_SIMPLE_EXAMPLES`/`_COMPLEX_
 
 - **What other actors do on their own, before and between interactions with Kael.** The timeline log (Day 4) only knows what is recorded as state: Kael's actions (player line), NPC agents' own words, moves/joins/leaves/meetings. Background behaviour exists only as DM prose and never reaches the log. Example from the user: "Bob was drinking a beer with Rose. Both saw Kael leave and followed him. Kael noticed but ignored it." Day 5 should give actors their own activity/whereabouts over time, so these become timeline events with their own witnesses (Kael may or may not perceive them).
 - Until then (Day 4 stopgap): when a new character or place appears with no context, the scene tracker writes a very short placeholder line (what the character was doing, what the place was like) so the log has no holes. Quality is deliberately low; it only has to avoid plot holes. Replace it on Day 5.
-- Decide whether the DM narrates from the timeline brief (`DM_BRIEF=timeline`): it needs a drift measurement that works (see "Measured, not switched on" above).
+- **The DM's drift is a world-state gap, so the DM-brief decision moved here (user, Nov 27).** A place is little more than a name in the graph. When the DM narrates it, its only material is its own earlier prose, which is how "the barrel of pickled herrings ... against the porch" from Borin's farm showed up on the ridge. Reordering the brief can't fix that. The same gap made drift unmeasurable: props aren't state, and the graph doesn't know what is visible from where (the bell tower overlooking the Red Griffin read as drift). Plan:
+  - **Places get content:** a short description plus notable features and objects, generated once when a place is first described (like today's placeholders), then fixed.
+  - **Props become state:** `Item` nodes `AT` a place (already in the schema).
+  - **Places relate:** `PART_OF` / `CONNECTED_TO` / maybe "overlooks", so a view of another place is known to be legitimate.
+  - **Deterministic drift check:** an item AT place X mentioned in narration at place Y.
+  - **Then measure** `DM_BRIEF=timeline` (whose CURRENT SCENE would list what is actually here) against `classic`, and switch only on a clear win (see "Measured, not switched on" above).
 - Related open items to revisit on Day 5: the world clock only advances when the player or the narration explicitly says time passed (no month/year rollover); `looks_like_scene_shift` misses some arrivals; the Referee sometimes flags plain offers; who-knows-whom is not scoped.
 
 ## Re-running the model experiment (`model-experiment/`)
