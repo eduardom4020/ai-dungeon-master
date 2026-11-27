@@ -118,6 +118,9 @@ for line, want in [
     ("I tell Vexin to wait by the door and step inside.", ["Vexin"]),
     ('"Wait here, Vexin. I won\'t be long." I go into the forge.', ["Vexin"]),
     ('"Stay here." I go into the forge.', ["Vexin"]),           # one companion: no name needed
+    ('"Your leg won\'t take much more. Rest here, Vexin, and keep the fire low."', ["Vexin"]),
+    ('"Wait for me by the well, Vexin."', ["Vexin"]),
+    ('"Let\'s rest a moment before we go on, Vexin."', []),     # resting together, not staying behind
     ("I go alone to the forge.", ["Vexin"]),
     ("I part ways with Vexin at the crossroads.", ["Vexin"]),
     ("I leave Vexin a coin for his trouble and walk on.", []),  # giving, not leaving behind
@@ -131,6 +134,18 @@ for line, want in [
     w.join_party("Vexin")
     w.active_npc = "Vexin"
     check(line, agents.party_leavers(line, w), want)
+
+print("\n== movement words (gate for the scene tracker)")
+for line, want in [
+    ("I give him my arm to lean on. Borin and I move slowly down to the flat rocks by the creek, keeping low.", True),
+    ("We make our way along the ridge.", True),
+    ("I sneak around the back of the warehouse.", True),
+    ("I run back to the gate.", True),
+    ("It starts pouring outside, so I move to a table near the fire.", False),
+    ("/dm quick recap -- what's the name of this tavern, and who runs it?", False),
+    ("I move closer to Grimbold and lower my voice.", False),
+]:
+    check(line, bool(agents._MOVEMENT.search(agents._unquoted(line).lower())), want)
 
 print("\n== the party: arrival_place (move before the addressee is resolved)")
 w = tavern_world()

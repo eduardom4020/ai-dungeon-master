@@ -339,7 +339,15 @@ _DISMISS = re.compile(
 _MOVEMENT = re.compile(
     r"\b(?:leave|leaves|leaving|left|exit|exits|head|heads|heading|go|goes|going|"
     r"walk|walks|walking|enter|enters|step|steps|arrive|arrives|follow|follows|"
-    r"travel|ride|rides|climb|climbs|descend|descends|return|returns|cross|crosses)\b"
+    r"travel|ride|rides|climb|climbs|descend|descends|return|returns|cross|crosses|"
+    # Playthrough 2: "Borin and I move slowly down to the flat rocks by the
+    # creek" never reached the tracker, so nobody moved. move/run only with a
+    # direction ("I move to a table near the fire" and "who runs it" are not
+    # travel).
+    r"(?:move|moves|moving|run|runs|running)\s+(?:\w+ly\s+)?(?:on|down|up|along|out|off|toward|towards|"
+    r"through|across|into|ahead|forward|back|away|over)|"
+    r"sneak|sneaks|creep|creeps|limp|limps|march|marches|wander|wanders|"
+    r"make (?:my|our) way|makes? (?:his|her|their) way|set (?:off|out)|press on|push on)\b"
 )
 _EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
 # Minimum (mean-simple-sim - mean-complex-sim) margin to call it SIMPLE.
@@ -1514,7 +1522,10 @@ def party_leavers(player_input: str, world: WorldState) -> list:
             out.append(npc.name)
     for quote in _quoted_parts(player_input):
         q = quote.lower()
-        if not re.search(r"\b(?:wait|stay|remain)\s+(?:here|behind|outside|with|by)\b", q):
+        # "rest" + "wait for me": playthrough 2 ("Rest here, Borin, and keep
+        # the fire low.") left Borin in the party.
+        if not re.search(r"\b(?:wait|stay|remain|rest)\s+(?:here|behind|outside|with|by)\b"
+                         r"|\bwait for me\b", q):
             continue
         named = [n for n in party if any(re.search(rf"\b{re.escape(t)}\b", q) for t in n.name_tokens())]
         for npc in named or (party if len(party) == 1 else []):
