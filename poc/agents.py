@@ -6,6 +6,7 @@ intentionally not tuned yet. Revisit once we're testing against real play
 sessions, per the plan to defer that tuning until it's needed.
 """
 import json
+import os
 import re
 import urllib.error
 
@@ -14,6 +15,67 @@ from sentence_transformers import SentenceTransformer, util
 
 from ollama_client import chat
 from world_state import WorldState, NPC
+
+# Which world context the DM narrates from (Day 4): "classic" = the flat
+# context_brief() with the last 6 exchanges verbatim; "timeline" = the
+# graph-built WorldState.dm_brief() (timeline log + current scene last).
+# Override per run with the DM_BRIEF environment variable, to measure one
+# against the other. The Referee, tracker and worldbuilder keep the classic brief.
+DM_BRIEF = os.environ.get("DM_BRIEF", "classic")
+
+
+def dm_world_context(world: "WorldState") -> str:
+    return world.dm_brief() if DM_BRIEF == "timeline" else world.context_brief()
+
+
+# When the player or the narration says time passed (rule chosen by the user:
+# never invent time). Returns (part_of_day or "", next_day).
+_TIME_WORDS = {"dawn": "dawn", "sunrise": "dawn", "daybreak": "dawn", "first light": "dawn",
+               "morning": "morning", "midday": "midday", "noon": "midday",
+               "afternoon": "afternoon", "dusk": "evening", "sunset": "evening",
+               "evening": "evening", "nightfall": "night", "night": "night",
+               "midnight": "late night"}
+_TW = "|".join(sorted((re.escape(w) for w in _TIME_WORDS), key=len, reverse=True))
+_NEXT_DAY = re.compile(rf"\b(?:the\s+)?(?:next|following)\s+({_TW}|day)\b"
+                       rf"|\bsleep(?:s|ing)?\s+(?:through\s+the\s+night|until\s+({_TW}))\b")
+_UNTIL = re.compile(rf"\b(?:wait|waits|waiting|rest|rests|resting|sleep|sleeps|sleeping|camp|camps|"
+                    rf"stay|stays|hide|hides|keep watch)\b[^.!?]{{0,40}}?\b(?:until|till|for)\s+"
+                    rf"(?:the\s+)?({_TW})\b")
+_PASSES = re.compile(rf"\b(dawn breaks|the sun (?:rises|comes up)|night falls|darkness falls|"
+                     rf"the sun sets|by ({_TW})|as ({_TW}) (?:falls|comes|breaks))\b"
+                     rf"|\b(hours later|hours pass|an hour later|some hours later)\b")
+
+
+def time_passed(player_input: str, narration: str):
+    """(part, next_day) if the player's line or the narration explicitly says
+    time moved on ("I wait until dawn", "the next morning", "night falls",
+    "hours later" -> ("", False), i.e. one step on); None if it doesn't."""
+    player = _unquoted(player_input).lower()
+    # The player's own action: anything "until dawn" ("We climb until dawn").
+    # Not in the narration, where "he'll be gone until dawn" says nothing.
+    m = re.search(rf"\b(?:until|till)\s+(?:the\s+)?({_TW})\b", player)
+    if m and not _NEXT_DAY.search(player):
+        return _TIME_WORDS[m.group(1)], False
+    for text in (player, (narration or "").lower()):
+        m = _NEXT_DAY.search(text)
+        if m:
+            word = m.group(1) or m.group(2) or "morning"
+            return _TIME_WORDS.get(word, "morning"), True
+        m = _UNTIL.search(text)
+        if m:
+            return _TIME_WORDS[m.group(1)], False
+        m = _PASSES.search(text)
+        if m:
+            if m.group(4):
+                return "", False  # "hours later": one step on
+            phrase = m.group(1)
+            word = m.group(2) or m.group(3) or next(
+                (v for k, v in (("dawn", "dawn"), ("rises", "dawn"), ("comes up", "dawn"),
+                                ("night", "night"), ("darkness", "night"), ("sets", "evening"))
+                 if k in phrase), "")
+            return _TIME_WORDS.get(word, word), False
+    return None
+
 
 RULES_OPTIONS = {"temperature": 0.3, "top_p": 0.9}
 DM_OPTIONS = {"temperature": 0.85, "top_p": 0.95}
@@ -239,8 +301,9 @@ the PLAYER, NPC LINE and NARRATION texts actually say; never invent.
 Return ONLY a JSON object, matching exactly:
 {"moved": true | false,
  "location": "where Kael is at the END of this turn",
+ "situation": "...",
  "characters": [{"name": "...", "present": true | false}, \
-{"name": "...", "present": true | false, "new": true, "persona": "...", "aliases": ["..."]}]}
+{"name": "...", "present": true | false, "new": true, "persona": "...", "aliases": ["..."], "doing": "..."}]}
 
 - moved: true only if Kael physically left the place in CURRENT LOCATION \
 for a different building, street, or area (walked out of a building, \
@@ -266,7 +329,16 @@ mentioned, or stayed behind when Kael left.
 (one short sentence on who they are and how they behave, from the text \
 only) and "aliases" (up to 3 short ways the player might refer to them \
 without the name, from the text, e.g. "the dwarf", "the big man"; [] if \
-none).
+none) and "doing": what they were doing when Kael met them or, if only \
+mentioned, what is said about where they are or what they do -- under 15 \
+words, past tense, e.g. "was mending a fence outside his farm".
+- situation: only if moved is true and location is NOT one of KNOWN \
+PLACES: what the place was like when Kael arrived, under 15 words, e.g. \
+"a cold ridge top with a dead campfire and wolf tracks". Otherwise "".
+- doing and situation fill gaps in the game's log: take them from the text \
+when it says; if it says nothing, write a short ordinary, plausible guess \
+that fits the text (no magic, no new named people). These two fields are \
+the ONLY place where a guess is allowed.
 """
 
 
@@ -1325,7 +1397,7 @@ def narrate(world: WorldState, player_input: str, verdict: dict,
     else:
         player_block = f"PLAYER: {player_input}"
     user_content = (
-        f"WORLD CONTEXT:\n{world.context_brief()}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
+        f"WORLD CONTEXT:\n{dm_world_context(world)}\n\n{ruling_block}{npc_block}{lore_block}\n\n"
         f"{player_block}\n\n{length_block}"
     )
     messages = [
@@ -1394,6 +1466,16 @@ _NOT_NAME_WORDS = {"The", "This", "That", "These", "Those", "Some", "His", "Her"
                    "Woman", "Lady", "Sir", "Mister", "Master"}
 
 
+def _short_placeholder(text) -> str:
+    """A tracker placeholder (doing/situation), cleaned: one line, no
+    markdown, at most ~20 words, or "" if empty/none."""
+    text = re.sub(r"[*_`]", "", str(text or "")).strip().strip('"').rstrip(".")
+    if text.lower() in ("", "none", "n/a", "unknown"):
+        return ""
+    words = text.split()
+    return " ".join(words[:20])
+
+
 def _place_key(name: str) -> str:
     return " ".join(re.findall(r"[a-z]+", name.lower()))
 
@@ -1415,7 +1497,7 @@ def apply_scene_update(world: WorldState, update: dict, exclude_from: str = "",
     unnamed people the tracker sometimes lists ("overwatch guards"). Only
     ADDS presence: an NPC stops being present when Kael moves away, not
     because the tracker forgot them."""
-    changes = {"moved_to": None, "added": []}
+    changes = {"moved_to": None, "added": [], "doing": {}, "situation": ""}
     old_location = world.location
     if update.get("moved") is True and allow_move:
         loc = str(update.get("location") or "").strip()
@@ -1424,9 +1506,16 @@ def apply_scene_update(world: WorldState, update: dict, exclude_from: str = "",
         # A spot nested inside the current place ("<current> -- pit's mouth")
         # is not a move: it would strand the NPCs who are here.
         if loc and new != cur and not new.startswith(cur):
-            loc = next((p for p in world.known_places() if _place_key(p) == new), loc)
+            known = next((p for p in world.known_places() if _place_key(p) == new), "")
+            loc = known or loc
             world.move_to(loc)
             changes["moved_to"] = loc
+            # Placeholder for the log (Day 4 stopgap, see TO DO Day 5): what a
+            # NEW place was like on arrival.
+            situation = _short_placeholder(update.get("situation"))
+            if situation and not known:
+                world.graph.node(world.place_id(loc))["situation"] = situation
+                changes["situation"] = situation
     excluded = set(re.findall(r"[a-z]+", exclude_from.lower()))
     for c in update.get("characters") or []:
         if not isinstance(c, dict):
@@ -1453,6 +1542,11 @@ def apply_scene_update(world: WorldState, update: dict, exclude_from: str = "",
                 location=world.location if present else "", aliases=aliases,
             ))
             changes["added"].append(name)
+            # Placeholder for the log: what they were doing when met.
+            doing = _short_placeholder(c.get("doing"))
+            if doing:
+                world.graph.node(world.npcs[name].id)["intro"] = doing
+                changes["doing"][name] = doing
         elif present and (npc.location == "" or
                           (changes["moved_to"] and npc.location == old_location)):
             # Only someone with unknown whereabouts, or a companion who was
@@ -1488,6 +1582,70 @@ def bring_companions(world: WorldState, player_input: str, old_location: str,
             world.join_party(npc.name, by="player")
             moved.append(npc.name)
     return moved
+
+
+def _names(names) -> str:
+    names = list(names)
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+
+
+def _trim_sentences(text: str, max_chars: int = 220) -> str:
+    text = " ".join(str(text).split())
+    if len(text) <= max_chars:
+        return text
+    cut = text[:max_chars]
+    end = max(cut.rfind(". "), cut.rfind('." '), cut.rfind("! "), cut.rfind("? "))
+    return (cut[:end + 1] if end > 60 else cut.rstrip() + "...")
+
+
+def log_turn(world: WorldState, *, action: str, npc_name: str, npc_line: str,
+             start_location: str, were_here: set, left_behind: list, party_before: set,
+             scene_update: dict, narration: str):
+    """Write this turn into the timeline log (Day 4), built from what the
+    code already knows, not from the narration: Kael's action (the player's
+    words, refused claim already stripped), the NPC agent's own line, who
+    was left behind / joined, the move, the time passing, who was met. Each
+    line is stamped with the full date and place and KNOWN by its witnesses.
+    Placeholders from the tracker (what a new character was doing, what a
+    new place was like) fill the gaps (stopgap until Day 5)."""
+    here_now = {n.name for n in world.present_npcs()}
+    end_location = world.location
+    moved = end_location != start_location
+    w_start = sorted(were_here)
+    if action:
+        world.log(f'Kael (in the player\'s words): "{_trim_sentences(action)}"', w_start, start_location)
+    if npc_line:
+        world.log(f"{npc_name}: {_trim_sentences(npc_line)}", w_start, start_location)
+    if left_behind:
+        world.log(f"Kael left {_names(left_behind)} behind.", w_start, start_location)
+    party_now = [n.name for n in world.party()]
+    joined = [n for n in party_now if n not in party_before]
+    if joined:
+        world.log(f"{_names(joined)} joined Kael and travel with him now.", w_start, start_location)
+    company = [n for n in party_now if world.npcs[n].location == end_location]
+    who = "Kael" + (f" and {_names(company)}" if company else "")
+    if moved:
+        world.log(f"{who} left for {end_location}.", w_start, start_location)
+    passed = time_passed(action, narration)
+    if passed is not None:
+        before = world.clock_text()
+        world.advance_clock(*passed)
+        if world.clock_text() != before:
+            world.log(f"Time passed: it is now {world.clock['part']}.", sorted(here_now), end_location)
+    if moved:
+        situation = (scene_update or {}).get("situation") or ""
+        world.log(f"{who} arrived." + (f" The place: {situation}." if situation else ""),
+                  sorted(here_now), end_location)
+    doings = (scene_update or {}).get("doing") or {}
+    for name in (scene_update or {}).get("added") or []:
+        npc, doing = world.npcs.get(name), doings.get(name, "")
+        if npc is None:
+            continue
+        if world.is_present(npc):
+            world.log(f"Kael met {name}" + (f", who {doing}." if doing else "."),
+                      sorted(here_now), end_location)
+        else:
+            world.log(f"{name} was mentioned" + (f": {doing}." if doing else "."), w_start, start_location)
 
 
 def _npc_ref(npc: NPC, world: WorldState) -> str:

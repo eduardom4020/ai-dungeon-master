@@ -135,6 +135,22 @@ for line, want in [
     w.active_npc = "Vexin"
     check(line, agents.party_leavers(line, w), want)
 
+print("\n== time_passed (the clock only moves when the text says so)")
+for player, narration, want in [
+    ("I wait until dawn.", "", ("dawn", False)),
+    ("I sleep through the night.", "", ("morning", True)),
+    ("I look around.", "The next morning the fog lifts.", ("morning", True)),
+    ("We make camp for the night.", "", ("night", False)),
+    ("I keep walking.", "Night falls over the ridge.", ("night", False)),
+    ("I keep walking.", "Hours later, the ridge comes into view.", ("", False)),
+    ("I sit by the fire.", "The evening air is cold and the night is dark.", None),  # mentions, not passing
+    ('"I will be back by dawn," I say.', "", None),                                   # speech only
+    ("I ask Grimbold about the mill.", "", None),
+    ("We climb until dawn.", "", ("dawn", False)),
+    ("I ask where Lurik is.", "Borin says she won't be back until dawn.", None),  # narration "until": no
+]:
+    check(f"{player} | {narration}", agents.time_passed(player, narration), want)
+
 print("\n== movement words (gate for the scene tracker)")
 for line, want in [
     ("I give him my arm to lean on. Borin and I move slowly down to the flat rocks by the creek, keeping low.", True),

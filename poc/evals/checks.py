@@ -105,6 +105,36 @@ def _judged(name, kind, turn, narration, want_answer, use_judge):
     return _check(name, j["answer"] == want_answer, j["reason"], judged=True)
 
 
+_GENERIC_PLACE_WORDS = {"ashwick", "the", "main", "street", "road", "path", "town", "square", "gate",
+                        "house", "old", "west", "east", "north", "south", "edge", "outside", "inside",
+                        "near", "river", "hill", "top", "ridge", "door", "yard"}
+
+
+def _stale_mentions(player: str, narration: str, verdict: dict) -> list:
+    visited = verdict.get("_visited", [])
+    here = verdict.get("_location", "")
+    if here not in visited:
+        return []
+    idx = visited.index(here)
+    previous = visited[idx - 1] if idx > 0 else ""
+    old_places = [p for p in visited[:max(0, idx - 1)] if p != here]
+    said = (player or "").lower()
+    text = narration.lower()
+    hits = []
+    for p in old_places:
+        for w in re.findall(r"[a-z]+", p.split("--")[-1].lower()):
+            if len(w) >= 4 and w not in _GENERIC_PLACE_WORDS and w not in said \
+                    and re.search(rf"\b{w}\b", text) and w not in here.lower():
+                hits.append(w)
+    for name, where in (verdict.get("_npc_where") or {}).items():
+        if name in verdict.get("_present", []) or where == previous:
+            continue
+        first = name.split()[0].lower()
+        if first not in said and re.search(rf"\b{re.escape(first)}\b", text):
+            hits.append(name)
+    return sorted(set(hits))
+
+
 def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> list:
     results = []
     words = len(narration.split())
@@ -151,6 +181,15 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
     for name in turn.expect_present:
         results.append(_check("present", any(p.startswith(name) for p in present),
                               f"{name} not here; present={present}"))
+    if turn.expect_time:
+        clock = verdict.get("_clock", "")
+        results.append(_check("clock", turn.expect_time in clock, f"clock={clock!r}"))
+    # Drift (Day 4): details of places left 2+ moves ago, or of NPCs who are
+    # elsewhere (not at the place just left), in this turn's narration.
+    if "_visited" in verdict and narration and turn.kind not in ("recall", "redescribe") \
+            and not turn.text.lower().startswith("/dm") and not verdict.get("awaiting_player"):
+        stale = _stale_mentions(turn.text, narration, verdict)
+        results.append(_check("no_stale_scene", not stale, f"stale: {stale}"))
     # What NPC agents know (Day 4, step 3, witnesses scenario).
     npc_said = (verdict.get("npc_line") or "").lower()
     if turn.npc_must_not_include:

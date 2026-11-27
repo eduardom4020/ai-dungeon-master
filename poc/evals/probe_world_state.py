@@ -7,6 +7,7 @@ old WorldState API reads/writes the graph, saves round-trip, and saves from
 before the graph are migrated.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -149,6 +150,59 @@ pre["graph"]["data"]["edges"] = [x for x in pre["graph"]["data"]["edges"]
 e3 = WorldState.from_dict(pre)
 check("graph save from before events: history known by all",
       len(e3.events_known_by(e3.npcs["Grimbold"])), 2)
+
+# ---- clock, timeline log, DM brief (Day 4) ----------------------------------
+t = WorldState(scene_summary="Kael looks for work.")
+check("default clock", t.clock_text(), "Year 200, 14th of Frostmonth, evening")
+t.advance_clock("night")
+check("later today", t.clock_text(), "Year 200, 14th of Frostmonth, night")
+t.advance_clock("dawn")
+check("earlier part -> next day", t.clock_text(), "Year 200, 15th of Frostmonth, dawn")
+t.advance_clock("", False)
+check("one step on", t.clock["part"], "morning")
+t.clock = {"year": "Year 200", "month": "Frostmonth", "day": 21, "part": "late night"}
+t.advance_clock("", False)
+check("late night + hours -> dawn next day", t.clock_text(), "Year 200, 22nd of Frostmonth, dawn")
+t.clock = dict(t.clock, day=14, part="evening")
+t.move_to("Ashwick -- Borin's farm")
+t.add_npc(NPC(name="Borin", persona="Old trapper.", important=True, location=t.location))
+t.add_npc(NPC(name="Grimbold", persona="Innkeeper.", important=True, location="Ashwick -- the tavern"))
+t.join_party("Borin")
+agents.log_turn(t, action="I follow Borin north along the hunter's path.", npc_name="Borin",
+                npc_line='Borin spits. "Fine. But you walk behind."', start_location=t.location,
+                were_here={"Borin"}, left_behind=[], party_before=set(), scene_update={},
+                narration="They set off.")
+t.move_to("Blackpine Ridge -- the ridge's edge")
+agents.log_turn(t, action="We climb until dawn.", npc_name="", npc_line="",
+                start_location="Ashwick -- Borin's farm", were_here={"Borin"}, left_behind=[],
+                party_before={"Borin"}, scene_update={"situation": "a cold ridge top with wolf tracks"},
+                narration="")
+tl = t.timeline()
+check("every line has the full date and place", all(re.match(r"\d+\. \[Year 200, \d+\w\w of Frostmonth, [a-z ]+ \| .+\] ", x) for x in tl), True)
+check("timeline lines", [x.split("] ", 1)[1] for x in tl], [
+    'Kael (in the player\'s words): "I follow Borin north along the hunter\'s path."',
+    'Borin: Borin spits. "Fine. But you walk behind."',
+    "Borin joined Kael and travel with him now.",
+    'Kael (in the player\'s words): "We climb until dawn."',
+    "Kael and Borin left for Blackpine Ridge -- the ridge's edge.",
+    "Time passed: it is now dawn.",
+    "Kael and Borin arrived. The place: a cold ridge top with wolf tracks.",
+])
+check("arrival stamped with the new place and new time", tl[-1].split("] ")[0],
+      "7. [Year 200, 15th of Frostmonth, dawn | Blackpine Ridge -- the ridge's edge")
+check("Grimbold witnessed none of it", t.timeline(viewer=t.npcs["Grimbold"]), [])
+check("Borin witnessed all of it", len(t.timeline(viewer=t.npcs["Borin"])), 7)
+b = t.dm_brief()
+check("brief: current scene is the last block", b.rsplit("\n", 6)[0].count("CURRENT SCENE"), 0)
+check("brief: order", [b.index(k) for k in ("STORY PREMISE", "TIMELINE", "CURRENT SCENE")],
+      sorted(b.index(k) for k in ("STORY PREMISE", "TIMELINE", "CURRENT SCENE")))
+check("scene block", t.scene_block().splitlines()[:3], [
+    "Place: Blackpine Ridge -- the ridge's edge",
+    "Time: Year 200, 15th of Frostmonth, dawn",
+    "Here: Kael; Borin (travelling with Kael): Old trapper."])
+t2 = WorldState.from_dict(json.loads(json.dumps(t.to_dict())))
+check("clock and timeline survive save/load", (t2.clock_text(), t2.timeline()), (t.clock_text(), tl))
+check("exchanges and log lines stay separate", t.events_known_by(t.npcs["Borin"]), [])
 
 # ---- old saves -------------------------------------------------------------
 legacy = {

@@ -1,0 +1,2280 @@
+{
+  "meta": {
+    "label": "d4-drift-timeline",
+    "scenario": "drift",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "6b9ffb6+dirty",
+    "timestamp": "2026-11-27 11:53",
+    "turn_ids": [
+      "d01-out",
+      "d02-tannery",
+      "d03-look-tannery",
+      "d04-tower",
+      "d05-look-tower",
+      "d06-rest",
+      "d07-look-again",
+      "d08-recall"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "clock": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 15,
+        "n": 24,
+        "judged": true,
+        "rate": 0.625
+      },
+      "length": {
+        "pass": 24,
+        "n": 24,
+        "judged": false,
+        "rate": 1.0
+      },
+      "location": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 24,
+        "n": 24,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 24,
+        "n": 24,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 12,
+        "n": 12,
+        "judged": true,
+        "rate": 1.0
+      },
+      "no_stale_scene": {
+        "pass": 18,
+        "n": 21,
+        "judged": false,
+        "rate": 0.857
+      },
+      "no_stray_note": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_flagged": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "recall": {
+        "pass": 2,
+        "n": 3,
+        "judged": false,
+        "rate": 0.667
+      },
+      "scene_shift_flagged": {
+        "pass": 6,
+        "n": 9,
+        "judged": false,
+        "rate": 0.667
+      }
+    },
+    "words_by_kind": {
+      "normal": {
+        "mean": 62.8,
+        "max": 100
+      },
+      "recall": {
+        "mean": 60,
+        "max": 80
+      },
+      "shift": {
+        "mean": 111.7,
+        "max": 162
+      }
+    },
+    "latency_mean_s": 10.2,
+    "first_token_mean_s": 4.78,
+    "fast_path_rate": 0.875,
+    "turns": 24
+  },
+  "runs": [
+    [
+      {
+        "id": "d01-out",
+        "kind": "shift",
+        "player": "I finish my ale, say goodbye to Grimbold and walk out of the Red Griffin into the main street.",
+        "narration": "The door\u2019s hinge creaks as you push past, spilling golden lamplight onto cobbles slick with damp. A man\u2019s laughter drifts from a nearby table, mixed with the clink of glasses and the distant jangle of a faro deck. The tavern\u2019s warmth vanishes in a sudden gust, carrying the smell of horse manure and woodsmoke from the stables down the street.",
+        "words": 60,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist nods slowly from behind the bar, his grizzled eyebrows locking together. \"Come back for the next round if you see the Black Raven pennant up. And mind that back alley\u2014thieves got to be lurking someth\u2019 new there.\" He tosses a rough-hewn wooden token at you with the heel of his hand. \"You\u2019ve got my best regards to whoever you\u2019re heading for. Don\u2019t get yourself in over your head.\" The bell over the door chimes as you step outside.",
+          "narration_dropped": [
+            "The token in your palm stays warm where the bar\u2019s heat lingers, and someone ahead steps aside, muttering about \"cold air from the butcher\u2019s stall.\""
+          ],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "doing": {},
+            "situation": "cobblestones slick with damp, lamplight spilling, horse manure and woodsmoke in the air",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the main street",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 19.47,
+        "first_token_s": 12.4,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'golden lamplight' without any explanation or context for its unusual color or origin, which could imply a subtle magical element in an otherwise ordinary setting.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d02-tannery",
+        "kind": "shift",
+        "player": "I walk down the main street to the tannery by the river and step inside.",
+        "narration": "The cobbled street curves around you, the river\u2019s dark current glinting under lamplight as the tannery\u2019s stinking breeze\u2014sickly sweet, like wet hides and boiling ash\u2014hits your nose. A low-slung wooden shed with a warped roof, its planks stitched together with rusted iron rivets. A single lantern flickers beside the door, casting jagged shadows over a pair of bare-legged legs propped up on a barrel: one man\u2019s boots are dunked in a trough of murky brown liquid, his face half-hidden behind a ragged kerchief. The air reek of burning pitch and something sourer, like spoiled milk. A loose shutter rattles against its hinges as a wind gusts, and the man\u2014middle-aged, his hands ringed with scar tissue\u2014spits a stream of tobacco juice into the trough. He doesn\u2019t look up. \"Ain\u2019t open to civilians,\" he mutters, voice like gravel. The shed\u2019s back wall groans under the weight of stacked hides, some still quivering. A dog naps in a patch of shadows, tail twitching.",
+        "words": 160,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the tannery by the river",
+            "added": [],
+            "doing": {},
+            "situation": "a low-slung wooden shed with a warped roof, reeking of boiling hides and burning pitch",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 16.56,
+        "first_token_s": 3.94,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "160 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary elements like lamplight, shadows, and tension without introducing any supernatural or uncanny phenomena.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the tannery by the river'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d03-look-tannery",
+        "kind": "normal",
+        "player": "I look around the tannery for whoever runs it.",
+        "narration": "The man\u2019s boots clatter back into the trough with a splat as he finally lowers the kerchief to glare at you. His calloused hands grip the barrel\u2019s edge, and the lantern\u2019s light catches the double bar across his throat\u2014tanned hide stretched over a knife-wound scar. A younger apprentice, barefoot and shivering in a patched-up tunic, sidles forward from the shadows, wiping her nose on her sleeve. \u201cHe\u2019s Luthain,\u201d she says, voice thin with smoke, \u201cbut he won\u2019t bother you if you ain\u2019t askin\u2019 for work.\u201d The dog lifts its head, ears twitching at the movement, then drifts back to sleep.",
+        "words": 100,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [
+              "Luthain"
+            ],
+            "doing": {
+              "Luthain": "glared at Kael from behind the barrel"
+            },
+            "situation": ""
+          },
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [
+            "Luthain"
+          ],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 14.0,
+        "first_token_s": 3.38,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "100 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a **double bar across his throat\u2014tanned hide stretched over a knife-wound scar**, which implies a supernatural or unnatural preservation of flesh rather than a mundane injury.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical actions and observations by NPCs or the environment, without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d04-tower",
+        "kind": "shift",
+        "player": "I leave the tannery and climb the hill path up to the old bell tower.",
+        "narration": "The hill path rises steeply through a tangle of scrub and old stone steps half-buried in frost-matted grass, each step groaning underfoot like a long-forgotten groan. A westerly wind tugs at the lantern\u2019s flame, carrying the stench of river muck and the copper tang of blood\u2014tannery work clinging to the back of your hair, even up here. The old bell tower looms ahead, its wooden cupola rotted away, the stone bell tower itself half-collapsed, crowned with rusted iron rings and a single gnarled oak branch snagged on the parapet like a half-drawn weapon. Above it, the town\u2019s streetlights flicker below, a distant hum of conversation and the occasional sharp bark from a patrol dog. The wind dies just for a moment, leaving an unnatural silence\u2014the only sound the scrabbling of a rat somewhere deep in the ruins.",
+        "words": 137,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the hill path to the old bell tower",
+            "added": [],
+            "doing": {},
+            "situation": "a steep, windy path with half-buried steps and a half-collapsed tower",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 11.93,
+        "first_token_s": 3.75,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "137 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a gnarled oak branch snagged on the parapet 'like a half-drawn weapon,' which implies an uncanny or eerie quality without explicit supernatural cause.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the hill path to the old bell tower'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d05-look-tower",
+        "kind": "normal",
+        "player": "I look around the top of the bell tower.",
+        "narration": "The wind howls through the skeletal framework of the tower, rattling rusted nails in the half-broken stone. Below, Ashwick\u2019s lamplight pools like spilled ink against the muddied cobbles, but the path below is swallowed in darkness\u2014just enough shadow to hide movement. The copper-sour stench of the tannery lingers, clinging to the damp wool of your cloak.",
+        "words": 56,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 5.14,
+        "first_token_s": 3.55,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "56 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes 'lamplight pools like spilled ink' and 'just enough shadow to hide movement' without any clear source or explanation, which could imply an uncanny or supernatural quality to the lighting and shadows.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes sensory details and environmental observations without attributing them to Kael's internal perspective or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d06-rest",
+        "kind": "normal",
+        "player": "I sit down against the bell and rest until midnight.",
+        "narration": "The wind dies down slightly as the body shifts against the cold stone, its breath curling in the air like a dog\u2019s sigh. Distant laughter spills from the tavern below\u2014drunks singing off-key, a cart wheel creaking past on the cobbles. The bell itself hums with age, a slow, hollow note no one hears but you.",
+        "words": 55,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 4.8,
+        "first_token_s": 3.54,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "55 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes the bell 'humming with age, a slow, hollow note no one hears but you,' which implies a supernatural auditory phenomenon.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": false,
+            "detail": "stale: ['tavern']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration uses the second-person pronoun 'you' to describe internal auditory perception ('no one hears but you'), which implies Kael's subjective experience rather than a direct quote or explicit emotional/decision statement.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d07-look-again",
+        "kind": "normal",
+        "player": "I stand up, stretch and look out over the town from the tower.",
+        "narration": "The moon bobs low behind the rooftops, slithering behind a tangle of smokestacks as you rise. Ashwick\u2019s streets below churn with late-night movement\u2014hoofbeats echoing uneven, the hitch of a tethered horse, a woman\u2019s voice raised in an argument near the butcher\u2019s stall. The cold clings to the back of your neck, but the wind here carries the acrid tang of wet fur from the tannery, mixed with the sharp, sickly-sweet stink of spilled fruit down by the market.",
+        "words": 78,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 5.95,
+        "first_token_s": 3.57,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "78 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details without introducing any supernatural, magical, or uncanny elements like glowing substances, curses, or unexplained phenomena.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('you rise', 'look out') and sensory observations without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d08-recall",
+        "kind": "recall",
+        "player": "/dm where am I right now, and what time is it?",
+        "narration": "You\u2019re still atop the old bell tower, its rotted stone steps half-buried in the wind-swept earth. It\u2019s nearly past midnight, the hour when the town\u2019s lamps sputter low and the streets thin to a trickle of late tradesfolk and drunks.\n\nThe wind sharpens the stink of wet horse from the stables below, and the far-off clink of a tankard being set down at the Red Griffin spills through the chilled air, too faint to place.",
+        "words": 75,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The question is a straightforward recap of established facts, not an attempt to invent new information.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "doing": {},
+            "situation": ""
+          },
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern",
+            "Luthain": "Ashwick -- the tannery by the river"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 14.43,
+        "first_token_s": 8.99,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "75 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sounds and smells without introducing any supernatural, magical, or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "d01-out",
+        "kind": "shift",
+        "player": "I finish my ale, say goodbye to Grimbold and walk out of the Red Griffin into the main street.",
+        "narration": "The bar\u2019s door swings shut with a creak behind you, muffling the hum of the Red Griffin\u2019s voices. The narrow street beyond is slick with melted snow, the lamplight casting long shadows from the town\u2019s weathered signs and the occasional hitching post. A distant dog barks from a house across the way, its tail thumping against a wooden wall.",
+        "words": 59,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "(Grimbold Ironfist wipes a damp rag across the bar with a grunt, then locks eyes at the door. \"Well, don\u2019t be a stranger, Kael\u2014next round\u2019s on you if you\u2019re bringing coin and news worth hearing.\")",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "doing": {},
+            "situation": "a slick, snow-melted street with lamplight shadows and distant dog barking",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the main street",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 12.67,
+        "first_token_s": 6.8,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "59 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sounds, shadows, and lamplight without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d02-tannery",
+        "kind": "shift",
+        "player": "I walk down the main street to the tannery by the river and step inside.",
+        "narration": "The tannery door groans open, its hinges rusted but solid under your touch. Inside, the stink of brine and rotting hides claws at your throat, thick enough to taste on the back of your tongue\u2014salt and sour, like wet leather left too long in the sun. Steam rises in lazy curls from a large copper vat near the back, where a young woman in a apron splashes water over a pile of scrap hides with a long wooden paddle. Nearby, a burly man with a stubbled jaw is prying at a hide with a curved knife, his breath coming in ragged puffs against the warmth. The air hums with the faint whine of a bellows in the corner, though no one's tending it just now. The door creaks shut behind you, sealing in the smell.\n\nA voice cuts through the noise, sharp with the tone of one used to being obeyed. \"Well now\u2014what brings you to the stinking pit of tanners, lad?\"",
+        "words": 162,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [
+            "She points the paddle toward the rear with a glare that could curdle milk."
+          ],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the tannery by the river",
+            "added": [],
+            "doing": {},
+            "situation": "a stinking workshop with brine, hides, and steam",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 17.91,
+        "first_token_s": 3.2,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "162 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details (smells, sounds, steam, physical labor) without introducing any supernatural, magical, or uncanny elements like curses, omens, or unexplained phenomena.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the tannery by the river'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d03-look-tannery",
+        "kind": "normal",
+        "player": "I look around the tannery for whoever runs it.",
+        "narration": "Your glance shifts to the doorjamb as the woman freezes mid-stroke, her paddle hovering in the brine, while the burly man stiffens where he kneels by the hides. Behind them, a sturdy oak desk sits by the door, its surface clear of clutter\u2014only a worn ledger lies closed, its edges yellowed with age. The tannery\u2019s scent sharpens, the copper vat\u2019s steam curling with a hint of something bitter beneath the brine.",
+        "words": 71,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "doing": {},
+            "situation": ""
+          },
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 12.91,
+        "first_token_s": 3.79,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details (steam, scent, brine, yellowed ledger edges) without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical observations and environmental details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d04-tower",
+        "kind": "shift",
+        "player": "I leave the tannery and climb the hill path up to the old bell tower.",
+        "narration": "The tannery\u2019s door creaks shut behind you, its heavy oak hinges groaning against the damp. The hill path rises steeply from the riverbank, its stone steps worn black by generations of boot soles and animal hooves. Above the muddy streets of Ashwick, the air shifts\u2014colder, thinner, and alive with a faint metallic taint from the nearby forge. The old bell tower looms ahead, its crooked masonry crowned with a rusted iron spire, the scent of rain and iron seeping from its gaping windows. The first stars flicker through the thin clouds, but the distant lanterns of town are swallowed by shadow.",
+        "words": 101,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the hill path to the old bell tower",
+            "added": [],
+            "doing": {},
+            "situation": "a steep stone path with worn steps, cold air, and faint iron scent",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 10.25,
+        "first_token_s": 3.26,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "101 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a faint metallic taint from the nearby forge and distant lanterns swallowed by shadow, but these are ordinary sensory observations without supernatural or uncanny implications.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the hill path to the old bell tower'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d05-look-tower",
+        "kind": "normal",
+        "player": "I look around the top of the bell tower.",
+        "narration": "The iron steps curl into a narrow landing at the tower\u2019s crown, where a single lantern swings vacant by a frayed chain. Below, Ashwick\u2019s rooftops huddle in the dark like sleeping animals, their chimneys breathing out faint, wavering steam. The wind howls through cracks in the masonry, rattling loose shingles and the rusted bell inside.",
+        "words": 55,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 4.97,
+        "first_token_s": 3.57,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "55 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes 'chimneys breathing out faint, wavering steam' and a 'rusted bell inside' without any explanation or context for these phenomena.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical observations and environmental details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d06-rest",
+        "kind": "normal",
+        "player": "I sit down against the bell and rest until midnight.",
+        "narration": "The rough stone of the tower\u2019s base absorbs the cold through your clothes, and the lantern\u2019s light gutters as the wind tugs at the chain. A distant dog barks again\u2014twice\u2014from below, the echo sharpening on the empty air. Frost creeps up from the ground, but your breath steams slower than the chimney smoke from town.",
+        "words": 55,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 4.83,
+        "first_token_s": 3.67,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "55 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a lantern\u2019s light 'guttering' and 'chimney smoke from town' without any magical context or explanation, which could imply supernatural interference.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical sensations and environmental details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d07-look-again",
+        "kind": "normal",
+        "player": "I stand up, stretch and look out over the town from the tower.",
+        "narration": "The damp cold clings harder to your skin as you rise, and the lantern\u2019s flame dims further in the gusts. Below, Ashwick\u2019s rooftops gleam with frost-laden tiles, their edges catching the streetlamps\u2019 smoky glow\u2014though one shuttered window near the Red Griffin\u2019s back has a faint, shifting light, like candle-wax gutting. A far-off cart\u2019s wheels rattle on cobbles, muffled by distance.",
+        "words": 60,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 5.42,
+        "first_token_s": 3.56,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'faint, shifting light, like candle-wax gutting' which implies an unnatural or supernatural phenomenon.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": false,
+            "detail": "stale: ['griffin']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('stand up,' 'stretch,' 'look out') and sensory observations ('damp cold,' 'lantern\u2019s flame,' 'frost-laden tiles') without attributing speech, thoughts, or emotions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d08-recall",
+        "kind": "recall",
+        "player": "/dm where am I right now, and what time is it?",
+        "narration": "You\u2019re at the top of the old bell tower, the iron-scented wind still biting your hands. The hour is past midnight by the lantern\u2019s gut.",
+        "words": 25,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM already knows the location and approximate time based on the scene description.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "doing": {},
+            "situation": ""
+          },
+          "party": [],
+          "_location": "Ashwick -- the hill path to the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the hill path to the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 12.3,
+        "first_token_s": 8.49,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "25 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions an 'iron-scented wind' and a 'lantern\u2019s gut' without explanation or context, which could imply supernatural or uncanny elements in an otherwise ordinary setting.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "d01-out",
+        "kind": "shift",
+        "player": "I finish my ale, say goodbye to Grimbold and walk out of the Red Griffin into the main street.",
+        "narration": "The door creaks shut behind you, its hinges groaning against the cold. Grimbold\u2019s heavy footsteps shuffle back to the bar, the clink of his pint against its saucer drowning out the last dribble of foam. A stray dog sniffs at the damp cobblestones, its breath steaming in the twilight as the streetlamps flicker, casting long shadows over the empty sign for the Red Griffin.",
+        "words": 64,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist pulls the pint back to wipe the suds with his thumb. \"Ain't no hurry, lad. The door ain't locked.\" He spits a wad of chewed tobacco into the spittoon by the door. \"But don\u2019t take too long\u2014my ale\u2019s best when it\u2019s fresh. And my ale.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "doing": {},
+            "situation": "a cold, empty street with flickering lamplight and a stray dog sniffing cobblestones",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the main street",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 13.66,
+        "first_token_s": 7.2,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "64 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'long shadows' and 'stray dog' behavior without supernatural context, but no glowing, moving, or inherently magical elements are present.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d02-tannery",
+        "kind": "shift",
+        "player": "I walk down the main street to the tannery by the river and step inside.",
+        "narration": "The wooden door of the tannery groans on its hinges as it swings open, revealing the reek of brine and wet hides in a cramped, dim space. Rows of half-cured animal pelts hang from the low rafters, their edges still glistening with salt, while the clatter of a leather hammer echoes from a station near a shallow, churning trough of water and curds. A lantern hanging from the ceiling trembles, casting jagged shadows over a hunched woman in a soiled apron, her fingers deftly prying a strip of hide from a large knife. A damp, meaty scent\u2014half fish, half rot\u2014lingers beneath the tang of lime and sweat. The door thudding behind you startles her enough to pause; she mutters something under her breath before wiping her brow on her sleeve.",
+        "words": 130,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the tannery by the river",
+            "added": [],
+            "doing": {},
+            "situation": "cramped, dim space with brine, wet hides, and a churning trough",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 13.22,
+        "first_token_s": 3.64,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "130 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical sensations and environmental details without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the tannery by the river'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d03-look-tannery",
+        "kind": "normal",
+        "player": "I look around the tannery for whoever runs it.",
+        "narration": "The woman\u2019s eyes flick toward you, tracking your gaze, but she doesn\u2019t stop her work. A knife clinks against the trough as she resumes prying at the hide, her breath shallow, rhythmic. Her apron pockets sag with worn leather thimbles and half-peeled garlic cloves\u2014only the faintest rustle of paper might reveal a ledger if it were there.",
+        "words": 57,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the tannery by the river",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 4.8,
+        "first_token_s": 3.21,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "57 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details (breath, knife clinking, rustling paper) without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical observations and actions of an NPC without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d04-tower",
+        "kind": "shift",
+        "player": "I leave the tannery and climb the hill path up to the old bell tower.",
+        "narration": "The path winds upward, slick with frozen mud from the river below, the lamplight barely piercing the chill. Ahead, the bell tower looms\u2014its stonework weathered, the bell silent, its once-sharp edge now dulled by rust. The scent of damp earth and old wood clings, mixed with the sour tang of river brine lingering where the path kisses the tower\u2019s base. No one else is here; only a sparrow flits in the shadowed rafters, its wings muffling against the dark.\n\nThe tower\u2019s front doors hang ajar, their hinges groaning as you push them open. Inside, the air is thicker, thick with years of dust, and the hollow thud of stone floors beneath your feet. A single lantern hangs cracked, its glass darkened, casting wavering light over a ladder spiraling upward into the gloom.",
+        "words": 132,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the old bell tower",
+            "added": [],
+            "doing": {},
+            "situation": "a dark spiral staircase with a cracked lantern casting dim light",
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 11.11,
+        "first_token_s": 3.17,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "132 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a sparrow flitting in shadowed rafters with wings 'muffling against the dark,' an implied unnatural sound without source or explanation.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the old bell tower'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "d05-look-tower",
+        "kind": "normal",
+        "player": "I look around the top of the bell tower.",
+        "narration": "The lantern\u2019s flicker wavers, casting shifting shadows across the rough-hewn stone walls. Through the narrow arched opening, the town below sprawls\u2014lanterns dotting the muddy street, a few figures moving like ants in the Red Griffin\u2019s light. The wind howls through the tower\u2019s cracks, carrying the sharp scent of smoke from a distant hearth, mixed with the damp of the river.",
+        "words": 60,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, evening"
+        },
+        "elapsed_s": 5.04,
+        "first_token_s": 3.34,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary light sources (lanterns, fire) and natural elements (wind, shadows) without introducing any supernatural or uncanny phenomena.",
+            "judged": true
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": false,
+            "detail": "stale: ['griffin']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical observations and environmental details without attributing them to Kael's thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d06-rest",
+        "kind": "normal",
+        "player": "I sit down against the bell and rest until midnight.",
+        "narration": "The cold stone bell\u2019s edge bites through your coat. Your breath fogs faintly in the lantern\u2019s glow, fogging also the wind\u2019s whisper through the tower\u2019s cracks\u2014now a faint, distant hum from the town below. A rat scuttles past your boots, lost in the shadowed nook.",
+        "words": 45,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 4.56,
+        "first_token_s": 3.18,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "45 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a 'lantern\u2019s glow' and 'faint, distant hum' without any supernatural context, but does not introduce anything inherently magical or uncanny like glowing ink, moving objects, or unexplained voices.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical sensations and environmental details without attributing them to Kael's internal thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d07-look-again",
+        "kind": "normal",
+        "player": "I stand up, stretch and look out over the town from the tower.",
+        "narration": "The lantern\u2019s sway flickers against the iron railing, casting jagged shadows across the cobbled rooftops below. A gust tugs at the edge of your cloak, pulling loose a scrap of paper from your belt\u2014it flutters past the ledge, vanishing into the gutters. The distant hum of Ashwick\u2019s slumber shifts to the creak of a loose timber, somewhere in the timber yard.",
+        "words": 61,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 5.15,
+        "first_token_s": 3.53,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "61 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a lantern\u2019s flickering light casting shadows and a gust of wind pulling a scrap of paper, both ordinary occurrences.",
+            "judged": true
+          },
+          {
+            "name": "clock",
+            "passed": true,
+            "detail": "clock='Year 200, 14th of Frostmonth, late night'",
+            "judged": false
+          },
+          {
+            "name": "no_stale_scene",
+            "passed": true,
+            "detail": "stale: []",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('stand up,' 'stretch,' 'look out') and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "d08-recall",
+        "kind": "recall",
+        "player": "/dm where am I right now, and what time is it?",
+        "narration": "You are still in the old bell tower, above Ashwick. The hour is just before dawn, the sky a dark slate gray where the town\u2019s lamplight bleeds into it\u2014time enough for another hour of waiting, or to make for the cobblestone path down.\n\nThe wind sharpens the stink of brine from the tannery below, thick enough to taste on your teeth. A lone crow takes flight from a chimney, its wings beating against the quiet, carrying it toward the river.",
+        "words": 80,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM already knows the location and approximate time from RECENT HISTORY.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "doing": {},
+            "situation": ""
+          },
+          "party": [],
+          "_location": "Ashwick -- the old bell tower",
+          "_present": [],
+          "_visited": [
+            "Ashwick -- the Red Griffin tavern",
+            "Ashwick -- the main street",
+            "Ashwick -- the tannery by the river",
+            "Ashwick -- the old bell tower"
+          ],
+          "_npc_where": {
+            "Grimbold Ironfist": "Ashwick -- the Red Griffin tavern"
+          },
+          "_clock": "Year 200, 14th of Frostmonth, late night"
+        },
+        "elapsed_s": 13.83,
+        "first_token_s": 8.1,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "80 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a crow taking flight with no explanation or supernatural context, but no other overtly magical or uncanny elements are present.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": false,
+            "detail": "none of ['midnight', 'late night', 'night'] present",
+            "judged": false
+          }
+        ]
+      }
+    ]
+  ]
+}

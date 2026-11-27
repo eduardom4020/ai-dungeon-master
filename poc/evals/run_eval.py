@@ -65,6 +65,10 @@ def run_scenario(turns, use_judge, run_idx, total_runs, setup=None):
         elapsed = time.monotonic() - t0
         verdict["_location"] = world.location
         verdict["_present"] = [n.name for n in world.present_npcs()]
+        # For the drift check (Day 4): places in visit order, where each NPC is, the clock.
+        verdict["_visited"] = list(world.places)
+        verdict["_npc_where"] = {n.name: n.location for n in world.npcs.values()}
+        verdict["_clock"] = world.clock_text()
         results = checks.run_checks(turn, narration, verdict, use_judge=use_judge)
         fails = [r["name"] for r in results if r["passed"] is False]
         print(f"  run {run_idx}/{total_runs} {turn.id:<22} {len(narration.split()):>4}w "

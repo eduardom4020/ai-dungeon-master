@@ -13,6 +13,7 @@ as plain fields.
 """
 import json
 import re
+from datetime import datetime
 from pathlib import Path
 
 from world_graph import PLAYER_ID, WorldGraph
@@ -72,10 +73,24 @@ class NPC:
         return f"NPC({self.id or 'unbound'} {self.name!r} @ {self.location!r})"
 
 
+# The world clock (Day 4). Free-text year and month (the world's own
+# calendar), a day number and a part of the day. It only moves forward, and
+# only when the player or the narration says time passed
+# (agents.time_passed). No month/year rollover yet (TO DO Day 5).
+PARTS_OF_DAY = ["dawn", "morning", "midday", "afternoon", "evening", "night", "late night"]
+DEFAULT_CLOCK = {"year": "Year 200", "month": "Frostmonth", "day": 14, "part": "evening"}
+
+
+def _ordinal(n: int) -> str:
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
 class WorldState:
     def __init__(self, location: str = "", scene_summary: str = "", npcs=None,
                  flags=None, active_npc: str = "", recent_history=None,
-                 places=None, pending_action: str = ""):
+                 places=None, pending_action: str = "", clock=None):
+        self.clock = dict(clock or DEFAULT_CLOCK)
         self.graph = WorldGraph()
         self.graph.add_node("Character", node_id=PLAYER_ID, name="Kael", player=True)
         self.scene_summary = scene_summary
@@ -225,11 +240,73 @@ class WorldState:
                 self.graph.add_edge(npc.id, "KNOWS", eid)
 
     def events_known_by(self, npc, last: int = 2) -> list:
-        """The last `last` events this NPC witnessed, oldest first, as
-        (player_text, dm_text)."""
+        """The last `last` exchanges (whole turns) this NPC witnessed, oldest
+        first, as (player_text, dm_text)."""
         known = set(self.graph.targets(npc.id, "KNOWS")) if npc and npc.id else set()
-        events = [e for e in self.graph.nodes("Event") if e in known]
+        events = [e for e in self.graph.nodes("Event") if e in known and "player" in self.graph.node(e)]
         return [(self.graph.node(e)["player"], self.graph.node(e)["dm"]) for e in events[-last:]]
+
+    # ---- the world clock ---------------------------------------------------
+    def clock_text(self) -> str:
+        c = self.clock
+        return f"{c['year']}, {_ordinal(int(c['day']))} of {c['month']}, {c['part']}"
+
+    def advance_clock(self, part: str = "", next_day: bool = False):
+        """Move time forward to `part` of the day (the next day if that part
+        is not later today, or if next_day)."""
+        cur = PARTS_OF_DAY.index(self.clock["part"]) if self.clock["part"] in PARTS_OF_DAY else 0
+        new = PARTS_OF_DAY.index(part) if part in PARTS_OF_DAY else (cur + 1) % len(PARTS_OF_DAY)
+        if next_day or new <= cur:
+            self.clock["day"] = int(self.clock["day"]) + 1
+        self.clock["part"] = PARTS_OF_DAY[new]
+
+    # ---- the timeline log ----------------------------------------------------
+    def log(self, text: str, witnesses=(), place: str = None):
+        """One timeline line, MMO-log style: what happened, stamped with the
+        full in-game date and place (repeated on every line, so a line never
+        depends on an earlier one), plus the real time as metadata. KNOWN by
+        Kael and each witness (NPC names)."""
+        place = self.location if place is None else place
+        eid = self.graph.add_node("Event", text=text, clock=self.clock_text(), place=place,
+                                  real_time=datetime.now().isoformat(timespec="seconds"),
+                                  short=text[:40])
+        pid = self.place_id(place, create=False)
+        if pid:
+            self.graph.add_edge(eid, "AT_PLACE", pid)
+        self.graph.add_edge(PLAYER_ID, "KNOWS", eid)
+        for name in witnesses:
+            npc = self.npcs.get(name)
+            if npc and npc.id:
+                self.graph.add_edge(npc.id, "KNOWS", eid)
+        return eid
+
+    def timeline(self, viewer=None, last: int = 10) -> list:
+        """The last `last` log lines, oldest first, as numbered text. viewer:
+        an NPC -> only the lines they witnessed (None = everything, the DM)."""
+        known = set(self.graph.targets(viewer.id, "KNOWS")) if viewer is not None else None
+        lines = [e for e in self.graph.nodes("Event") if "text" in self.graph.node(e)
+                 and (known is None or e in known)][-last:]
+        return [f"{i}. [{self.graph.node(e)['clock']} | {self.graph.node(e)['place']}] "
+                f"{self.graph.node(e)['text']}" for i, e in enumerate(lines, 1)]
+
+    def scene_block(self) -> str:
+        """Where things stand right now, as plain text for a prompt."""
+        pid = self.graph.target(PLAYER_ID, "AT")
+        situation = self.graph.node(pid).get("situation", "") if pid else ""
+        lines = [f"Place: {self.location}" + (f" ({situation})" if situation else ""),
+                 f"Time: {self.clock_text()}"]
+        party = {n.name for n in self.party()}
+        here = self.present_npcs()
+        lines.append("Here: Kael" + "".join(
+            f"; {n.name}{' (travelling with Kael)' if n.name in party else ''}: {n.persona}" for n in here))
+        active = self.npcs.get(self.active_npc)
+        if self.is_present(active):
+            lines.append(f"Talking with: {active.name}")
+        elsewhere = [n for n in self.npcs.values() if not self.is_present(n)]
+        if elsewhere:
+            lines.append("Not here: " + "; ".join(
+                f"{n.name} ({n.location or 'whereabouts unknown'})" for n in elsewhere))
+        return "\n".join(lines)
 
     def context_brief(self) -> str:
         lines = [f"LOCATION: {self.location}", f"SCENE: {self.scene_summary}"]
@@ -261,9 +338,35 @@ class WorldState:
                 lines.append(f"  DM: {dm_text}")
         return "\n".join(lines)
 
+    def dm_brief(self, timeline_lines: int = 10) -> str:
+        """The DM's world context, built from the graph (Day 4): the story
+        premise, established facts, a timeline log with the full date and
+        place on every line, the last exchange verbatim (so dialogue flows),
+        and the current scene LAST. Replaces the last 6 exchanges of raw
+        narration, whose old scene details the DM kept carrying into new
+        places ("the barrel of pickled herrings ... against the porch" on the
+        ridge). The DM still knows everything; this only orders it."""
+        lines = [f"STORY PREMISE: {self.scene_summary}"]
+        if self.flags:
+            lines.append("ESTABLISHED FACTS:")
+            lines += [f"  - {f}" for f in self.flags]
+        tl = self.timeline(last=timeline_lines)
+        if tl:
+            lines.append("TIMELINE (what happened so far, oldest first; each line has its own date and place):")
+            lines += [f"  {t}" for t in tl]
+        if self.recent_history:
+            player_text, dm_text = self.recent_history[-1]
+            lines.append("LAST EXCHANGE (verbatim):")
+            lines.append(f"  Player: {player_text}")
+            lines.append(f"  DM: {dm_text}")
+        lines.append("CURRENT SCENE (this is where things stand RIGHT NOW):")
+        lines += [f"  {x}" for x in self.scene_block().splitlines()]
+        return "\n".join(lines)
+
     # ---- persistence -------------------------------------------------------
     def to_dict(self):
         return {
+            "clock": self.clock,
             "graph": self.graph.to_dict(),
             "scene_summary": self.scene_summary,
             "active_npc": self.active_npc,
@@ -281,7 +384,7 @@ class WorldState:
         world = cls(scene_summary=d.get("scene_summary", ""),
                     active_npc=d.get("active_npc", ""),
                     recent_history=[tuple(x) for x in d.get("recent_history", [])],
-                    pending_action=d.get("pending_action", ""))
+                    pending_action=d.get("pending_action", ""), clock=d.get("clock"))
         world.graph = WorldGraph.from_dict(d["graph"])
         for name, data in d.get("npcs", {}).items():
             npc = NPC(name=name, persona="", known_facts=data.get("known_facts"),

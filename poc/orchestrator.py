@@ -103,6 +103,7 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     left_behind =[] if is_meta else agents.party_leavers(player_input, world)
     for name in left_behind:
         world.leave_party(name)
+    party_before = {n.name for n in world.party()}
     early_place = "" if is_meta else agents.arrival_place(player_input, world)
     if early_place:
         world.move_to(early_place)
@@ -319,6 +320,16 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # leave) or at the end (they saw him arrive). NPC agents only hear the
     # events they witnessed.
     witnesses = were_here | {n.name for n in world.present_npcs()}
+    # The timeline log (Day 4): built from what the code knows, not the prose.
+    # /dm questions are out of character and not logged; on a refused-claim
+    # turn only Kael's own action (claim stripped) is logged.
+    if not is_meta:
+        agents.log_turn(
+            world, action=action if verdict.get("player_assertion") else player_input,
+            npc_name=active_npc.name if npc_line else "", npc_line=npc_line or "",
+            start_location=start_location, were_here=were_here, left_behind=left_behind,
+            party_before=party_before, scene_update=verdict.get("scene_update"), narration=dm_text,
+        )
     world.add_turn(history_text, history_dm, witnesses=sorted(witnesses))
     if played_pending:
         verdict["played_pending"] = played_pending

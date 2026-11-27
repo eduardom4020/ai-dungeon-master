@@ -34,6 +34,7 @@ class Turn:
     expect_absent: list = field(default_factory=list)   # NPCs that must NOT be here
     npc_must_not_include: list = field(default_factory=list)  # NONE of these in the NPC agent's line
     npc_must_include_any: list = field(default_factory=list)  # one of these in the NPC agent's line
+    expect_time: str = ""  # substring the world clock must contain after the turn
 
 
 SCENARIOS = {
@@ -181,6 +182,29 @@ SCENARIOS["witnesses"] = [
     # checked deterministically in probe_world_state.py.
     Turn("w05-back-to-tallow", "I walk back to the smithy and ask Tallow to repeat the password, so I "
          "am sure I remember it right.", "normal", expect_location="smithy", expect_npc="Tallow"),
+]
+
+
+SCENARIOS["drift"] = [
+    # Added Day 4: does the DM carry details of earlier places into the
+    # current one (playthrough 2: "the barrel of pickled herrings ... against
+    # the porch" on the ridge)? Four places; the no_stale_scene check looks
+    # for places 2+ moves back and absent NPCs in the narration. Also the
+    # world clock (only moves when the text says so).
+    Turn("d01-out", "I finish my ale, say goodbye to Grimbold and walk out of the Red Griffin into the "
+         "main street.", "shift", expect_location="street"),
+    Turn("d02-tannery", "I walk down the main street to the tannery by the river and step inside.",
+         "shift", expect_location="tannery"),
+    Turn("d03-look-tannery", "I look around the tannery for whoever runs it.", "normal"),
+    Turn("d04-tower", "I leave the tannery and climb the hill path up to the old bell tower.", "shift",
+         expect_location="tower"),
+    Turn("d05-look-tower", "I look around the top of the bell tower.", "normal"),
+    Turn("d06-rest", "I sit down against the bell and rest until midnight.", "normal",
+         expect_time="late night"),
+    Turn("d07-look-again", "I stand up, stretch and look out over the town from the tower.", "normal",
+         expect_time="late night"),
+    Turn("d08-recall", "/dm where am I right now, and what time is it?", "recall",
+         must_include=["tower"], must_include_any=["midnight", "late night", "night"]),
 ]
 
 

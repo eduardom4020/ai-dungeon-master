@@ -19,6 +19,8 @@ def seed_world() -> WorldState:
             "the border town of Ashwick as night falls, looking for work."
         ),
     )
+    # The world's own calendar (free text year/month), see world_state.DEFAULT_CLOCK.
+    world.clock = {"year": "Year 200", "month": "Frostmonth", "day": 14, "part": "evening"}
     world.move_to("Ashwick -- the Red Griffin tavern")
     world.add_npc(NPC(
         name="Grimbold Ironfist",
