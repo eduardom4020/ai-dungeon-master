@@ -14,7 +14,9 @@ networkx does not enforce any of this; every write goes through WorldGraph.
 import networkx as nx
 
 # Node type -> id prefix.
-NODE_TYPES = {"Character": "C", "Place": "P", "Item": "I", "Fact": "F"}
+# Event: one played turn (player line + what was said/narrated). Characters
+# who were there KNOW it; NPC agents only hear events they witnessed.
+NODE_TYPES = {"Character": "C", "Place": "P", "Item": "I", "Fact": "F", "Event": "E"}
 
 # Relation -> allowed (from type, to type) pairs.
 EDGE_TYPES = {
@@ -23,13 +25,14 @@ EDGE_TYPES = {
     "CONNECTED_TO": {("Place", "Place")},
     "TRAVELS_WITH": {("Character", "Character")},
     "HAS": {("Character", "Item")},
-    "KNOWS": {("Character", "Fact"), ("Character", "Character")},
+    "KNOWS": {("Character", "Fact"), ("Character", "Character"), ("Character", "Event")},
+    "AT_PLACE": {("Event", "Place")},  # where an event happened
     "ABOUT": {("Fact", t) for t in NODE_TYPES},
 }
 
 # Relations a node can have at most one of, going out (a character is in
 # one place at a time). add_edge() replaces the old one.
-SINGLE_OUT = {"AT", "PART_OF"}
+SINGLE_OUT = {"AT", "PART_OF", "AT_PLACE"}
 
 PLAYER_ID = "C0"
 
@@ -109,11 +112,19 @@ class WorldGraph:
         return t[0] if t else ""
 
     # ---- debugging -------------------------------------------------------
-    def describe(self) -> str:
-        """Readable dump: nodes by id, then edges as `C2 Vexin -AT-> P1 ...`."""
-        lines = [f"{n} [{d['type']}] {self.label(n)}" for n, d in self.g.nodes(data=True)]
+    def describe(self, events: bool = False) -> str:
+        """Readable dump: nodes by id, then edges as `C2 Vexin -AT-> P1 ...`.
+        Events (one per turn) are summarised unless events=True."""
+        is_event = lambda n: self.g.nodes[n]["type"] == "Event"
+        lines = [f"{n} [{d['type']}] {self.label(n)}" for n, d in self.g.nodes(data=True)
+                 if events or not is_event(n)]
         for u, v, k in self.g.edges(keys=True):
-            lines.append(f"{u} {self.label(u)} -{k}-> {v} {self.label(v)}")
+            if events or not (is_event(u) or is_event(v)):
+                lines.append(f"{u} {self.label(u)} -{k}-> {v} {self.label(v)}")
+        if not events:
+            n_ev = len(self.nodes("Event"))
+            if n_ev:
+                lines.append(f"({n_ev} events; /graph events to list them and who witnessed each)")
         return "\n".join(lines)
 
     # ---- persistence -----------------------------------------------------

@@ -32,6 +32,8 @@ class Turn:
     expect_party: list = None  # exact names travelling with Kael after the turn (None = no check)
     expect_present: list = field(default_factory=list)  # NPCs that must be here after the turn
     expect_absent: list = field(default_factory=list)   # NPCs that must NOT be here
+    npc_must_not_include: list = field(default_factory=list)  # NONE of these in the NPC agent's line
+    npc_must_include_any: list = field(default_factory=list)  # one of these in the NPC agent's line
 
 
 SCENARIOS = {
@@ -159,6 +161,40 @@ SCENARIOS = {
 }
 
 
+SCENARIOS["witnesses"] = [
+    # Added Day 4, step 3: NPC agents only hear what they witnessed. Kael
+    # tells Tallow a password at the smithy; Grimbold, at the tavern, must
+    # not know it (before, the last two exchanges went to every NPC); Tallow
+    # still does. Starts with Tallow at the smithy (SETUPS below).
+    Turn("w01-to-smithy", "I leave the Red Griffin and walk down the main street to the smithy.",
+         "shift", expect_location="smithy", expect_present=["Tallow"], expect_absent=["Grimbold"]),
+    Turn("w02-secret", 'I lower my voice. "Tallow, the password for the mill gate is red heron. '
+         'Keep it to yourself."', "normal", expect_npc="Tallow"),
+    Turn("w03-ask-grimbold", "I walk back to the red griffin tavern and ask Grimbold what the password "
+         "for the mill gate is.", "normal", expect_location="Red Griffin", expect_npc="Grimbold",
+         npc_must_not_include=["heron"]),
+    Turn("w04-press-grimbold", '"Come on, Grimbold. Somebody in this town must have told you the '
+         'password. Is it a bird?"', "normal", expect_npc="Grimbold", npc_must_not_include=["heron"]),
+    # No npc_must_include_any=["heron"] here: in all 3 first runs Tallow
+    # clearly remembered ("you got it once", "you're asking twice now") but
+    # refused to repeat it, in character. That the event reaches his prompt is
+    # checked deterministically in probe_world_state.py.
+    Turn("w05-back-to-tallow", "I walk back to the smithy and ask Tallow to repeat the password, so I "
+         "am sure I remember it right.", "normal", expect_location="smithy", expect_npc="Tallow"),
+]
+
+
+def _witnesses_setup(world):
+    from world_state import NPC
+    world.add_npc(NPC(
+        name="Tallow",
+        persona=("Old trapper who works the bellows at the smithy for coin. Plain-spoken and "
+                 "reliable; keeps a friend's secret but repeats it to that friend if asked."),
+        important=True, location="Ashwick -- the smithy",
+        aliases=["the trapper", "the old trapper"],
+    ))
+
+
 def _companions_setup(world):
     from world_state import NPC
     world.add_npc(NPC(
@@ -171,4 +207,4 @@ def _companions_setup(world):
 
 
 # Extra world setup run after play.seed_world() for a scenario.
-SETUPS = {"companions": _companions_setup}
+SETUPS = {"companions": _companions_setup, "witnesses": _witnesses_setup}

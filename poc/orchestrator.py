@@ -315,7 +315,11 @@ def run_turn(world: WorldState, player_input: str, stream_cb=None, verbose=False
     # Keep the NPC's actual words in the story history too: later turns (and
     # the DM's recaps) need to know what was said, not only the reactions.
     history_dm = f"{active_npc.name}: {npc_line}\n{dm_text}" if npc_line else dm_text
-    world.add_turn(history_text, history_dm)
+    # Who witnessed this turn: everyone with Kael at the start (they saw him
+    # leave) or at the end (they saw him arrive). NPC agents only hear the
+    # events they witnessed.
+    witnesses = were_here | {n.name for n in world.present_npcs()}
+    world.add_turn(history_text, history_dm, witnesses=sorted(witnesses))
     if played_pending:
         verdict["played_pending"] = played_pending
     return dm_text, verdict

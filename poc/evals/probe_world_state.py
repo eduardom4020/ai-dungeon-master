@@ -118,6 +118,38 @@ q.move_to("gate")
 check("left behind: stays at the forge", (q.npcs["Silas"].location, q.party()), ("forge", []))
 check("no party line when empty", "TRAVELLING WITH" in q.context_brief(), False)
 
+# ---- events: NPCs know only what they witnessed ------------------------------
+e = WorldState()
+e.move_to("smithy")
+e.add_npc(NPC(name="Tallow", persona=".", important=True, location="smithy"))
+e.add_npc(NPC(name="Grimbold", persona=".", important=True, location="tavern"))
+e.add_turn('"The password is red heron."', 'Tallow nods.')   # default witnesses: who is here
+e.move_to("tavern")
+e.add_turn("I walk to the tavern.", "Warm in here.", witnesses=["Grimbold", "Tallow"])
+check("witness knows the secret", [p for p, _ in e.events_known_by(e.npcs["Tallow"])],
+      ['"The password is red heron."', "I walk to the tavern."])
+check("non-witness does not", [p for p, _ in e.events_known_by(e.npcs["Grimbold"])], ["I walk to the tavern."])
+check("Kael knows every event", len(e.graph.targets(PLAYER_ID, "KNOWS")), 2)
+check("event records where it happened", e.place_name(e.graph.target("E1", "AT_PLACE")), "smithy")
+e2 = WorldState.from_dict(json.loads(json.dumps(e.to_dict())))
+check("events survive save/load", [p for p, _ in e2.events_known_by(e2.npcs["Grimbold"])], ["I walk to the tavern."])
+import agents  # noqa: E402
+_prompts = []
+_real_chat = agents.chat
+agents.chat = lambda messages, options=None: (_prompts.append(messages[0]["content"]), ("ok", None))[1]
+agents.npc_reply(e.npcs["Grimbold"], e, "What is the password?")
+agents.npc_reply(e.npcs["Tallow"], e, "What is the password?")
+agents.chat = _real_chat
+check("NPC prompt: non-witness Grimbold doesn't get the secret", "red heron" in _prompts[0], False)
+check("NPC prompt: witness Tallow does", "red heron" in _prompts[1], True)
+pre = e.to_dict()
+pre["graph"]["data"]["nodes"] = [n for n in pre["graph"]["data"]["nodes"] if n.get("type") != "Event"]
+pre["graph"]["data"]["edges"] = [x for x in pre["graph"]["data"]["edges"]
+                                 if not (str(x["source"]).startswith("E") or str(x["target"]).startswith("E"))]
+e3 = WorldState.from_dict(pre)
+check("graph save from before events: history known by all",
+      len(e3.events_known_by(e3.npcs["Grimbold"])), 2)
+
 # ---- old saves -------------------------------------------------------------
 legacy = {
     "location": "Ashwick -- the smithy", "scene_summary": "Old save.",

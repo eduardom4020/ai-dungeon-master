@@ -203,9 +203,33 @@ class WorldState:
             self.graph.add_node("Fact", text=fact)
 
     # ---- history -----------------------------------------------------------
-    def add_turn(self, player_text, dm_text, keep_last=6):
+    def add_turn(self, player_text, dm_text, keep_last=6, witnesses=None):
+        """Record a played turn: in recent_history (the DM's view: it knows
+        everything) and as an Event node KNOWN by Kael and every NPC that
+        witnessed it (default: everyone here now). NPC agents only hear the
+        events they witnessed (events_known_by), so a secret told to Tallow
+        at the smithy no longer reaches Grimbold's prompt at the tavern."""
         self.recent_history.append((player_text, dm_text))
         self.recent_history = self.recent_history[-keep_last:]
+        if witnesses is None:
+            witnesses = [n.name for n in self.present_npcs()]
+        eid = self.graph.add_node("Event", player=player_text, dm=dm_text,
+                                  short=player_text[:40])
+        here = self.graph.target(PLAYER_ID, "AT")
+        if here:
+            self.graph.add_edge(eid, "AT_PLACE", here)
+        self.graph.add_edge(PLAYER_ID, "KNOWS", eid)
+        for name in witnesses:
+            npc = self.npcs.get(name)
+            if npc and npc.id:
+                self.graph.add_edge(npc.id, "KNOWS", eid)
+
+    def events_known_by(self, npc, last: int = 2) -> list:
+        """The last `last` events this NPC witnessed, oldest first, as
+        (player_text, dm_text)."""
+        known = set(self.graph.targets(npc.id, "KNOWS")) if npc and npc.id else set()
+        events = [e for e in self.graph.nodes("Event") if e in known]
+        return [(self.graph.node(e)["player"], self.graph.node(e)["dm"]) for e in events[-last:]]
 
     def context_brief(self) -> str:
         lines = [f"LOCATION: {self.location}", f"SCENE: {self.scene_summary}"]
@@ -264,7 +288,18 @@ class WorldState:
                       thread=data.get("thread"))
             npc.id, npc._world = data["id"], world
             world.npcs[name] = npc
+        if not world.graph.nodes("Event"):
+            world._history_known_by_all()
         return world
+
+    def _history_known_by_all(self):
+        """Saves from before Events: nobody recorded who saw what, so every
+        NPC knows the stored history (what NPC agents were shown before)."""
+        for player_text, dm_text in self.recent_history:
+            eid = self.graph.add_node("Event", player=player_text, dm=dm_text,
+                                      short=player_text[:40])
+            for who in [PLAYER_ID] + [n.id for n in self.npcs.values()]:
+                self.graph.add_edge(who, "KNOWS", eid)
 
     @classmethod
     def _from_legacy_dict(cls, d):
@@ -285,6 +320,7 @@ class WorldState:
                     location=location, pending_action=d.get("pending_action", ""))
         if not location:
             world.graph.remove_edge(PLAYER_ID, "AT")
+        world._history_known_by_all()
         return world
 
     def save(self, path: Path):

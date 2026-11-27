@@ -155,8 +155,18 @@ for line, want in [
     ("Forget this. I turn around and walk back to the red griffin tavern, go in and ask Grimbold for that map.",
      TAVERN),
     ("I walk back to the tavern and ask Grimbold for the map.", ""),            # not every word of the name
-    ("I walk back to the red griffin tavern.", ""),                             # nobody named there
+    ("I walk back to the red griffin tavern.", TAVERN),                         # named as the destination
     ("I think about the red griffin tavern and ask Grimbold's name again.", ""),  # no movement word
+]:
+    check(line, agents.arrival_place(line, w), want)
+w.move_to("Ashwick -- the smithy")
+w.move_to(TAVERN)
+for line, want in [
+    # witnesses eval: the tracker stopped at "the main street" 5/6.
+    ("I leave the Red Griffin and walk down the main street to the smithy.", "Ashwick -- the smithy"),
+    ("I walk past the smithy to the south gate.", "Ashwick -- the south gate"),  # past the smithy, to the gate
+    ("I head into the smithy.", "Ashwick -- the smithy"),
+    ("I step outside and look toward the smithy.", ""),         # looking, not going
 ]:
     check(line, agents.arrival_place(line, w), want)
 check("...and Grimbold is then the addressee",

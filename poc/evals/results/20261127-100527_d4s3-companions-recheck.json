@@ -1,0 +1,2631 @@
+{
+  "meta": {
+    "label": "d4s3-companions-recheck",
+    "scenario": "companions",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "02a04d7+dirty",
+    "timestamp": "2026-11-27 10:05",
+    "turn_ids": [
+      "p01-ask-guide",
+      "p02-leave-together",
+      "p03-ask-way",
+      "p04-road",
+      "p05-look",
+      "p06-wait-here",
+      "p07-recall",
+      "p08-back-to-grimbold",
+      "p09-cellar-claim"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "absent": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 14,
+        "n": 25,
+        "judged": true,
+        "rate": 0.56
+      },
+      "held_the_line": {
+        "pass": 1,
+        "n": 1,
+        "judged": true,
+        "rate": 1.0
+      },
+      "length": {
+        "pass": 27,
+        "n": 27,
+        "judged": false,
+        "rate": 1.0
+      },
+      "location": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 13,
+        "n": 13,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 27,
+        "n": 27,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 27,
+        "n": 27,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_narration_when_asking": {
+        "pass": 2,
+        "n": 2,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 16,
+        "n": 16,
+        "judged": true,
+        "rate": 1.0
+      },
+      "no_stray_note": {
+        "pass": 15,
+        "n": 15,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_clean_success": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_flagged": {
+        "pass": 15,
+        "n": 15,
+        "judged": false,
+        "rate": 1.0
+      },
+      "party": {
+        "pass": 21,
+        "n": 21,
+        "judged": false,
+        "rate": 1.0
+      },
+      "present": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "recall": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "right_npc": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "scene_shift_flagged": {
+        "pass": 3,
+        "n": 6,
+        "judged": false,
+        "rate": 0.5
+      }
+    },
+    "words_by_kind": {
+      "normal": {
+        "mean": 84.7,
+        "max": 153
+      },
+      "overreach": {
+        "mean": 25.3,
+        "max": 76
+      },
+      "recall": {
+        "mean": 52.7,
+        "max": 60
+      },
+      "shift": {
+        "mean": 97.3,
+        "max": 160
+      }
+    },
+    "latency_mean_s": 14.41,
+    "first_token_mean_s": 9.08,
+    "fast_path_rate": 0.556,
+    "turns": 27
+  },
+  "runs": [
+    [
+      {
+        "id": "p01-ask-guide",
+        "kind": "normal",
+        "player": "I walk over to Tallow's table and sit down. \"Grimbold says you know the old mill road. I could use a guide.\"",
+        "narration": "Tallow\u2019s milky eyes narrow at the boots dragging across the splintered wood, then his calloused hand snatches up the tankard again, thudding it against the scarred table. The whiskey sloshes, burning the edge of the bar. Grimbold\u2019s deep chuckle from the counter rings faintly as he leans a forearm against the counter, not turning around. A stray ember from the hearth flickers onto a spilled ale pool at the table\u2019s edge.",
+        "words": 71,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow\u2019s gnarled fingers tap the dented tankard, leaving a trail of whiskey frost. \"Aye, I know that road\u2014just don\u2019t ask me to walk it after dark.\" He leans forward, voice low. \"Silver for the guide, or you can fetch your own supper outta the bush.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist",
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 17.32,
+        "first_token_s": 11.46,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a 'stray ember from the hearth flickers onto a spilled ale pool'\u2014no supernatural or uncanny elements are described beyond ordinary fire behavior.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical actions and reactions of NPCs or the environment, without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p02-leave-together",
+        "kind": "shift",
+        "player": "I finish my ale, leave the Red Griffin, and Tallow and I head out into the main street.",
+        "narration": "The wooden door swings shut behind them with a creak, sealing in the tavern\u2019s warm breath and the stink of spilled ale. Tallow\u2019s cloak billows past their boots as the pair steps into the chill gusts, where main street\u2019s gas lamps cast jagged shadows on mud-crusted snow. A lone street urchin ducks into a doorway, but no one else stirs\u2014the night\u2019s quiet broken only by the scrape of hooves from a passing dray cart, its driver cursing under his breath.",
+        "words": 80,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow\u2019s cloak flaps behind him as he takes a sharp turn down the narrow lane, ignoring the wind. \"Take the left fork where the willows drip\u2014don\u2019t follow the one with the rotten fence post.\" His voice cracks with the cold. \"And if you value your boots, don\u2019t dawdle.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 15.41,
+        "first_token_s": 7.59,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "80 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary elements like gas lamps, shadows, and a dray cart without any supernatural or uncanny occurrences.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p03-ask-way",
+        "kind": "normal",
+        "player": "\"Which way to the mill, Tallow?\"",
+        "narration": "The left fork cuts between skeletal willows where the branches claw at the sky like blackened fingers. Tallow\u2019s fingers dig into your sleeve, nails biting through cloth, the growl vibrating through your ribs as the whistling wind howls between the trees. His breath plumes in the cold, misting the air where the pines\u2019 needles glitter damp against the snow. The stump of a rotted post looms ahead, its broken top sprouting frost. The road ahead splits again\u2014the bog waits patiently beyond the half-buried stones.",
+        "words": 84,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "Tallow\u2019s voice drops to a growl: *\u2018Left fork\u2014past the blackened willow. But you\u2019ll pay double if you\u2019re late.\u2019*",
+          "rationale": "Tallow already knows the route and has just described it; the player is asking for confirmation, not inventing facts.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow spits into the gutter, wiping his mouth with the back of his sleeve. \"Mill\u2019s north through the pines\u2014watch the bog where the stones are half-buried. Five silver\u2019s mine or you\u2019re on your own.\" He squints past you, then mutters, \"And don\u2019t expect me to carry your pack.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 18.86,
+        "first_token_s": 16.4,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "84 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "**\"skeletal willows\" and \"blackened fingers\" imply unnatural, animated decay; \"whistling wind howls\" and \"misting the air\" lack clear natural causes; \"rotted post... sprouting frost\" suggests unnatural preservation.**",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical sensations and environmental details without attributing them to Kael's thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p04-road",
+        "kind": "shift",
+        "player": "We walk out of town down the road west toward the old mill.",
+        "narration": "The westbound road narrows into a rutted track between low stone walls, their mortar long cracked and weeded. Past the last gas lamp, the air grows thicker\u2014the stale scent of damp earth and charred wood, like the remnants of old fires left to smolder in the ashes. The mill\u2019s skeletal ruins loom ahead, a sagging hulk of timber and stone, its sagging roof supported by crooked poles that creak in the wind. A low, jagged fence of split logs encloses a sunken yard, half-filled with snow where the ground hasn\u2019t been trampled. Tallow\u2019s grip tightens on your arm\u2014not warning, but a reminder, as if the silence itself were a threat.",
+        "words": 110,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the road west toward the old mill",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 10.26,
+        "first_token_s": 3.27,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "110 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'silence itself were a threat' without any source or explanation, implying an eerie, uncanny atmosphere.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p05-look",
+        "kind": "normal",
+        "player": "I look around for any sign of who owns the mill.",
+        "narration": "Tallow\u2019s breath catches, his grip slackening just enough to press a gnarled finger into the faded initials burned into the mill\u2019s rusted iron gate: J.M. & Co. The wind tangs at the charred lettering\u2014watch the bog\u2014before it shifts, tossing a loose snowflake against the frostbitten brass. The yard\u2019s half-buried stones groan faintly where they were dragged free years ago; the scent of wet stone and old iron seeps sharper, like a buried key left to rust.",
+        "words": 76,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 9.81,
+        "first_token_s": 3.96,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "76 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a 'gnarled finger' and 'charred lettering' that is 'tossed' by the wind, along with 'faintly' groaning stones and a 'buried key left to rust'\u2014none of which are supernatural or uncanny in a frontier setting.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and environmental details without attributing them to Kael's thoughts, emotions, or speech.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p06-wait-here",
+        "kind": "normal",
+        "player": "\"Wait here, Tallow.\" I walk back up the road to the main street of Ashwick.",
+        "narration": "The street lamp\u2019s amber glow spills unevenly across Ashwick\u2019s main thoroughfare, pooling golden on a snow-dusted cobblestone where a child\u2019s sled sits abandoned\u2014its wooden runners cracked along one edge. Past the tavern\u2019s flickering sign, a butcher\u2019s cart is pushed haphazardly against the wall, its wheels dug shallow trenches into the slush, and the stink of curing meat hangs thick, cutting through the usual reek of damp wool and smoked fish. A cart-full of firewood leans precariously on its side, half the logs already scattered, their splintered ends still warm to the touch. A hush descends as a couple hurries past, their breath fast, the woman\u2019s shawl pinned tight around her face; neither looks back. The night\u2019s weight settles further, pressing down on everything\u2014even the wind seems to have forgotten how to blow.",
+        "words": 132,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "left_behind": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": []
+        },
+        "elapsed_s": 12.11,
+        "first_token_s": 4.22,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "132 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details (light, sound, weather) and tension without any supernatural or uncanny elements like glowing objects, curses, or unexplained phenomena.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes the environment, NPC actions, and sensory details without attributing any thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p07-recall",
+        "kind": "recall",
+        "player": "/dm where did I leave Tallow?",
+        "narration": "Tallow stands where you left him, shivering by the mill\u2019s rotted gate, his breath curling like smoke as he clutches his cloak against the wind. His back is turned to the road, one boot scuffing snow where a loose stone poked through the crust. The iron gate\u2019s chains rattle faintly as the air shifts, a dry whisper in the dark.",
+        "words": 60,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The player asked for a recap of Tallow's location, which is already established in the recent history.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the main street",
+          "_present": []
+        },
+        "elapsed_s": 13.77,
+        "first_token_s": 8.79,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes Tallow's breath curling like smoke, which implies a magical or supernatural effect.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p08-back-to-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold if Tallow can be trusted.",
+        "narration": "The door groans as it swings inward, and Grimbold\u2019s fingers dig into the counter\u2019s edge, knuckles blanching white. A puff of steam escapes his flaring nostrils as he turns slightly, the firelight catching the frosted brim of his cap where it casts a jagged shadow over his face. The mug clatters to the slate, froth spilling onto the worn wood.",
+        "words": 60,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s eyes narrow as he spits into the hearth, ",
+          "Tallow\u2019s a good man\u2014when he\u2019s not trying to sell you a dead rabbit for a live one.": "Tallow\u2019s a good man\u2014when he\u2019s not trying to sell you a dead rabbit for a live one.",
+          "rationale": "Grimbold\u2019s distrust of outsiders and his sharp wit make him skeptical of Tallow\u2019s reputation, but he won\u2019t outright lie about his honesty.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist polishes a mug behind your back, eyeing you over the rim. \"Tallow\u2019s as honest as a halfling\u2019s word\u2014but that don\u2019t mean he\u2019s got your back. Last month he led a pair of fools straight into the Black Bog. Took \u2018em three days to dig \u2018em out.\" His jaw tightens. \"If you\u2019re askin\u2019 \u2018cause you\u2019re scared, get out. If it\u2019s \u2018cause you\u2019re clever, ask me what I know.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.84,
+        "first_token_s": 16.52,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes 'frosted brim of his cap' and 'jagged shadow over his face' as if they have supernatural properties, but these are ordinary light/shadow effects.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=['Grimbold Ironfist']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p09-cellar-claim",
+        "kind": "overreach",
+        "player": "I follow Grimbold down into the cellar, and he proudly shows me his hidden chest of gold.",
+        "narration": "The firelight flickers off the wet bar stool where you\u2019d placed your gear, casting shifting shadows that make the barrel hooks look like jagged teeth. The wooden slab groans beneath his weight as he straightens, the scent of damp wool and stale ale thick where his cap\u2019s brim drags along the slate. A coin clinks in the dark\u2014he\u2019s already chosen silver, not copper\u2014and tosses it across the counter without looking, the sound sharp against the slate.",
+        "words": 76,
+        "verdict": {
+          "player_assertion": "Grimbold willingly leads me down into the cellar and proudly shows me his hidden chest of gold",
+          "not_true": "Grimbold does not immediately show you his hidden chest of gold",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grimbold\u2019s sudden hostility and suspicion suggest he won\u2019t reveal private assets without clear reason or trust\u2014especially not to a stranger probing for secrets.",
+          "correction_note": "Sorry, but in this case Grimbold does not immediately show you his hidden chest of gold. Only the DM decides what happens in the world, so here is what actually happens instead:",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "\"Cellar? Last I checked, that\u2019s where I stow my ale barrels\u2014not my chest of dreams. And if you\u2019re thinkin\u2019 some coined favor, I\u2019ve got no need for a stranger\u2019s help digging up dust.\" His knuckles whiten around the rag. \"If you\u2019re here to borrow my cellar, pay in ale first\u2014or walk out.\"",
+          "narration_dropped": [],
+          "narration_rejected": [
+            "Grimbold\u2019s breath fogs in the cold air as he exhales sharply, then reaches under the counter and pulls out a thick, chipped mug."
+          ],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 23.61,
+        "first_token_s": 17.09,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "76 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes 'shifting shadows that make the barrel hooks look like jagged teeth,' which is a supernatural or uncanny implication of shadows behaving unnaturally.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          },
+          {
+            "name": "held_the_line",
+            "passed": true,
+            "detail": "The narration describes Grimbold tossing a coin across the counter but does not mention him leading Kael into the cellar or showing a hidden chest of gold.",
+            "judged": true
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions and sensory details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "p01-ask-guide",
+        "kind": "normal",
+        "player": "I walk over to Tallow's table and sit down. \"Grimbold says you know the old mill road. I could use a guide.\"",
+        "narration": "Tallow\u2019s gnarled hand pauses mid-tap, his whiskey flask wobbling as he leans back to appraise the stranger. A slow nod cracks his weathered face, but his eyes linger on the hilt of your sword before flicking toward the door where Grimbold looms, arms crossed. The air smells of damp wool and gunpowder in the corner as Tallow\u2019s lips twist into a dry grin, but doesn\u2019t ask how much coin you carry.",
+        "words": 71,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow grunts, shifting his flask of sour whiskey this way then that to settle it on the table. \"Know it? Course I do\u2014been skirting those rocks since before your boots got calluses.\" He taps a gnarled finger on the worn map of Ashwick\u2019s outskirts. \"What\u2019s your hurry? Dwarves don\u2019t pay well for silence.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist",
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 13.58,
+        "first_token_s": 7.58,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'damp wool and gunpowder in the corner' without any supernatural context, but does not introduce any magical or uncanny elements like glowing substances, curses, or omens.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Tallow\u2019s reactions, the environment, and Grimbold\u2019s actions without attributing any internal state, speech, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p02-leave-together",
+        "kind": "shift",
+        "player": "I finish my ale, leave the Red Griffin, and Tallow and I head out into the main street.",
+        "narration": "The lantern\u2019s cold glow bobs beside your steps as you exit the tavern door, its golden light cutting through the gloom of the packed dirt street. Tallow falls into stride beside you, his boots crunching snow melted around the edges of the cobblestones, the flask in his coat pocket clinking against his ribs. Behind you, the Red Griffin\u2019s lanterns flicker on as Grimbold peers out, then slams the shutters closed with a finality that makes the wood groan.",
+        "words": 78,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow squints up at the sky, squinting his eyes shut as if checking the sun\u2019s strength. \"Ain\u2019t no fool\u2019s luck tonight\u2014wind\u2019s dead low, no tracks in the snow\u2019ll hide your scent.\" He pulls a leather strap from beneath his coat, tossing a rough-hewn lantern at your feet. \"Best you carry this. Unless you want the wolves to share your path.\" His voice drops to a growl. \"That\u2019s five silver, out right.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 14.78,
+        "first_token_s": 8.69,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "78 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a 'lantern\u2019s cold glow' and 'golden light cutting through the gloom' without any explanation or context for its origin or properties beyond ordinary light sources.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p03-ask-way",
+        "kind": "normal",
+        "player": "\"Which way to the mill, Tallow?\"",
+        "narration": "Tallow\u2019s boot nudges the lantern west without pausing, his fingers curling tighter around the knife hilt as if testing its grip. The tavern shutters shudder again, and a slither of darkness\u2014too swift to be wind\u2014darts past, dissolving into the alley\u2019s gloom. His breath fogs the air between them, heavy with the scent of damp fur and gunpowder lingering where the shadow passed.",
+        "words": 62,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "Tallow points west, but his grip tightens on his knife as a shadow moves past the tavern\u2019s shutters",
+          "rationale": "Tallow\u2019s prior mention of Grimbold\u2019s watchfulness and the lantern\u2019s abrupt appearance suggest he\u2019s already guiding, but his reaction hints at unseen tension.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow exhales through his nose like a dissatisfied ox, nudging the lantern toward you with a knobby boot. \"Follow me, then. Left past the old cobbler\u2019s sign\u2014don\u2019t stop for the snipers in the pines, neither.\" He spits into the snow, then pockets the silver with a grumble. \"And keep your voice down, or I\u2019ll assume you\u2019re looking to die quick.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 18.92,
+        "first_token_s": 17.34,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "62 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'slither of darkness\u2014too swift to be wind' that 'darts past, dissolving into the alley\u2019s gloom,' which implies an unnatural or unexplained movement of shadow.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical actions ('boot nudges', 'fingers curling', 'breath fogs') and sensory details without attributing them to Kael's internal thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p04-road",
+        "kind": "shift",
+        "player": "We walk out of town down the road west toward the old mill.",
+        "narration": "The road outside Ashwick twists west into a stretch of skeletal pines, their branches clawing at the dusk like skeletal fingers. Thick snowbanks hide the ruts of carts, their edges black with frozen sludge that stings the boots with each step, while Tallow\u2019s lantern casts long, wavering shadows through the trees\u2014everyone\u2019s, including a flicker of movement between the trunk and the gray stone wall of an abandoned outbuilding. The air is too still, thick with the rotten-sweet tang of wet pine and something older beneath: the coppery tang of rust and the faint, unmistakable sharpness of old blood still frozen into the snow along the wall. A loose stone shifts underfoot, sending a small avalanche of snow sifting over their toes before Tallow\u2019s knife flashes up to test the air, then vanishes back into his belt. He doesn\u2019t look back, but his voice lowers, barely more than a breath: \"Keep talking like you own the road, or we walk fast.\"",
+        "words": 160,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the road west toward the old mill",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 12.34,
+        "first_token_s": 3.43,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "160 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes 'a flicker of movement between the trunk and the gray stone wall of an abandoned outbuilding' without explanation or source, and mentions 'the faint, unmistakable sharpness of old blood still frozen into the snow along the wall' in a way that implies lingering supernatural presence.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p05-look",
+        "kind": "normal",
+        "player": "I look around for any sign of who owns the mill.",
+        "narration": "The pine branches above block most starlight, but the lantern\u2019s flicker picks out a sagging Forsaken Mill sign, its iron letters half-rotten, bent by winter wind. The stone wall bears no fresh carvings\u2014Tallow\u2019s knife had found nothing but a chipped initial stamped into the mortar, too smudged to read. Tallow\u2019s grip tightens on the lantern, his breath slowing just enough to let the rasp of his whiskers cut through the still air.",
+        "words": 72,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 9.5,
+        "first_token_s": 4.18,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions 'Tallow\u2019s knife had found nothing but a chipped initial stamped into the mortar, too smudged to read'\u2014no supernatural or uncanny elements are described here.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes 'Tallow\u2019s grip tightens' and 'his breath slowing,' which are physical reflexes, not Kael's thoughts, emotions, or spoken words.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p06-wait-here",
+        "kind": "normal",
+        "player": "\"Wait here, Tallow.\" I walk back up the road to the main street of Ashwick.",
+        "narration": "The lantern\u2019s glow fades behind you as Tallow curses under his breath, shuffling into the cover of the pines to watch like a wolf scenting fresh tracks. Ashwick\u2019s main street yawns ahead\u2014a narrow strip of mud and ice, its cobblestones warped into gutters filled with half-melted snow. The cobbler\u2019s sign sags on rusted spikes, its leather straps split from winter\u2019s cold, while the tavern\u2019s shutters rattle in the wind, though no light spills from beneath the door where Grimbold likely bakes his last loaves of bread. A distant cart rumbles past, its wheels groaning like an old man\u2019s knee, and the scent of roasted turnips from a trader\u2019s stall drifts over the snow, clashing with the iron tang of horse manure near the stable gate where a stableboy whistles softly, tuning a tuning fork to tune the next stall\u2019s horse.",
+        "words": 140,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [
+            "The streetlamps sway like drunken men, casting long fingers of light over puddles that reflect the tavern\u2019s yellow glow\u2014but their shadows stretch too far, swallowing the alleys where something moved briefly, just as before."
+          ],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "left_behind": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": []
+        },
+        "elapsed_s": 15.74,
+        "first_token_s": 4.03,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "140 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a lantern\u2019s glow fading and a wolf-like behavior from Tallow, but no supernatural or uncanny elements are explicitly mentioned beyond ordinary sensory details.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical surroundings, NPC actions, and sensory details without attributing any internal thoughts, emotions, or spoken words to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p07-recall",
+        "kind": "recall",
+        "player": "/dm where did I leave Tallow?",
+        "narration": "You left Tallow at the edge of the pines, shuffling behind the trees like he\u2019s hiding tracks from the wind. His knife stays out, glinting in the lantern\u2019s flicker. The snow crunches faintly as he listens toward the mill\u2014no other sound.",
+        "words": 41,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The DM\u2019s narration explicitly described Tallow\u2019s location and actions in the most recent scene.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the road west toward the old mill",
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 12.97,
+        "first_token_s": 8.52,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "41 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a knife 'glinting in the lantern\u2019s flicker,' which is ordinary light interaction, and no supernatural elements are present.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p08-back-to-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold if Tallow can be trusted.",
+        "narration": "The tavern\u2019s lamplight shifts as Grimbold\u2019s hand stalls mid-stroke with the rag, pressing harder against the bar\u2019s scarred wood. His knuckles whiten, but his voice doesn\u2019t falter\u2014just his breath catches once, a puff of steam through his stubbled jaw. The ale tankard rumbles back on its stand, sending a droplet skittering to splash against the wooden planks at your feet. Outside, a horse whinnies in the stable yard, the sound sharper than the wind.",
+        "words": 74,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s eyes narrow at Tallow\u2019s name\u2014he knows the trapper\u2019s reputation but won\u2019t say it outright",
+          "rationale": "Grimbold\u2019s reaction is ambiguous, neither a flat yes nor a no, but hints at deeper knowledge or caution.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist swirls his tankard, sloshing ale over the rim with a huff. \"Tallow? He\u2019ll get you to where you need with no fuss, I\u2019ll grant you that. But trust? Never trust a man who\u2019d sell the devil his own shadow for the right price.\" He slams his tankard down and grabs a dry rag to wipe the bar. \"He\u2019s got your back if the wolves come, but ask him if he\u2019s got your heart\u2014and you\u2019ll know he\u2019s not your friend.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.75,
+        "first_token_s": 15.66,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "74 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a horse whinnying 'sharper than the wind,' which implies an unnatural or uncanny alteration of sound.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=['Grimbold Ironfist']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p09-cellar-claim",
+        "kind": "overreach",
+        "player": "I follow Grimbold down into the cellar, and he proudly shows me his hidden chest of gold.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "the tavern has a hidden chest of gold",
+          "not_true": "no hidden chest of gold is revealed in the cellar",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "The player asserts an invented fact about a hidden treasure, which the DM would need to invent\u2014Grimbold\u2019s reaction alone is not enough to confirm its existence.",
+          "correction_note": "No hidden chest of gold is revealed in the cellar. Only the DM decides what happens in the world. Do you still want Kael to do this? I follow Grimbold down into the cellar.\n(Type yes to go ahead, or write what Kael does instead.)",
+          "pending_action": "I follow Grimbold down into the cellar.",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 6.72,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "p01-ask-guide",
+        "kind": "normal",
+        "player": "I walk over to Tallow's table and sit down. \"Grimbold says you know the old mill road. I could use a guide.\"",
+        "narration": "Tallow\u2019s lips tighten at the mention of Grimbold\u2019s name, his knuckles stopping mid-crack. A sip of ale pauses half-finished, the glass resting an inch from his lips. He eyes the worn leather at Kael\u2019s boots\u2014the kind that stays dry in mud or snow\u2014before nodding once. The wood of the table groans as he shifts his weight, setting the glass down with a soft thunk.",
+        "words": 64,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow swirls his ale, the froth catching the firelight. \"Old mill road don\u2019t take no nonsense. Snow\u2019s still deep in places. Five gold to guide you\u2014day and night, if you\u2019re lucky. And I\u2019ll need you to carry half the supplies.\" He leans back, cracking his knuckles. \"Grimbold keeps you fed, then?\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist",
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 13.74,
+        "first_token_s": 7.65,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "64 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical reactions and sounds without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes Tallow\u2019s physical and emotional reactions, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p02-leave-together",
+        "kind": "shift",
+        "player": "I finish my ale, leave the Red Griffin, and Tallow and I head out into the main street.",
+        "narration": "The tavern door creaks shut behind Kael, its brass handle leaving a cold ring on the back of his neck. Tallow\u2019s breath fogs the winter air as he strides forward, boots crunching over packed snow left by earlier patrons. The street yawns black and silent between flickering lanterns, only the distant jingle of harness bells from a wagon marking time.",
+        "words": 60,
+        "verdict": {
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "npc_name": "Tallow",
+          "npc_line": "The snow crunches underfoot as Tallow leads, his breath plumes in the cold air. He doesn\u2019t look back. \"Stay close. Bandits know that road better than I do.\" His voice is low, almost to himself. He tugs the collar of his patched coat tighter.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the main street",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 12.44,
+        "first_token_s": 7.36,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "60 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a cold ring on Kael's neck from a brass handle, which could imply a supernatural chill or lingering magic, but no explicit supernatural or uncanny elements are described.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": false,
+            "detail": "scene_shift=False",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p03-ask-way",
+        "kind": "normal",
+        "player": "\"Which way to the mill, Tallow?\"",
+        "narration": "The alley\u2019s rat-infested reek cuts the crisp air as a pair of shadowed boots scuffs snow near the mouth of it. Tallow\u2019s breath stills, fingers twitching toward his belt knife\u2014then he exhales through his nose, shaking his head once. The lanterns on the street flicker like they\u2019re trying to burn out, their warmth swallowed by the alley\u2019s blackness.",
+        "words": 58,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Tallow points left, toward a narrow alley where lantern light barely reaches",
+          "rationale": "Tallow\u2019s silence and caution suggest he\u2019s not eager to direct strangers into danger, but he\u2019ll guide them\u2014with deliberate, guarded precision.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow spits snow from his mouth, wiping his boot on the dirt before pointing a frostbitten finger toward the pines. \"Left. If you follow the trackers\u2019 prints\u2014fresh ones, too\u2014you\u2019ll hit the ridge by dusk.\" His jaw tightens. \"But I ain\u2019t takin\u2019 no detours. And don\u2019t expect me to hold your hand.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 17.99,
+        "first_token_s": 16.55,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "58 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes lanterns 'flickering like they\u2019re trying to burn out,' which implies an inexplicable or supernatural cause rather than ordinary wear or wind.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Tallow\u2019s physical reactions ('fingers twitching toward his belt knife', 'exhales through his nose', 'shakes his head once') rather than attributing any thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p04-road",
+        "kind": "shift",
+        "player": "We walk out of town down the road west toward the old mill.",
+        "narration": "Tallow\u2019s boots leave deep prints in the snow, kicking up a fine spray that clings to Kael\u2019s face. The road narrows here, flanked by skeletal pines their branches heavy with frost, their needles whispering in the wind like a low, tired hum. The scent of damp earth and pine needles thickens, mixed with the acrid tang of smoke from a distant farmstead\u2019s chimney\u2014someone still cooking dinner despite the cold. A rusted iron fence, half-collapsed, marks the edge of the road; its weathered slats groan as Tallow steps over, muttering about cowards who let their property rot.",
+        "words": 96,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the road west toward the old mill",
+            "added": [],
+            "came_along": [
+              "Tallow"
+            ]
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 10.05,
+        "first_token_s": 3.34,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "96 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes 'needles whispering in the wind like a low, tired hum,' which implies an uncanny or supernatural quality to the pines' branches.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p05-look",
+        "kind": "normal",
+        "player": "I look around for any sign of who owns the mill.",
+        "narration": "No mill stands where the road meets the ridge\u2014just an empty field where pine shadows stretch long. A weathered signpost juts from the snow, its rusted lettering half-buried: \"Old Mill Road\" scrawled in jagged, faded paint. Tallow\u2019s breath fogs where he points, though he doesn\u2019t turn his head away. The wind carries the distant clatter of a frozen creek, and somewhere in the trees, a crow caws\u2014a sound too loud for night.",
+        "words": 72,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 9.42,
+        "first_token_s": 3.48,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "72 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions a crow cawing 'too loud for night' without explanation or context, which could imply an unnatural or unsettling element.",
+            "judged": true
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration includes the phrase *'Tallow\u2019s breath fogs where he points, though he doesn\u2019t turn his head away'*\u2014this describes an NPC's action, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p06-wait-here",
+        "kind": "normal",
+        "player": "\"Wait here, Tallow.\" I walk back up the road to the main street of Ashwick.",
+        "narration": "The main street hums with quiet life despite the hour: a blacksmith\u2019s anvil clangs faintly from a shut shop, its glow spilling into the lane, while a cart-wheels\u2019 rattle echoes from a warehouse\u2019s back doors, its driver muttering curses to a bundle of straw. The lanterns here cast long, shifting pools of yellow over the snow, revealing a cluster of drunkards pressed against a tavern\u2019s low wall\u2014one of them spitting into the street, his breath steaming in the cold. A door bounces shut at the back of a storefront, where a sign creaks in the wind: \"Ashwick Apothecary\"\u2014below it, a cracked mirror reflects the street\u2019s lamplight like a broken eye. The air tastes of roasted chestnuts from a stall, though no vendor stays to sell them now, and the wind carries a distant bark from a half-grown hound tied to a post by the Red Griffin\u2019s steps\u2014its collar rattles as it shifts, impatient.",
+        "words": 153,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "left_behind": [
+            "Tallow"
+          ],
+          "_location": "Ashwick -- the main street",
+          "_present": []
+        },
+        "elapsed_s": 12.75,
+        "first_token_s": 4.63,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "153 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a **cracked mirror** reflecting lamplight 'like a broken eye,' which implies an eerie, almost sentient quality without explicit supernatural cause.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the main street'",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=[]",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes the environment and actions of NPCs or the world without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p07-recall",
+        "kind": "recall",
+        "player": "/dm where did I leave Tallow?",
+        "narration": "Kael left Tallow standing at the road\u2019s edge where the pines begin\u2014bootprints deep in the snow leading northward, a tattered cloak half-swung open against the wind.\n\nA crow\u2019s call cuts through the silence as Tallow curses under his breath, stomping his boot into the crust of snow to mark his spot. The road behind yawns empty now.",
+        "words": 57,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "info_request",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": false,
+          "outcome": "success",
+          "twist": "",
+          "rationale": "The player is asking for a fact already established in the RECENT HISTORY.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": "Ashwick -- the road west toward the old mill",
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the road west toward the old mill",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 13.69,
+        "first_token_s": 8.93,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "57 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a crow\u2019s call and cursing under breath, but no supernatural or uncanny elements are explicitly described beyond ordinary environmental details.",
+            "judged": true
+          },
+          {
+            "name": "recall",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "p08-back-to-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold if Tallow can be trusted.",
+        "narration": "The tavern\u2019s firelight flickers on Grimbold\u2019s stubbled jaw as he exhales through his nose, fingers drumming once on the bar. A half-empty tankard rumbles where it sat\u2014now untouched\u2014its froth long melted into the wood. His gnarled hand taps the counter twice, a signal for the player to lean closer, though his voice stops short of a whisper. The smell of damp wool and ale breath thickens the air between them, mingling with the lingering scent of burnt oak from the hearth.",
+        "words": 81,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": true,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s eyes narrow at the name, then he leans in\u2014low voice, \u2018Tallow\u2019s a good man, but he\u2019s got a score to settle with the mill\u2019s new owner. Ask him why he\u2019s heading *there* tonight.\u2019",
+          "rationale": "Grimbold knows Tallow\u2019s reputation but won\u2019t outright endorse him without context\u2014he\u2019s protective of his regulars but wary of outsiders\u2019 motives.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist grunts, scrubbing a mug dry with a rag instead of meeting your eyes. \"Tallow\u2019s a bear, but he\u2019s honest as they come. Slower than a snail in winter, though\u2014don\u2019t expect him to babble about you.\" He slams the mug down. \"But if he\u2019s leading you, I\u2019ll know why. And I know the last fool who trusted Tallow\u2019s silence got lost in the pines.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 22.35,
+        "first_token_s": 16.21,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "81 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary sensory details (firelight, ale breath, burnt oak scent) without introducing any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "party",
+            "passed": true,
+            "detail": "party=[]",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Tallow still here; present=['Grimbold Ironfist']",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical actions, sensory details, and NPC behavior without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "p09-cellar-claim",
+        "kind": "overreach",
+        "player": "I follow Grimbold down into the cellar, and he proudly shows me his hidden chest of gold.",
+        "narration": "",
+        "words": 0,
+        "verdict": {
+          "player_assertion": "the tavern has a cellar with a hidden chest of gold",
+          "not_true": "there is no hidden chest of gold in the tavern cellar",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": true,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Grimbold\u2019s gruffness and secrecy hint at practicality, not hidden treasure, and the tavern\u2019s setting suggests practicality over fantasy.",
+          "correction_note": "There is no hidden chest of gold in the tavern cellar. Only the DM decides what happens in the world. Do you still want Kael to do this? I follow Grimbold down into the cellar.\n(Type yes to go ahead, or write what Kael does instead.)",
+          "pending_action": "I follow Grimbold down into the cellar.",
+          "awaiting_player": true,
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 7.22,
+        "first_token_s": NaN,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "no_narration_when_asking",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "0 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "not_clean_success",
+            "passed": true,
+            "detail": "outcome=complication, flagged=True",
+            "judged": false
+          }
+        ]
+      }
+    ]
+  ]
+}

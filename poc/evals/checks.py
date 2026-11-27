@@ -151,6 +151,14 @@ def run_checks(turn, narration: str, verdict: dict, use_judge: bool = True) -> l
     for name in turn.expect_present:
         results.append(_check("present", any(p.startswith(name) for p in present),
                               f"{name} not here; present={present}"))
+    # What NPC agents know (Day 4, step 3, witnesses scenario).
+    npc_said = (verdict.get("npc_line") or "").lower()
+    if turn.npc_must_not_include:
+        leaked = [w for w in turn.npc_must_not_include if w.lower() in npc_said]
+        results.append(_check("npc_no_leak", not leaked, f"NPC said {leaked}: {npc_said[:120]!r}"))
+    if turn.npc_must_include_any:
+        results.append(_check("npc_remembers", any(w.lower() in npc_said for w in turn.npc_must_include_any),
+                              f"NPC line: {npc_said[:120]!r}"))
     for name in turn.expect_absent:
         results.append(_check("absent", not any(p.startswith(name) for p in present),
                               f"{name} still here; present={present}"))

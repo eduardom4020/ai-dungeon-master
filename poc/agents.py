@@ -1068,8 +1068,11 @@ def npc_reply(npc: NPC, world: WorldState, player_line: str) -> str:
     # exchanges (trimmed) -- enough to answer in context without the cost of
     # the full world brief.
     others = [n.name for n in world.present_npcs() if n.name != npc.name]
+    # Only what THIS NPC witnessed (Day 4, step 3): the last two exchanges of
+    # the whole story used to go to every NPC, so a secret Kael told Tallow
+    # at the smithy was in Grimbold's prompt at the tavern.
     recent = "\n".join(
-        f"  Player: {p}\n  DM: {d[:400]}" for p, d in world.recent_history[-2:]
+        f"  Player: {p}\n  DM: {d[:400]}" for p, d in world.events_known_by(npc, last=2)
     ) or "  (nothing yet)"
     # Without this, each NPC agent guessed about the others: Grimbold's agent
     # named "Old Man Harlow", then Veyra's and Borla's agents called Harlow
@@ -1556,6 +1559,15 @@ def arrival_place(player_input: str, world: WorldState) -> str:
             continue
         if any(n.location == place and n.important and _mention_positions(text, n)
                for n in world.npcs.values()):
+            return place
+        # The place is the destination: its name right after "to/into/reach/
+        # back to the". witnesses eval: "walk down the main street to the
+        # smithy" stopped at "the main street" 5/6 (the tracker's choice), so
+        # the secret meant for Tallow was told to an empty street.
+        name_rx = r"\W+".join(re.escape(w) for w in re.findall(r"[a-z]+", specific.lower())
+                              if w not in {"the"})
+        if name_rx and re.search(rf"\b(?:to|into|reach|reaches|reaching|enter|enters|entering)\s+"
+                                 rf"(?:the\s+|old\s+)*{name_rx}\b", text):
             return place
     return ""
 

@@ -1,0 +1,1577 @@
+{
+  "meta": {
+    "label": "d4s3-witnesses-v2",
+    "scenario": "witnesses",
+    "runs": 3,
+    "judge": "on",
+    "model": "ministral-3:8b-instruct-2512-q4_K_M",
+    "git": "02a04d7+dirty",
+    "timestamp": "2026-11-27 09:41",
+    "turn_ids": [
+      "w01-to-smithy",
+      "w02-secret",
+      "w03-ask-grimbold",
+      "w04-press-grimbold",
+      "w05-back-to-tallow"
+    ],
+    "partial": false
+  },
+  "summary": {
+    "checks": {
+      "absent": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "grounded": {
+        "pass": 6,
+        "n": 15,
+        "judged": true,
+        "rate": 0.4
+      },
+      "length": {
+        "pass": 15,
+        "n": 15,
+        "judged": false,
+        "rate": 1.0
+      },
+      "location": {
+        "pass": 9,
+        "n": 9,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_extra_npc_speech": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_markdown": {
+        "pass": 15,
+        "n": 15,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_meta_leak": {
+        "pass": 15,
+        "n": 15,
+        "judged": false,
+        "rate": 1.0
+      },
+      "no_puppeting": {
+        "pass": 12,
+        "n": 12,
+        "judged": true,
+        "rate": 1.0
+      },
+      "no_stray_note": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "not_flagged": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "npc_no_leak": {
+        "pass": 6,
+        "n": 6,
+        "judged": false,
+        "rate": 1.0
+      },
+      "npc_remembers": {
+        "pass": 0,
+        "n": 3,
+        "judged": false,
+        "rate": 0.0
+      },
+      "present": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      },
+      "right_npc": {
+        "pass": 12,
+        "n": 12,
+        "judged": false,
+        "rate": 1.0
+      },
+      "scene_shift_flagged": {
+        "pass": 3,
+        "n": 3,
+        "judged": false,
+        "rate": 1.0
+      }
+    },
+    "words_by_kind": {
+      "normal": {
+        "mean": 62,
+        "max": 80
+      },
+      "shift": {
+        "mean": 132.3,
+        "max": 145
+      }
+    },
+    "latency_mean_s": 18.73,
+    "first_token_mean_s": 13.68,
+    "fast_path_rate": 0.2,
+    "turns": 15
+  },
+  "runs": [
+    [
+      {
+        "id": "w01-to-smithy",
+        "kind": "shift",
+        "player": "I leave the Red Griffin and walk down the main street to the smithy.",
+        "narration": "The smithy looms ahead, its glowing forge spatters the cobblestones with flecks of molten iron and soot-stained spume. Its massive oak doors\u2014charred at the edges from long use\u2014creak open without notice, and the sour tang of burning oak and iron-warm air billows out to greet the street. A thick curtain of steam curls from the bellows\u2019 chute, masking whatever lies within from prying eyes. The clatter of a hammer on red-hot metal rises and falls in steady rhythm, carrying the deep thunk-thunk of work that doesn\u2019t quit, even as dusk gathers overhead. The distant lowing of cattle from the market square blends into the smith\u2019s clamor, a reminder that the town\u2019s heartbeat is not silent even after sundown.",
+        "words": 118,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 14.41,
+        "first_token_s": 7.35,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "118 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a glowing forge and molten iron, which are not inherently supernatural but imply an unnatural intensity without explanation in an ordinary setting.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "w02-secret",
+        "kind": "normal",
+        "player": "I lower my voice. \"Tallow, the password for the mill gate is red heron. Keep it to yourself.\"",
+        "narration": "Tallow pauses mid-spit, his breath hitching slightly as his eyes narrow. The leather-wrapped fist halts halfway to his sleeve, leaving a smudge of ash against his dark trousers. The air between you both stays still, thick with the scent of burned cork and iron.",
+        "words": 44,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Tallow\u2019s loyalty is conditional; he won\u2019t reveal a secret unless he trusts the asker\u2019s intent or has a reason to. | cleared: only in quoted speech (\"the password for the mill gate is 'red heron'\")",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow grunts, slapping ash from his sleeves with a leather-wrapped fist. \"Ain't it my problem what you whisper to yourself, lad. If anyone asks, I don\u2019t know naught of it.\" He spits toward the forge, ignoring the cinder that lands near his boot. \"But if you\u2019re worried, I\u2019ll say it\u2019s \u2018black crow\u2019 instead. Make sure you keep that straight.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 15.44,
+        "first_token_s": 14.33,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "44 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a 'thick with the scent of burned cork and iron' atmosphere but does not mention any supernatural or uncanny elements like glowing substances, curses, or omens.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and sensory details ('his breath hitching', 'eyes narrowing', 'leather-wrapped fist halts', 'air stays still') without attributing speech, thought, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w03-ask-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold what the password for the mill gate is.",
+        "narration": "Grimbold\u2019s lips peel back from his yellowed teeth as his forearm lowers. The rag he wipes around the rim snags on the wood, leaving a damp streak. His free hand grips the bar edge, knuckles white where the ale\u2019s residue hasn\u2019t worn off yet. The tinkle of cutlery from neighboring tables pauses, but no one else dares look their way\u2014just the distant clack of a shutter being pulled up somewhere outside.",
+        "words": 71,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s eyes narrow as he wipes his tankard with a rag, then sets it down with a clatter",
+          "rationale": "The player is attempting to bypass the established tension around the mill gate password, which involves a secret known only to a few.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist slams the last of the mugs into the rack with a clatter, glaring at you over his thick forearm. \"The mill gate? Hmph. Not my job to repeat what the miller\u2019s mumble-fool says. You want that, ask him\u2014if you\u2019ve got coin to pay the fine for asking.\" He rubs his stubbled chin, eyes narrowing. \"But if you\u2019re here \u2018bout the gate, you\u2019re likely lookin\u2019 for trouble. The miller ain\u2019t stupid.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 20.38,
+        "first_token_s": 14.44,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "71 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes no supernatural, magical, or uncanny elements\u2014only mundane physical details and tension.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist slams the last of the mugs into the rack with a clatter, glaring at you over his thick forearm. \"the m'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes only physical reactions and environmental details without attributing speech, thought, emotion, or decision to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w04-press-grimbold",
+        "kind": "normal",
+        "player": "\"Come on, Grimbold. Somebody in this town must have told you the password. Is it a bird?\"",
+        "narration": "The bar\u2019s wood groans as Grimbold\u2019s fingers dig deeper, splinters cracking like teeth from the pressure. His breath smells of sour ale and old cigarillo smoke, fogging the air between you. The shutters rattling outside fall silent as if the wind itself held its breath.",
+        "words": 45,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Grimbold\u2019s grip tightens on the bar, his knuckles cracking as he leans in, voice dropping to a growl: *\u2018Bird? No. But it ain\u2019t a bird. Not unless you count the one that\u2019s been pecking at the miller\u2019s grain sacks since last harvest. And that\u2019s not the password. That\u2019s a *warning*.\u2019*",
+          "rationale": "Grimbold resists outright refusal but twists the question into a riddle, testing the player\u2019s persistence and hinting at deeper trouble.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist scoffs and wipes the bar with a rag, slamming it down hard. \"A bird? Pah! Last fool who asked \u2018bout a bird got his tongue chewed off by the miller\u2019s hound. You want the password? Try the blacksmith\u2019s daughter\u2014if she don\u2019t charge you a fistful of coin first.\" He leans in, voice dropping to a growl. \"But I ain\u2019t tellin\u2019 you nothin\u2019.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 23.31,
+        "first_token_s": 18.55,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "45 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes the shutters 'falling silent as if the wind itself held its breath,' which implies an uncanny or supernatural interruption of natural forces.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist scoffs and wipes the bar with a rag, slamming it down hard. \"a bird? pah! last fool who asked \u2018bout a '",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w05-back-to-tallow",
+        "kind": "normal",
+        "player": "I walk back to the smithy and ask Tallow to repeat the password, so I am sure I remember it right.",
+        "narration": "The steam from the bellows\u2019 chute swirls thicker, obscuring the forge\u2019s glow as Tallow\u2019s hand tightens on the lever. His breath hitches again, just enough to puff a ring of smoke toward the sooty curtain. The distant rattle of a shutter shudders the frame once before silence returns, heavier this time.",
+        "words": 51,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "partial",
+          "twist": "Tallow\u2019s eyes flick to the forge, then back\u2014he hesitates, then mutters, \u2018black crow\u2019\u2014but adds, \u2018But if you\u2019re still here at dawn, I\u2019ll say it was a lie\u2019",
+          "rationale": "Tallow\u2019s prior behavior shows he\u2019s cautious but not cruel\u2014he\u2019ll comply with the request but leaves room for future leverage.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow\u2019s calloused fingers stutter on the bellows lever as he glares at you. \"You\u2019re wastin\u2019 my breath, lad. I ain\u2019t got time to babysit. Either you remember it or you don\u2019t.\" He coughs into his sleeve, voice rough. \"Ask the miller next time. And for the love of the forge, don\u2019t get caught mispronouncing it.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 20.43,
+        "first_token_s": 15.53,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "51 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes smoke 'puffing' as if it has agency ('a ring of smoke toward the sooty curtain') without a clear natural cause, which could imply supernatural influence.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "npc_remembers",
+            "passed": false,
+            "detail": "NPC line: 'tallow\u2019s calloused fingers stutter on the bellows lever as he glares at you. \"you\u2019re wastin\u2019 my breath, lad. i ain\u2019t got'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Tallow\u2019s physical actions and the environment, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "w01-to-smithy",
+        "kind": "shift",
+        "player": "I leave the Red Griffin and walk down the main street to the smithy.",
+        "narration": "The main street slopes gently down from the tavern\u2019s busy threshold, the cobblestones worn smooth beneath boots and cart wheels. Steam rises from the smithy\u2019s open doorway\u2014thick, greasy, and faintly stinging to the nose\u2014where Tallow\u2019s bellows huff like a contented beast, sending up a haze of soot and sparks that catch the last light of dusk. The forge\u2019s heat bleeds out, casting jagged shadows over the wheelbarrow of glowing coals and a half-shaped horseshoe cooling on the anvil. Beyond, a wagon\u2019s creaking tailgate hints at goods left unloaded, and the tang of horse manure mixes with the iron scent in the chill air.\n\nA bell clangs faintly from the town crier\u2019s tower as the first stars prick through the low clouds, though no words follow\u2014just the reminder that Ashwick\u2019s routines don\u2019t pause for walkers.",
+        "words": 134,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 11.03,
+        "first_token_s": 3.22,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "134 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes ordinary physical phenomena (steam, sparks, shadows, horse manure, and natural light) without any supernatural or uncanny elements.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "w02-secret",
+        "kind": "normal",
+        "player": "I lower my voice. \"Tallow, the password for the mill gate is red heron. Keep it to yourself.\"",
+        "narration": "Tallow\u2019s left hand tightens around the bellows\u2019 chain, fingers white-knuckled, and the air between you grows thick with a sharp smell like burnt leather. His cough rattles louder, throat raw, and the spat wad of juice sizzles into the red-hot coals with a hiss\u2014steam hissing between your boots. The half-finished horseshoe on the anvil glows brighter, the iron shuddering as the blast of air shifts.",
+        "words": 65,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Tallow\u2019s eyes narrow; he coughs into his sleeve, then spits toward the forge",
+          "rationale": "Tallow\u2019s secret-keeping is conditional\u2014he\u2019ll only repeat a secret to the original confidant, not to a stranger who just handed him one out of nowhere.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow wipes the bar of soot-streaked grease with his sleeve and scowls, spitting a wad of tobacco juice toward the corner. \"You\u2019d do better paying a copper to keep your damn secrets than trusting some backwoods trapper.\" His voice is rough as hammered iron.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 14.88,
+        "first_token_s": 13.24,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "65 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a glowing horseshoe and steam hissing between boots without explanation or context for a frontier town with no established magic.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w03-ask-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold what the password for the mill gate is.",
+        "narration": "Grimbold\u2019s gloved fingers stutter over the tankard\u2019s rim, leaving a ring of soapy residue on the bar\u2019s wooden surface. The air smells sharp with the faint tang of spilled ale mixing with the smoke drifting from the hearth\u2019s dying embers. His left eyebrow twitches once, the muscle just above the scar above his right eye throbbing with quiet frustration as he turns to refill a mug with slow deliberation\u2014clink of glass, swirl of brown.",
+        "words": 74,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s eyes narrow as he wipes his tankard, then leans in and whispers: *\u2018Ask the right question, and I might tell you. But not that one.\u2019*",
+          "rationale": "The innkeeper\u2019s protective of his regulars and rumors, and the player\u2019s blunt request risks revealing they\u2019re not a trusted patron or local.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist scowls at the bar as Kael\u2019s voice cuts through the murmur of the tavern\u2019s patrons. He wipes a mug with a rag and slams it down harder than necessary, sending a splash of foamy ale skittering to the floor. \"Last time someone asked that, they got their knuckles pounded by the miller\u2019s own kin. And you want the same?\" He leans in, voice low and rough. \"Try asking the right way\u2014buy me a round, bring me news from the north, or prove you can handle a fight at dawn. That\u2019s how doors open.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.5,
+        "first_token_s": 15.68,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "74 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration mentions a 'scar above his right eye' and a 'throbbing muscle' without any explanation or context, which could imply an unnatural or supernatural cause.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist scowls at the bar as kael\u2019s voice cuts through the murmur of the tavern\u2019s patrons. he wipes a mug with'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w04-press-grimbold",
+        "kind": "normal",
+        "player": "\"Come on, Grimbold. Somebody in this town must have told you the password. Is it a bird?\"",
+        "narration": "The tankard crashes against the bar again, the mug\u2019s lip chipping where it struck the wood. A shard of ice glints in the lamplight from Grimbold\u2019s spilled ale, its scent cutting through the smoke like a cut. The innkeeper\u2019s gloved hand seizes the nearest tankard\u2014a dark, bitter-looking brew\u2014and shoves it toward Kael, rattling it once against the countertop. The mug\u2019s condensation clings to the outside, cold to the touch. Grimbold\u2019s voice disappears behind the door\u2019s swing as it slams shut.",
+        "words": 80,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s scarred eyebrow locks into a flat line; he sets the mug down with a *thud* and points to the door with his tankard, then grunts, \u2018Ask the right people, not the wrong ones\u2019",
+          "rationale": "Grimbold is not a source for idle chatter, and a blunt question about a sensitive detail risks escalating tension rather than yielding information.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist\u2019s thick brows knit together like a blacksmith\u2019s anvil under a hammer. He spits into the bar\u2019s trough and grabs the half-empty mug you just left, sniffing the liquid like a hound on a trail. \"A bird, you say? You\u2019re close as a blind mole. Raven, maybe. Or a cranesbill\u2014though that\u2019s old news.\" His eyes narrow. \"But who told you? And why now? The miller\u2019s got new guards since the last raid. You got coins in hand, or just questions?\" He wipes the bar with a rag that\u2019s been there since last Tuesday\u2019s spat with the butcher. \"Answer one, or leave. Both ways, I\u2019ve got better things to worry about than some stranger\u2019s bad luck.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 26.05,
+        "first_token_s": 19.29,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "80 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'shard of ice glints in the lamplight' without any explanation or context for its presence in a non-magical setting.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist\u2019s thick brows knit together like a blacksmith\u2019s anvil under a hammer. he spits into the bar\u2019s trough a'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration only describes physical actions and sensory details without attributing speech, thoughts, emotions, or decisions to Kael.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w05-back-to-tallow",
+        "kind": "normal",
+        "player": "I walk back to the smithy and ask Tallow to repeat the password, so I am sure I remember it right.",
+        "narration": "Tallow\u2019s breath rumbles through a dry, rattling cough that shakes the forge\u2019s iron supports. The bellows chain snaps taut again, sending a shower of sparks skittering across the anvil, while his boots grip the soot only to slide\u2014once\u2014toward the glowing coals. The air fills with the acrid tang of singed wool and burnt breath as his gloved hand balloons around his chest.",
+        "words": 62,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Tallow\u2019s cough wheezes violently, choking on his own phlegm; the bellows chain snaps taut as he clutches his chest, iron-shod boots skidding on soot",
+          "rationale": "Tallow\u2019s health and hostility make this a risky demand, and his immediate reaction to the last secret test suggests he won\u2019t comply without provocation or consequence.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow\u2019s bellows jerk to a stop, his arm locking stiff as stone. \"Again? You\u2019d think the miller\u2019s own dog would know better\u2019n to repeat nonsense twice.\" He spits, crunching a blackened toothpick between gritted teeth. \"Aye, you got it once\u2014good. Now you remember it.\" His gloved hand twitches toward a rusted chisel behind him, just enough to show he\u2019d not hesitate to use it.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 21.36,
+        "first_token_s": 15.59,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "62 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a 'glowing coals' and 'burnt breath' without any explanation or context for their unusual luminosity.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "npc_remembers",
+            "passed": false,
+            "detail": "NPC line: 'tallow\u2019s bellows jerk to a stop, his arm locking stiff as stone. \"again? you\u2019d think the miller\u2019s own dog would know bet'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Tallow\u2019s physical actions and the environment, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "id": "w01-to-smithy",
+        "kind": "shift",
+        "player": "I leave the Red Griffin and walk down the main street to the smithy.",
+        "narration": "The Red Griffin\u2019s heavy doors groan shut behind you as you step into Ashwick\u2019s main street, the wooden planks damp underfoot from the morning\u2019s rain. The lamplighter\u2019s glow barely claws through the thickening dusk, casting long shadows over cobblestones still slick with mud from the day\u2019s traffic. To your left, the smell of hot metal and soap rises from the Ashwick Smithy\u2014a ramshackle workshop with a rust-stained awning sagging over a doorway patched with scraps of leather. The clatter of the bellows echoes inside, steady and rhythmic, while a low hum of conversation and the occasional bang of hammer on anvil lingers outside. A single crow perches on the chimney pot, its wings folded tight, watching you pass with a raucous caw. The air carries the sharp tang of iron, mixed with the faint, acrid note of something burning\u2014likely last night\u2019s fire in the hearth.",
+        "words": 145,
+        "verdict": {
+          "turn_type": "action",
+          "known_to_dm": true,
+          "addresses_npc": false,
+          "scene_shift": true,
+          "player_assertion": "",
+          "outcome": "success",
+          "twist": "",
+          "rationale": "heuristic: skipped verdict call, judged simple",
+          "narration_dropped": [
+            "The street itself is nearly empty now, save for a pair of women hauling buckets from the well around the corner, their voices muted by the distance."
+          ],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 12.24,
+        "first_token_s": 3.39,
+        "fast_path": true,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "145 words (budget 170)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": true,
+            "detail": "The narration describes a crow perching and watching with no explanation or context for its behavior beyond being a crow, which could imply intentional observation but lacks supernatural framing.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "present",
+            "passed": true,
+            "detail": "Tallow not here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "absent",
+            "passed": true,
+            "detail": "Grimbold still here; present=['Tallow']",
+            "judged": false
+          },
+          {
+            "name": "scene_shift_flagged",
+            "passed": true,
+            "detail": "scene_shift=True",
+            "judged": false
+          }
+        ]
+      },
+      {
+        "id": "w02-secret",
+        "kind": "normal",
+        "player": "I lower my voice. \"Tallow, the password for the mill gate is red heron. Keep it to yourself.\"",
+        "narration": "Tallow\u2019s fingers freeze on the bellows pump, knuckles whitening as the leather strap slackens. The crow on the chimney fluffs its feathers but doesn\u2019t move, as if sensing something. The hammer on the anvil clangs once\u2014louder than intended\u2014against the half-shaped horseshoe.",
+        "words": 41,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "",
+          "rationale": "Tallow knows the password but questions the context, suspecting Kael\u2019s motives given his sudden arrival and lack of prior connection. | cleared: only in quoted speech ('the password for the mill gate is red heron')",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow\u2019s calloused hand pauses mid-stroke on the bellows, soot dusting the floor. \"Keep it to myself? Course I will\u2014but who else knows it, lad? That\u2019s the real question.\" He grunts, wiping a sleeve across his brow. \"Ask me about it and I\u2019ll tell ya, elsewise\u2026 well, you\u2019ve asked.\"(Tallow sets his jaw, staring at the anvil where a half-finished horseshoe gleams in the forge light.)",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 15.83,
+        "first_token_s": 14.68,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "41 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration describes a crow on the chimney 'sensing something' and its behavior as if 'unusual' without explanation, which implies supernatural awareness.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and environmental responses ('Tallow\u2019s fingers freeze...', 'crow on the chimney fluffs its feathers...'), not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w03-ask-grimbold",
+        "kind": "normal",
+        "player": "I walk back to the red griffin tavern and ask Grimbold what the password for the mill gate is.",
+        "narration": "Grimbold\u2019s brow creases deeper, his tankard hitting the bar with enough force to slosh the last of the ale sideways. His grip tightens on the rag, knuckles whitening where he digs it into the wood, then pauses mid-wipe to fix you with a glare. The crow on the chimney dips its head, feathers ruffling, but stays perched as Grimbold\u2019s eyes dart toward the tavern door\u2014once, twice\u2014before he exhales through his nose and slams the rag down harder.",
+        "words": 77,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s brow furrows; he sets down his tankard with a clink, then leans in and lowers his voice\u2014though his gaze flickers toward the door as if expecting interruption",
+          "rationale": "The innkeeper\u2019s secrecy is a known trait, but asking outright risks his suspicion or a test of trust, especially in a town where secrets matter.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist slams his tankard down with a clatter. \"Aye, so now you\u2019re after the mill gate password, eh? Thought you just wanted a drink and a tale about Tallow\u2019s latest \u2018lost coin\u2019 story. Scrap.\" He leans in, voice low but menacing. \"That\u2019s private. And for what\u2014silver in the hand, or is it just idle chatter?\" He wipes the bar with a rag, eyeing you like a bar bet gone wrong.",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 21.3,
+        "first_token_s": 15.11,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "77 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration mentions the crow on the chimney 'dips its head, feathers ruffling, but stays perched'\u2014a behavior that could imply intentional or uncanny movement without clear cause.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the Red Griffin tavern'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist slams his tankard down with a clatter. \"aye, so now you\u2019re after the mill gate password, eh? thought y'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical gestures and reactions of Grimbold and the environment, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w04-press-grimbold",
+        "kind": "normal",
+        "player": "\"Come on, Grimbold. Somebody in this town must have told you the password. Is it a bird?\"",
+        "narration": "Grimbold\u2019s knuckles turn white around the mug as his fist clenches the wood so hard the ale sloshes, threatening to spill. The crow on the rafters jerks upright with a sharp, dry rustle\u2014feathers ruffling like a storm front\u2014before flapping down from its perch with a thump onto the bar behind Grimbold\u2019s tankard. The innkeeper\u2019s breath stutters, then he exhales through his nose, nostrils flaring, as the bird tilts its head toward the door.",
+        "words": 73,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "dialogue",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Grimbold\u2019s grip tightens on his tankard; the crow flaps its wings sharply and takes flight into the rafters",
+          "rationale": "Grimbold\u2019s hostility escalates when pressed about the password, and the crow\u2019s reaction hints at deeper unease or tension.",
+          "npc_name": "Grimbold Ironfist",
+          "npc_line": "Grimbold Ironfist\u2019s grizzled eyebrows shoot up like a pair of jagged iron spikes. \"A bird? Well, that\u2019s the laughable guess of the week\u2014some fop from the guilds, last I saw him. \u2018The golden eagle, eh? Fine, then you\u2019d better bring a feathered invitation.\u2019 Ha! The real gate\u2019s password ain\u2019t no poet\u2019s fancy\u2014it\u2019s something that\u2019s stuck in Tallow\u2019s throat for weeks, now, and he still won\u2019t tell me why he cares.\" He shakes his head, muttering. \"Aye, there\u2019s a bird in it, though. But not one you\u2019d spot in the sky. Come back when you\u2019ve got coin enough to make it worth spilling Tallow\u2019s secrets\u2014and don\u2019t waste my time with riddles.\" He slides a half-full mug of ale toward you with a grunt. \"Drink up. Then come see me when you\u2019re not just begging like a halfwit.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": null,
+          "party": [],
+          "_location": "Ashwick -- the Red Griffin tavern",
+          "_present": [
+            "Grimbold Ironfist"
+          ]
+        },
+        "elapsed_s": 22.64,
+        "first_token_s": 20.27,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "73 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The crow's movement is described as 'jerks upright with a sharp, dry rustle\u2014feathers ruffling like a storm front' and 'flapping down... with a thump onto the bar'\u2014implying deliberate, almost sentient behavior without explanation.",
+            "judged": true
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Grimbold Ironfist",
+            "judged": false
+          },
+          {
+            "name": "npc_no_leak",
+            "passed": true,
+            "detail": "NPC said []: 'grimbold ironfist\u2019s grizzled eyebrows shoot up like a pair of jagged iron spikes. \"a bird? well, that\u2019s the laughable gu'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes physical reactions and actions of Grimbold and the crow, not Kael's speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      },
+      {
+        "id": "w05-back-to-tallow",
+        "kind": "normal",
+        "player": "I walk back to the smithy and ask Tallow to repeat the password, so I am sure I remember it right.",
+        "narration": "The bellows shudder to a stop, steam hissing violently through the cracked leather. Tallow\u2019s jaw locks even harder, his teeth grinding together like a trapped rat\u2019s, while the crow on the chimney lets out a sharp, dry caw\u2014laughing\u2014before taking flight with a flap of ruffled wings. The anvil rings once against the hammer, sending a spark skittering into the soot-stained floor.",
+        "words": 61,
+        "verdict": {
+          "player_assertion": "",
+          "not_true": "",
+          "turn_type": "action",
+          "known_to_dm": false,
+          "addresses_npc": true,
+          "scene_shift": false,
+          "outcome": "complication",
+          "twist": "Tallow\u2019s jaw locks tighter; the crow lets out a sharp, mocking caw as the bellows suddenly stop with a hiss of escaping steam",
+          "rationale": "Tallow\u2019s prior hesitation and the crow\u2019s reaction imply he won\u2019t repeat the password casually, especially after Grimbold\u2019s interference.",
+          "npc_name": "Tallow",
+          "npc_line": "Tallow exhales through gritted teeth, flicking a loose coal with the toe of his boot. \"You\u2019re asking twice now, Kael\u2014first at the tavern, then here. That ain\u2019t the way.\" He leans back against the anvil, arms crossed. \"Tell me who else you told before you get the password.\"",
+          "narration_dropped": [],
+          "narration_rejected": [],
+          "scene_update": {
+            "moved_to": null,
+            "added": [],
+            "came_along": []
+          },
+          "party": [],
+          "_location": "Ashwick -- the smithy",
+          "_present": [
+            "Tallow"
+          ]
+        },
+        "elapsed_s": 20.18,
+        "first_token_s": 14.48,
+        "fast_path": false,
+        "retries": 0,
+        "referee_fallback": false,
+        "checks": [
+          {
+            "name": "length",
+            "passed": true,
+            "detail": "61 words (budget 110)",
+            "judged": false
+          },
+          {
+            "name": "no_meta_leak",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_markdown",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_extra_npc_speech",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "grounded",
+            "passed": false,
+            "detail": "The narration includes a crow on the chimney that 'lets out a sharp, dry caw\u2014laughing\u2014before taking flight', which implies an uncanny or supernatural behavior for an inanimate setting.",
+            "judged": true
+          },
+          {
+            "name": "location",
+            "passed": true,
+            "detail": "location='Ashwick -- the smithy'",
+            "judged": false
+          },
+          {
+            "name": "right_npc",
+            "passed": true,
+            "detail": "npc agent: Tallow",
+            "judged": false
+          },
+          {
+            "name": "npc_remembers",
+            "passed": false,
+            "detail": "NPC line: 'tallow exhales through gritted teeth, flicking a loose coal with the toe of his boot. \"you\u2019re asking twice now, kael\u2014fir'",
+            "judged": false
+          },
+          {
+            "name": "not_flagged",
+            "passed": true,
+            "detail": "",
+            "judged": false
+          },
+          {
+            "name": "no_stray_note",
+            "passed": true,
+            "detail": "unexpected note: None",
+            "judged": false
+          },
+          {
+            "name": "no_puppeting",
+            "passed": true,
+            "detail": "The narration describes Tallow\u2019s physical reactions and the environment's response, not Kael\u2019s speech, thoughts, emotions, or decisions.",
+            "judged": true
+          }
+        ]
+      }
+    ]
+  ]
+}
